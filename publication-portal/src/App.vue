@@ -10,6 +10,11 @@ export default {
   // components: {
   //   HelloWorld
   // }
+  mounted() {
+    let themejs = document.createElement('script')
+    themejs.setAttribute('src', 'https://kit.fontawesome.com/5a55e4b82b.js')
+    document.head.appendChild(themejs)
+},  
 }
 </script>
 

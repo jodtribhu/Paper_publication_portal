@@ -13,9 +13,9 @@
   padding: 1rem;
   background-color: rgba(231, 231, 233, 0.966);
   margin:auto;
-  
-  width: 90%;
-  min-height: 90vh;
+  border-top: 7px solid rgb(73, 40, 40);
+  width: 50%;
+  height: 88vh;
 }
 
 </style>
