@@ -15,6 +15,12 @@
                 
                 </p>
             </div>
+            <div class="student_name">
+                <p><span class="boldit">Team Mates </span> <span v-if="publication_record.teammates!=''">: {{publication_record.teammates}}</span>
+                <span v-if="publication_record.teammates==null">: Himself</span>   
+                </p>
+            </div>
+       
        
      </base-dialog>
         <div >
