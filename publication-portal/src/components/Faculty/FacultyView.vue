@@ -1,6 +1,17 @@
 <template>
     <div >
-        <faculty-publication > </faculty-publication>
+        <faculty-header></faculty-header>
+        <div class="faculty_display">
+            <div class="side">
+                <side-bar ></side-bar>  
+            </div>
+            <div class="main">
+                 <faculty-publication > </faculty-publication> 
+            </div>
+            
+           
+        </div>
+
     </div>
     
 </template>
@@ -15,3 +26,20 @@ export default {
   },
 }
 </script>
+<style scoped>
+.faculty_display{
+
+    display:flex;
+    justify-content:space-between;
+    height:90vh;
+}
+.side{
+    padding-top:2rem;
+    height: 100%;
+    width:10%; 
+}
+.main{
+    height: 100%;
+    width:100%;  
+}
+</style>

@@ -4,18 +4,26 @@
       
         <div class="box">
             <h1>Login</h1>
-                <input type="email" name="email" placeholder="Email" v-model="email">
-                <input type="password" name="password" placeholder="Password" v-model="password">
-            <div>
-            <p class="error" v-if="error!=''">{{error}}</p>
+
+            <div class="input-block">
+              <input type="email"  name="input-text" id="input-text"  v-model="email" placeholder="Email" required>
+              <span class="placeholder"> Email </span>
             </div>
+    
+            <div class="input-block">
+              <input type="password"  name="input-text" id="input-text"  v-model="password" placeholder="Password" required>
+              <span class="placeholder"> Password </span>
+            </div>
+                
+              
+            <div>
+              <p class="error" v-if="error!=''">{{error}}</p>
+            </div>
+
             <button v-if="incorrect_login" @click="login">Login</button>
-             <p @click="forgotpassword">Forgot Password</p>
-        </div> 
-        <div>
-  
-        </div>
-      
+
+             <p class="forgotpassword" @click="forgotpassword">Forgot Password </p>
+        </div>       
     </div>
 </template>
 
@@ -82,6 +90,61 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+.box input[type = "email"],.box input[type = "password"]{
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #876a27;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  border-radius: 4px;
+}
+
+div.input-block {
+  position: relative;
+}
+div.input-block input {
+  font-weight: 500;
+  font-size: 1rem;
+  
+}
+div.input-block span.placeholder {
+  position: absolute;
+  margin-left:25%;
+  padding: 0 4px;
+  font-family: 'Montserrat', sans-serif;
+  color:rgba(255, 255, 255, 0);
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  top: 1rem;
+  left: 4.2rem;
+  transition: all 0.2s;
+  transform-origin: 0% 0%;
+  background: none;
+  pointer-events: none;
+}
+
+
+div.input-block input:valid + span.placeholder,
+div.input-block input:focus + span.placeholder {
+  transform: scale(0.8) translateY(-1.8rem) translateX(-7.5rem);
+  background: #872744;
+}
+
+div.input-block input:focus + span.placeholder {
+  color: wheat;
+}
+
+div.input-block input:valid + span.placeholder{
+   color: rgba(245, 222, 179, 0.014);
+   background-color: transparent;
+}
+
 .error{
     color: #a75864;
 }
@@ -93,47 +156,38 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  background: #383e56;
+  background: #872744;
   text-align: center;
 }
 .box h1{
   color: white;
   text-transform: uppercase;
-  font-weight: 500;
+  font-family: 'Noto Sans Mono', monospace;
+  
 }
-.box input[type = "email"],.box input[type = "password"]{
-  background: none;
-  display: block;
-  margin: 20px auto;
-  text-align: center;
-  border: 2px solid #3498db;
-  padding: 14px 10px;
-  width: 200px;
-  outline: none;
-  color: white;
-  border-radius: 24px;
-  transition: 0.25s;
+input{
+  color:white;
+  font-family: 'Montserrat', sans-serif;
 }
-.box input[type = "email"]:focus,.box input[type = "password"]:focus{
-  width: 280px;
-  border-color: #2ecc71;
+
+.forgotpassword{
+  color: rgba(192, 175, 175, 0.671);
 }
+
+
 .box button{
+  font-family: 'Montserrat', sans-serif;
   background: none;
   display: block;
   margin: 20px auto;
   text-align: center;
-  border: 2px solid #2ecc71;
   padding: 14px 40px;
   outline: none;
-  color: white;
+  color:white;
+  background: #6e3647;
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
 }
-.box button:hover{
-  background: #2ecc71;
-}
-
 
 </style>
