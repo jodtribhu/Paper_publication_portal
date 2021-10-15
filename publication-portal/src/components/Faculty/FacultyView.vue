@@ -3,10 +3,13 @@
         <faculty-header></faculty-header>
         <div class="faculty_display">
             <div class="side">
-                <side-bar ></side-bar>  
+                <side-bar @messageFromChild="childMessageRecieved" ></side-bar>  
             </div>
             <div class="main">
-                 <faculty-publication > </faculty-publication> 
+                 <faculty-publication v-if="gotoComponent=='Publication'" > </faculty-publication> 
+                 <faculty-approved v-if="gotoComponent=='Approved'" > </faculty-approved> 
+                <faculty-rejected v-if="gotoComponent=='Rejected'" > </faculty-rejected> 
+                <faculty-dashboard v-if="gotoComponent=='Dashboard'" > </faculty-dashboard> 
             </div>
             
            
@@ -16,14 +19,23 @@
     
 </template>
 <script>
+import FacultyDashboard from './FacultyDashboard.vue';
 import FacultyPublication from './FacultyPublication.vue';
+import FacultyApproved from './Faculty_Approved.vue';
+import FacultyRejected from './Faculty_Rejected.vue';
 export default {
-  components: { FacultyPublication},
+    
+  components: { FacultyPublication,FacultyApproved,FacultyRejected, FacultyDashboard},
   data(){
       return{
-          
+          gotoComponent:"Dashboard"
       }
   },
+  methods:{
+        childMessageRecieved(message){
+           this.gotoComponent=message
+        },
+  }
 }
 </script>
 <style scoped>
