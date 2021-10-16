@@ -7,7 +7,7 @@
             </div>
             <div class="main">
                  <faculty-publication v-if="gotoComponent=='Publication'" > </faculty-publication> 
-                 <faculty-approved v-if="gotoComponent=='Approved'" > </faculty-approved> 
+                 <faculty-approved v-if="gotoComponent=='Accepted'" > </faculty-approved> 
                 <faculty-rejected v-if="gotoComponent=='Rejected'" > </faculty-rejected> 
                 <faculty-dashboard v-if="gotoComponent=='Dashboard'" > </faculty-dashboard> 
             </div>
