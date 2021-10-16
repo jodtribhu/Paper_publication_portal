@@ -1,7 +1,7 @@
 <template>
     
         <div class="sidebar">
-            <div :class="{ 'shadow1' : tabbed_view === 'Dashboard'}"  @click="executeDashboard" class="sidebar_item tab1">
+            <div :class="{ 'shadow1' : tabbed_view === 'Dashboard'}"  @click="executeDashboard()" class="sidebar_item tab1">
                 <div class="sidebar_icon">
                     <i class="fas fa-user-graduate"></i>
                 </div>
@@ -10,7 +10,7 @@
                 </div>     
             </div>
             <hr>
-             <div :class="{ 'shadow2' : tabbed_view === 'Publication'}" @click="executePublication" class="sidebar_item tab2">
+             <div :class="{ 'shadow2' : tabbed_view === 'Publication'}" @click="executePublication()" class="sidebar_item tab2">
                 <div class="sidebar_icon">
                      <i class="fas fa-scroll"></i>
                 </div>
@@ -18,6 +18,15 @@
                      <p >My Publications</p>
                 </div>     
             </div>    
+            <hr>
+             <div :class="{ 'shadow3' : tabbed_view === 'Form'}" @click="executeForm()" class="sidebar_item tab3">
+                <div class="sidebar_icon">
+                    <i class="fab fa-wpforms"></i>
+                </div>
+                <div class="sidebar_text">
+                     <p >Student Form</p>
+                </div>     
+            </div>  
         </div>
   
 </template>
@@ -29,12 +38,10 @@ export default {
         executePublication(){
             this.$emit('messageFromChild','Publication')
         },
-        executeApproved(){
-             this.$emit('messageFromChild','Accepted')
+        executeForm(){
+             this.$emit('messageFromChild','Form')
         },
-        executeRejected(){
-             this.$emit('messageFromChild', 'Rejected')
-        },
+
         executeDashboard(){
              this.$emit('messageFromChild','Dashboard')
         }
@@ -76,6 +83,9 @@ p{
 .fa-scroll{
     color:wheat;
 }
+.fa-wpforms{
+    color:wheat;
+}
 .fa-check-circle{
     color:green;
 }
@@ -89,19 +99,26 @@ hr{
      background-color:#393446c0;
       border-radius: 0px 24px 0 0px;
 }
-.tab2:hover{
+.tab3:hover{
      background-color:#393446c0;
      border-radius: 0px 0px 24px 0px;
 }
-
+.tab2:hover{
+     background-color:#393446c0;
+     border-radius: 0px 0px 0px 0px;
+}
 
 .shadow1{
      background-color:#352f30c0;
       border-radius: 0px 24px 0 0px;
 }
+.shadow3{
+     background-color:#352f30c0;
+     border-radius: 0px 0px 24px 0px;
+}
 .shadow2{
      background-color:#352f30c0;
-     border-radius: 0px 0px 0 0px;
+     border-radius: 0px 0px 0px 0px;
 }
 
 </style>

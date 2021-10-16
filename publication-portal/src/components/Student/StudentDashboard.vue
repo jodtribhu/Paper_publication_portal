@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="margin_Correct">
         <student-card>
             <h1>Dashboard</h1>
              <div class="card container_flex">
@@ -76,7 +76,7 @@ export default {
         return{
             publicationchartOptions: {
                             chart: {fontFamily: 'Montserrat, sans-serif'},
-                            colors:['#17780e','#9e5105','#78150e'],
+                            colors:['#13a608','#ff9a1f','#f72027'],
                             stroke: {
                                     width:0
                                 },
@@ -96,6 +96,10 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+.margin_Correct{
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
 h1{
     text-align: center;
     font-family: 'Montserrat', sans-serif;
@@ -151,7 +155,8 @@ h1{
     display: flex;
     width:100%;
     justify-content: center;
-    background-color:rgb(179, 174, 174);
+     background-color:rgb(209, 199, 199);
+    
     border-radius: 24px 0 0 0;
     align-items: center;
 }
@@ -159,7 +164,7 @@ h1{
     display: flex;
     width:100%;
     border-left:2px solid rgb(70, 69, 69);
-     background-color:rgb(179, 174, 174);
+     background-color:rgb(209, 199, 199);
     justify-content: center;
     
     align-items: center;
@@ -168,7 +173,7 @@ h1{
     display: flex;
     width:100%;
     border-left:2px solid rgb(70, 69, 69);
-     background-color:rgb(179, 174, 174);
+      background-color:rgb(209, 199, 199);
     justify-content: center;
     
     align-items: center;
@@ -177,7 +182,7 @@ h1{
     display: flex;
     width:100%;
     border-left:2px solid rgb(70, 69, 69);
-    background-color:rgb(179, 174, 174);
+     background-color:rgb(209, 199, 199);
     justify-content: center;
     border-radius: 0 24px 0 0;
     
@@ -186,11 +191,9 @@ h1{
 .pcard {
   margin:auto;
   border-radius: 0 0 12px 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
-  margin-bottom: 20px;
   background-color: transparent;
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: center;
 }

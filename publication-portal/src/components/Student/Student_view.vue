@@ -10,6 +10,8 @@
                  <!-- <faculty-approved v-if="gotoComponent=='Approved'" > </faculty-approved> 
                 <faculty-rejected v-if="gotoComponent=='Rejected'" > </faculty-rejected>  -->
                 <student-dashboard v-if="gotoComponent=='Dashboard'" > </student-dashboard> 
+                <student-form v-if="gotoComponent=='Form'" > </student-form> 
+                <student-publication v-if="gotoComponent=='Publication'" > </student-publication> 
             </div>
             
            
@@ -18,13 +20,19 @@
 </template>
 <script>
 import StudentDashboard from './StudentDashboard.vue';
-
+import StudentForm from './StudentForm.vue';
+import StudentPublication from './StudentPublication.vue';
 export default {
-  components: { StudentDashboard},
+  components: { StudentDashboard,StudentForm,StudentPublication},
   data(){
       return {
           gotoComponent:'Dashboard',
       };
+  },
+    methods:{
+        childMessageRecieved(message){
+           this.gotoComponent=message
+        },
   }
     
 }

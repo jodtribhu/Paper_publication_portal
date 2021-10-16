@@ -1,104 +1,109 @@
 <template>
-
-<div class="full" :style="imagesselect()">
-     <base-dialog :show=showDialog class="dialogbox " title="Add Contributers" @close="opencloseDialog" >
-            <div class="student_name">
-                <p>Name:</p>
-                <input v-model="person_name" class="input_dialog" >
-            </div>
-            <div class="student_name">
-                <p>Roll Number :</p>
-                <input v-model="person_roll_no" class="input_dialog"   type="text">
-            </div>
-            <div class="student_name">
-                <p>Email :</p>
-                <input v-model="person_email" class="input_dialog"  type="text">
-            </div>
-            <button class="dialogaddbutton" @click="add_Contributer">Done</button>
-     </base-dialog>
-      <form-card class="form_padding" >
-         <div  class="form_flex">
-            <div class="centered_form">
-                <h1 class="form_header">Student Form</h1>
-                <div class="student_name" >
-                    <p>Name:</p>
-                    <input v-model="student_name"  type="text"  :class="[student_name_error ? 'error_div' : 'input_form']">
-                </div>
-                <div class="student_name">
-                    <p>Roll Number :</p>
-                    <input v-model="student_roll_no"  type="text" :class="[student_roll_no_error ? 'error_div' : 'input_form']">
-                </div>
-                <div class="student_name">
-                    <p>Registered email :</p>
-                    <input v-model="student_email"  type="email" :class="[student_email_error ? 'error_div' : 'input_form']">
-                </div>
-                <div class="student_name">
-                    <p>Add other contributers to the project if any:</p>
-                        <div v-for="Person in addPerson" :key="Person" class="student_add_contribution">
-                            <div class="contributer_section">
-                                <p class="contributer"><span class="contributer_span">Name : </span> {{Person.Name}}</p>
-                                <p class="contributer"><span class="contributer_span">Roll Number : </span>  {{Person.RollNo}}</p>
-                                <p class="contributer"><span class="contributer_span">Email : </span> {{Person.Email}}</p>
+<div class="margin_correct">
+    <form-outercard>
+        <div class="full" :style="imagesselect()" >
+            <base-dialog :show=showDialog class="dialogbox " title="Add Contributers" @close="opencloseDialog" >
+                    <div class="student_name">
+                        <p>Name:</p>
+                        <input v-model="person_name" class="input_dialog" >
+                    </div>
+                    <div class="student_name">
+                        <p>Roll Number :</p>
+                        <input v-model="person_roll_no" class="input_dialog"   type="text">
+                    </div>
+                    <div class="student_name">
+                        <p>Email :</p>
+                        <input v-model="person_email" class="input_dialog"  type="text">
+                    </div>
+                    <button class="dialogaddbutton" @click="add_Contributer">Done</button>
+            </base-dialog>
+            <form-card class="form_padding" >
+                <div  class="form_flex">
+                    <div class="centered_form">
+                        <h1 class="form_header">Student Form</h1>
+                        <div class="student_name" >
+                            <p>Name:</p>
+                            <input v-model="student_name"  type="text"  :class="[student_name_error ? 'error_div' : 'input_form']">
+                        </div>
+                        <div class="student_name">
+                            <p>Roll Number :</p>
+                            <input v-model="student_roll_no"  type="text" :class="[student_roll_no_error ? 'error_div' : 'input_form']">
+                        </div>
+                        <div class="student_name">
+                            <p>Registered email :</p>
+                            <input v-model="student_email"  type="email" :class="[student_email_error ? 'error_div' : 'input_form']">
+                        </div>
+                        <div class="student_name">
+                            <p>Add other contributers to the project if any:</p>
+                                <div v-for="Person in addPerson" :key="Person" class="student_add_contribution">
+                                    <div class="contributer_section">
+                                        <p class="contributer"><span class="contributer_span">Name : </span> {{Person.Name}}</p>
+                                        <p class="contributer"><span class="contributer_span">Roll Number : </span>  {{Person.RollNo}}</p>
+                                        <p class="contributer"><span class="contributer_span">Email : </span> {{Person.Email}}</p>
+                                    </div>
+                                    <div class="contributer_section_edit" >
+                                        <i class="far fa-edit"></i>
+                                    </div>
+                                    
+                                </div>
+                            <button @click="opencloseDialog" class="addbutton">Add</button>
+                        </div>
+                        <div class="student_name">
+                            <p>Publication Title :</p>
+                            <input v-model="student_publication_title"  type="text" :class="[student_publication_title_error ? 'error_div' : 'input_form']">
+                        </div>
+                        <div class="student_name " >
+                            <p>Publication Duration :</p>
+                            <div class="two_column">
+                                <div class="each_label_two_column">
+                                    <label>Start : </label>
+                                    <input v-model="student_publication_start"  type="date" :class="[student_publication_start_error ? 'error_div' : 'input_date']">
+                                </div>
+                                <div class="each_label_two_column">
+                                    <label>End: </label>
+                                    <input v-model="student_publication_end"  type="date" :class="[student_publication_end_error ? 'error_div' : 'input_date']">
+                                </div>
                             </div>
-                            <div class="contributer_section_edit" >
-                                <i class="far fa-edit"></i>
+                        </div>
+                        <div class="published_twocolumn">
+                            <label class="label_container">Published in a Journal
+                                <input @click="journal_check" class="check" type="checkbox">
+                            </label>
+                            <label>Presented in Conference
+                                <input @click="conference_check" class="check" type="checkbox">
+                            </label>
+                        </div>
+                        <transition name = "fade">
+                            <div v-if="journal_checked" class="student_name show_transition">
+                                <p>Journal Name :</p>
+                                <input v-model="student_journal_name"  type="text" :class="[student_journal_name_error ? 'error_div' : 'input_form']">
                             </div>
-                            
-                        </div>
-                    <button @click="opencloseDialog" class="addbutton">Add</button>
-                </div>
-                <div class="student_name">
-                    <p>Publication Title :</p>
-                    <input v-model="student_publication_title"  type="text" :class="[student_publication_title_error ? 'error_div' : 'input_form']">
-                </div>
-                <div class="student_name " >
-                    <p>Publication Duration :</p>
-                    <div class="two_column">
-                        <div class="each_label_two_column">
-                            <label>Start : </label>
-                            <input v-model="student_publication_start"  type="date" :class="[student_publication_start_error ? 'error_div' : 'input_date']">
-                        </div>
-                        <div class="each_label_two_column">
-                            <label>End: </label>
-                            <input v-model="student_publication_end"  type="date" :class="[student_publication_end_error ? 'error_div' : 'input_date']">
-                        </div>
-                    </div>
-                </div>
-                <div class="published_twocolumn">
-                    <label class="label_container">Published in a Journal
-                        <input @click="journal_check" class="check" type="checkbox">
-                    </label>
-                    <label>Presented in Conference
-                        <input @click="conference_check" class="check" type="checkbox">
-                    </label>
-                </div>
-                <transition name = "fade">
-                    <div v-if="journal_checked" class="student_name show_transition">
-                        <p>Journal Name :</p>
-                        <input v-model="student_journal_name"  type="text" :class="[student_journal_name_error ? 'error_div' : 'input_form']">
-                    </div>
-                </transition>
-                <transition name = "fade">
-                    <div v-if="conference_checked" class="student_name">
-                        <p>Conference Name :</p>
-                        <input v-model="student_conference_name"  type="text" :class="[student_conference_name_error ? 'error_div' : 'input_form']">
-                    </div>
-                </transition>
+                        </transition>
+                        <transition name = "fade">
+                            <div v-if="conference_checked" class="student_name">
+                                <p>Conference Name :</p>
+                                <input v-model="student_conference_name"  type="text" :class="[student_conference_name_error ? 'error_div' : 'input_form']">
+                            </div>
+                        </transition>
 
-            </div>
-        </div>   
-        <div class="button_position">
-            <button @click="submitForm()" class="submitButton">SUBMIT</button>
+                    </div>
+                </div>   
+                <div class="button_position">
+                    <button @click="submitForm()" class="submitButton">SUBMIT</button>
+                </div>
+                
+            </form-card>  
+            
         </div>
-        
-    </form-card>  
-    
+    </form-outercard>
 </div>
 
 </template>
 
 <script>
+import FormOutercard from '../layout/FormOutercard.vue';
 export default {
+     components: { FormOutercard},
     data(){
         return{
             student_name:'',
@@ -187,6 +192,11 @@ export default {
 </script>
 
 <style scoped>
+.margin_correct{
+
+    overflow: hidden;
+    
+}
 .error_div:focus{
     height:1.2rem;
     border: none;
@@ -332,20 +342,15 @@ export default {
         padding: 2px 10px 2px 2px;
     }
     .form_header{
+        margin:0;
         font-family: 'Montserrat', sans-serif;
         text-align:center;
     }
      .full{
-         height:100vh;
-         background-size: cover;
-     }
-
-     .form_padding{
-         top:1rem;
-         bottom:1rem;
-         overflow: scroll;
-         height:82vh;   
-
+        padding:2rem;
+        height:90%;
+        margin-bottom: 2rem;
+        border-radius:24px;
      }
      .form_flex{
          display:flex;
@@ -357,24 +362,6 @@ export default {
          font-size:1.2rem;
      }
 
-     ::-webkit-scrollbar {
-  width: 8px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f100; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888; 
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}
 .submitButton{
     background-color: #041d36;
   border-radius: 5px;
@@ -390,4 +377,5 @@ export default {
     display: flex;
     justify-content:flex-end;
 }
+
 </style>

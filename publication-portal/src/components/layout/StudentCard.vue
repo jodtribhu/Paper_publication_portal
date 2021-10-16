@@ -14,6 +14,7 @@
   margin: 2rem auto;
  background-color:rgba(143, 160, 165, 0.781);
   max-width: 90%;
+  overflow: hidden; 
 }
 
 </style>
