@@ -1,39 +1,39 @@
 <template>
     
         <div class="sidebar">
-            <div class="sidebar_item tab1">
+            <div :class="{ 'shadow1' : tabbed_view === 'Dashboard'}"  @click="executeDashboard" class="sidebar_item tab1">
                 <div class="sidebar_icon">
                     <i class="fas fa-user-alt"></i>
                 </div>
                 <div class="sidebar_text">
-                     <p @click="executeDashboard">Dashboard</p>
+                     <p >Dashboard</p>
                 </div>     
             </div>
             <hr>
-             <div class="sidebar_item tab2">
+             <div :class="{ 'shadow2' : tabbed_view === 'Publication'}" @click="executePublication" class="sidebar_item tab2">
                 <div class="sidebar_icon">
                      <i class="fas fa-scroll"></i>
                 </div>
                 <div class="sidebar_text">
-                     <p @click="executePublication">Student Publications</p>
+                     <p >Student Publications</p>
                 </div>     
             </div>
             <hr>
-            <div class="sidebar_item tab3">
+            <div :class="{ 'shadow3' : tabbed_view === 'Accepted'}"  @click="executeApproved" class="sidebar_item tab3">
                 <div class="sidebar_icon">
                      <i class="far fa-check-circle"></i>
                 </div>
                 <div class="sidebar_text">
-                     <p @click="executeApproved">Approved Publications</p>
+                     <p>Approved Publications</p>
                 </div>     
             </div>
             <hr>
-            <div class="sidebar_item tab4">
+            <div :class="{ 'shadow4' : tabbed_view === 'Rejected'}"  @click="executeRejected" class="sidebar_item tab4">
                 <div class="sidebar_icon">
                      <i class="far fa-times-circle"></i>
                 </div>
                 <div class="sidebar_text">
-                     <p  @click="executeRejected">Rejected Publications</p>
+                     <p  >Rejected Publications</p>
                 </div>     
             </div>
             <div>                
@@ -45,6 +45,7 @@
 
 <script>
 export default {
+        props: ['tabbed_view'],
         methods:{
         executePublication(){
             this.$emit('messageFromChild','Publication')
@@ -118,6 +119,22 @@ hr{
      background-color:#352f30c0;
 }
 .tab4:hover{
+     background-color:#352f30c0;
+      border-radius: 0px 0px 24px 0px;
+}
+.shadow1{
+     background-color:#352f30c0;
+      border-radius: 0px 24px 0 0px;
+}
+.shadow2{
+     background-color:#352f30c0;
+     border-radius: 0px 0px 0 0px;
+}
+
+.shadow3{
+     background-color:#352f30c0;
+}
+.shadow4{
      background-color:#352f30c0;
       border-radius: 0px 0px 24px 0px;
 }

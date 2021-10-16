@@ -9,6 +9,8 @@ import TheHeader from './components/layout/TheHeader.vue';
 import FacultyHeader from './components/layout/FacultyHeader.vue';
 import SideBar from './components/layout/Sidebar.vue';
 import DashboardCard from './components/layout/DashboardCard.vue';
+import AdminCard from './components/layout/AdminCard.vue';
+
 
 const app=createApp(App);
 app.component('form-card',Formcard);
@@ -19,6 +21,7 @@ app.component('the-header',TheHeader);
 app.component('faculty-header',FacultyHeader);
 app.component('side-bar',SideBar);
 app.component('dashboard-card',DashboardCard);
+app.component('admin-card',AdminCard);
 
 app.use(router);
 app.mount('#app');

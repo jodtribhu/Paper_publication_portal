@@ -3,7 +3,7 @@
         <faculty-header></faculty-header>
         <div class="faculty_display">
             <div class="side">
-                <side-bar @messageFromChild="childMessageRecieved" ></side-bar>  
+                <side-bar :tabbed_view="gotoComponent" @messageFromChild="childMessageRecieved" ></side-bar>  
             </div>
             <div class="main">
                  <faculty-publication v-if="gotoComponent=='Publication'" > </faculty-publication> 

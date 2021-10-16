@@ -4,7 +4,7 @@
             <h1>
               <div class="logo_container">
                 <img class="logo" :src="require(`../../assets/images/amrita-logo.png`)" alt="">
-                <router-link to="/" class="logo_text"> Paper Publication Portal </router-link>
+                <router-link to="/" class="logo_text"> Amrita Paper Publication Portal </router-link>
               </div>
 
             </h1>

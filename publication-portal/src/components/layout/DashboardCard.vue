@@ -11,7 +11,8 @@
   border-radius: 0 24px 24px 24px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);
   padding: 0;
-  margin: 0 auto;
+
+  margin-left:3.5rem;
   background-color: #f6f6f6;
   max-width: 90%;
 }

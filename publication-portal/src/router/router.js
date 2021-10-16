@@ -5,15 +5,17 @@ import Login from '../components/Authentication/Login.vue';
 import ForgotPassword from '../components/Authentication/ForgotPassword.vue';
 
 import Sidebar from '../components/layout/Sidebar.vue';
+import AdminView from '../components/Admin/Admin_view.vue';
 
 const router=createRouter({
     history:createWebHistory(),
     routes:[
-        {path:'/',redirect:'/home'},
-        {path:'/home',component:StudentForm},
+        {path:'/',redirect:'/login'},
+        {path:'/studentform',component:StudentForm},
         {path:'/faculty',component:FacultyView},
         {path:'/login',component:Login},
         {path:'/ForgotPassword',component:ForgotPassword},
+        {path:'/admin',component:AdminView},
         {path:'/trial',component:Sidebar},
     ]
 });
