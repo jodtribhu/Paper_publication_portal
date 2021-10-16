@@ -10,7 +10,10 @@ import FacultyHeader from './components/layout/FacultyHeader.vue';
 import SideBar from './components/layout/Sidebar.vue';
 import DashboardCard from './components/layout/DashboardCard.vue';
 import AdminCard from './components/layout/AdminCard.vue';
-
+import StudentHeader from './components/layout/StudentHeader.vue';
+import StudentSidebar from './components/layout/StudentSidebar.vue';
+import StudentCard from './components/layout/StudentCard.vue';
+import VueApexCharts from "vue3-apexcharts";
 
 const app=createApp(App);
 app.component('form-card',Formcard);
@@ -22,6 +25,9 @@ app.component('faculty-header',FacultyHeader);
 app.component('side-bar',SideBar);
 app.component('dashboard-card',DashboardCard);
 app.component('admin-card',AdminCard);
-
+app.component('student-header',StudentHeader);
+app.component('student-sidebar',StudentSidebar);
+app.component('student-card',StudentCard);
 app.use(router);
+app.use(VueApexCharts);
 app.mount('#app');

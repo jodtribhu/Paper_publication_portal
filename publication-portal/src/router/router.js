@@ -6,6 +6,7 @@ import ForgotPassword from '../components/Authentication/ForgotPassword.vue';
 
 import Sidebar from '../components/layout/Sidebar.vue';
 import AdminView from '../components/Admin/Admin_view.vue';
+import StudentView from '../components/Student/Student_view.vue';
 
 const router=createRouter({
     history:createWebHistory(),
@@ -16,6 +17,7 @@ const router=createRouter({
         {path:'/login',component:Login},
         {path:'/ForgotPassword',component:ForgotPassword},
         {path:'/admin',component:AdminView},
+        {path:'/student',component:StudentView},
         {path:'/trial',component:Sidebar},
     ]
 });
