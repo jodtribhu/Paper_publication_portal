@@ -1,7 +1,7 @@
 <template>
     <div  class="card">
         <em @click="deletestudent" class="fas  fa-user-times"></em>
-        <h4><em class="far fa-address-card"> </em>   Student  Id: <span>{{id}}</span></h4>
+        <h4><em class="far fa-address-card"> </em>   Student  Name: <span>{{id}}</span></h4>
         <h4><em class="far fa-address-book"></em>  Student Roll Number: <span>{{rollno}}</span></h4>
         <p class="left">Created At : {{ created_at }}  </p>
     </div>
