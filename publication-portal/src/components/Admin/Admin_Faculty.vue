@@ -1,13 +1,15 @@
 <template>
     <admin-card>
-        <h1>Faculty List</h1>
-        <div class="button_row">
-            <button>Add New Faculty</button>
-            <input class="searchbar" type="text" v-model="searchkey" placeholder="Search">
-        </div>
-        <faculty-item></faculty-item>
-        <faculty-item></faculty-item>
-        <faculty-item></faculty-item>
+        
+            <h1>Faculty List</h1>
+            <div class="button_row">
+                <button>Add New Faculty</button>
+                <input class="searchbar" type="text" v-model="searchkey" placeholder="Search">
+            </div>
+            <faculty-item></faculty-item>
+            <faculty-item></faculty-item>
+            <faculty-item></faculty-item>
+        
     </admin-card>
 </template>
 
@@ -20,6 +22,14 @@ export default {
 </script>
 
 <style scoped>
+.faculty_Card {
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);
+  padding: 1rem;
+  margin:auto;
+  background-color: #f6f6f6;
+  width: 70%;
+}
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 h1{
     font-family: 'Montserrat', sans-serif;

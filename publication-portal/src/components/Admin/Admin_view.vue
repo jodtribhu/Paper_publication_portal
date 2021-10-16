@@ -1,7 +1,7 @@
 <template>
     <div>
         <the-header></the-header>
-        <!-- <base-card> -->
+        <div class="center">
             <div class="tabbed_view">
                 <div class="tabbed_view_flex">
                     <div :class="{ 'shadow1' : gotoComponentDashboard === 'Faculty'}" @click="executeFacultyTab" class="tabbed_view_flex_item tab1" >
@@ -25,7 +25,7 @@
             <admin-student v-if="gotoComponentDashboard=='Student'"></admin-student>
 
 
-        <!-- </base-card> -->
+        </div>
     </div>
 
 </template>
@@ -53,6 +53,12 @@ export default {
 </script>
 
 <style scoped>
+.center{
+   
+    width:70%;
+    margin:2rem auto;
+   
+}
 .fa-chalkboard-teacher{
     padding-top:1rem;
    font-size:1.5rem; 
@@ -65,8 +71,8 @@ export default {
     font-size:1.5rem;
 }
 .tabbed_view{
-    max-width:35%;
-    margin-left:3.5rem;
+    max-width:38%;
+    
      margin-top:2rem;
     padding-bottom:0;
 }
