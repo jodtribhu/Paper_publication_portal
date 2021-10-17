@@ -42,7 +42,7 @@
         </div>
         <div class="buttons_position">
               <button class="acceptButton" @click="opencloseAcceptDialog">Accept</button>
-              <button class="declineButton"  @click="opencloseDeclineDialog">Decline</button>
+             
         </div>
      </base-dialog>
      <base-dialog :show=showDeclineDialog class="dialogbox " title="Accept" @close="opencloseDeclineDialog" >
