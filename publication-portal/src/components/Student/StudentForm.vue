@@ -21,7 +21,7 @@
                 <div  class="form_flex">
                     <div class="centered_form">
                         <h1 class="form_header">Student Form</h1>
-                        <div class="student_name" >
+                        <!-- <div class="student_name" >
                             <p>Name:</p>
                             <input v-model="student_name"  type="text"  :class="[student_name_error ? 'error_div' : 'input_form']">
                         </div>
@@ -32,7 +32,7 @@
                         <div class="student_name">
                             <p>Registered email :</p>
                             <input v-model="student_email"  type="email" :class="[student_email_error ? 'error_div' : 'input_form']">
-                        </div>
+                        </div> -->
                         <div class="student_name">
                             <p>Add other contributers to the project if any:</p>
                                 <div v-for="Person in addPerson" :key="Person" class="student_add_contribution">

@@ -1,9 +1,28 @@
 <template>
     <admin-card>
-        
+            <base-dialog :show=showDialog class="dialogbox " title="Add New Faculty" @close="opencloseDialog" >
+                    <div class="admin_dialog">
+                        <div class="admin_item">
+                            <p class="label_dialog" >Faculty Name:</p>
+                            <input v-model="person_name" class="input_dialog" >
+                        </div>
+                        <div class="admin_item">
+                            <p class="label_dialog">Faculty Email:</p>
+                            <input v-model="person_name" type="email"  class="input_dialog" >
+                        </div>
+                        <div class="admin_item">
+                            <p class="label_dialog">Password :</p>
+                            <input v-model="person_email" class="input_dialog" >
+                        </div>
+                    </div>
+
+                    <button class="dialogaddbutton" @click="add_Contributer">Done</button>
+            </base-dialog>
+
+
             <h1>Faculty List</h1>
             <div class="button_row">
-                <button>Add New Faculty</button>
+                <button @click="opencloseDialog">Add New Faculty</button>
                 <input class="searchbar" type="text" v-model="searchkey" placeholder="Search">
             </div>
             <faculty-item></faculty-item>
@@ -17,11 +36,54 @@
 import FacultyItem from './FacultyItem.vue';
 export default {
     components: {FacultyItem},
+    data(){
+        return{
+            showDialog:false,
+        }
+    },
+    methods:{
+        opencloseDialog(){
+            this.showDialog=!this.showDialog;           
+        },
+    }
     
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+.label_dialog{
+    width:40%;
+}
+.input_dialog{
+    margin-top:1rem;
+    width:60%;
+    height:1.8rem;
+}
+.admin_dialog{
+    padding:1rem 0 1rem 0;
+}
+.admin_item{
+         font-family: 'Montserrat', sans-serif;
+         font-size:1.2rem;
+         display: flex;
+         width:90%;
+         padding:0;
+         
+}    
+.dialogaddbutton{
+        text-align:center;
+        padding: 0.75rem 1rem;
+        font-family: 'Montserrat', sans-serif;
+        background-color: #551524;
+        border: 1px solid #551524;;
+        color: white;
+        cursor: pointer;
+        border-radius: 10px;
+        position:absolute; 
+        bottom:10px;
+        left:20px;
+    } 
 .faculty_Card {
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);

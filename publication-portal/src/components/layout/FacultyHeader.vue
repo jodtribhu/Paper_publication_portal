@@ -42,6 +42,7 @@ export default {
 .logo_text{
   color:white;
   font-family: 'Noto Sans Mono', monospace;
+  font-weight: normal;
   padding-left: 2rem;
 }
 

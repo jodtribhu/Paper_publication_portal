@@ -5,6 +5,7 @@
             <div class="side">
                 <student-sidebar :tabbed_view="gotoComponent" @messageFromChild="childMessageRecieved" ></student-sidebar>  
             </div>
+            
             <div class="main">
                  <!-- <faculty-publication v-if="gotoComponent=='Publication'" > </faculty-publication>  -->
                  <!-- <faculty-approved v-if="gotoComponent=='Approved'" > </faculty-approved> 
@@ -54,4 +55,5 @@ export default {
     height: 100%;
     width:100%;  
 }
+
 </style>

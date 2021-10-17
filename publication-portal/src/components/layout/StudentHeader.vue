@@ -43,6 +43,7 @@ export default {
   color:white;
   font-family: 'Noto Sans Mono', monospace;
   padding-left: 2rem;
+  font-weight: normal;
 }
 
 

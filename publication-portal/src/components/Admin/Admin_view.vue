@@ -1,6 +1,10 @@
 <template>
     <div>
         <the-header></the-header>
+        <div class="style_font">
+            <p class="letter" > <span class="title">A</span>D<span class="title">M</span>I<span class="title">N</span> </p>
+        </div>
+
         <div class="center">
             <div class="tabbed_view">
                 <div class="tabbed_view_flex">
@@ -53,6 +57,32 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Comfortaa:wght@700&family=Noto+Sans+Mono:wght@300;900&family=Oswald:wght@700&family=Roboto:wght@100;900&display=swap');
+.title{
+    color:#682132;
+    padding:0;
+    margin:0;
+}
+
+.letter{
+    padding:0;
+     color:#551524;
+    
+}
+.style_font{
+    width:20%;
+    margin:1rem auto;
+    font-family: 'Oswald', sans-serif;
+    background-color:rgba(184, 174, 174, 0.781);
+    /* padding:1rem; */
+    border-radius:24px;
+    font-size:3.5rem;
+    letter-spacing: 0.4rem;
+    font-weight: 700;
+    border-width:0.5rem;
+    border-style:hidden hidden solid hidden  ;
+    text-align:center;
+}
 .center{
    
     width:70%;
