@@ -163,6 +163,7 @@ div.input-block input:valid + span.placeholder{
   color: white;
   text-transform: uppercase;
   font-family: 'Noto Sans Mono', monospace;
+  font-weight: normal;
   
 }
 input{

@@ -24,10 +24,10 @@
                 <p class="eli_result constsize2">Distinction</p>
             </div>
             <div class="flex-ele ">
-                <p class="constsize"><span class="centeralign">Grace Marks:</span></p>
-                <p class="gra_result constsize2">NIL</p>
+                <p class="constsize"><span class="centeralign">Submitted On:</span></p>
+                <p class="gra_result constsize2">Sample Date</p>
             </div>
-            <button class="button">Open PDF</button>                   
+            <button class="button">Claim</button>                   
         </div>
     </div>
 </template>
@@ -124,9 +124,7 @@ export default {
 .eli_result{
     color:green;
 }
-.gra_result{
-    color:blue;
-}
+
 .centeralign{
     text-align: left;
     width: 45%;
