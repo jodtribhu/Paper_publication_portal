@@ -7,11 +7,9 @@
       <table>
               <tr>
                   <th> Student Name</th>
-                  <th> Student Roll Number</th>
                   <th class="title_size"> Publication Title</th>
                   <th class="m_size"> Team Size</th>
-                  <th class="m_size"> Mark</th>
-                  <th> Details</th>
+                  <th class="details_size"> Details</th>
               </tr>
         </table>
       <p v-for="publication in x" :key="publication._id">
@@ -44,6 +42,7 @@ start:"01-01-2021",end:"10-08-2021",journal:"true",conference:"false",jname:"Sci
       cname:null,
       teamsize:4,
       mark:8,
+      gdrive:'https://googledrive/.com',
       teammates:"Sachin Sharma, Rohit Gupta,Virat Tendulkar"},
       {name:"Ashwin K",
         rollNo:"CB.EN.U4CSE18307",
@@ -107,6 +106,9 @@ start:"01-01-2021",end:"10-08-2021",journal:"true",conference:"false",jname:"Sci
 <style scoped>
 .m_size{
   width:10%;
+}
+.details_size{
+  width:5%;
 }
 .title_size{
     width:40%;

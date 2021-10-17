@@ -5,6 +5,12 @@
                 <p> <span class="boldit">Student Email</span>  : <span>{{publication_record.email}}</span> </p>
             </div>
             <div class="student_name">
+                <p> <span class="boldit">Student Roll Number</span>  : <span>{{publication_record.rollNo}}</span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Publication Link</span>  : <span><a href="publication_record.gdrive">{{publication_record.gdrive}}</a></span> </p>
+            </div>
+            <div class="student_name">
                 <p><span class="boldit">Journal Name </span> : <span v-if="publication_record.jname!=''">{{publication_record.jname}}</span>
                 <span v-if="publication_record.jname==null">: Not in a Journal</span>
                 </p>
@@ -20,18 +26,43 @@
                 <span v-if="publication_record.teammates==null">: Himself</span>   
                 </p>
             </div>
-       
-       
+            <div class="buttons_position">
+              <button class="acceptButton" @click="opencloseAcceptDialog">Accept</button>
+              <button class="declineButton" @click="opencloseDeclineDialog">Decline</button>
+            </div>
      </base-dialog>
+     <base-dialog :show=showAcceptDialog class="dialogbox " title="Accept" @close="opencloseAcceptDialog" >
+        <div class="remark_container">
+            <p class="label_accept">Enter Your Remarks: </p>
+            <textarea class="textarea_accept" ></textarea>
+        </div>
+        <div class="accept_container">
+            <p class="label_accept">Enter Your Marks: </p>
+            <input class="input_accept" type="text">
+        </div>
+        <div class="buttons_position">
+              <button class="acceptButton" @click="opencloseAcceptDialog">Accept</button>
+              <button class="declineButton"  @click="opencloseDeclineDialog">Decline</button>
+        </div>
+     </base-dialog>
+     <base-dialog :show=showDeclineDialog class="dialogbox " title="Accept" @close="opencloseDeclineDialog" >
+        <div class="remark_container">
+            <p class="label_accept">Enter Your Remarks: </p>
+            <textarea class="textarea_accept" ></textarea>
+        </div>
+        <div class="buttons_position">
+              <button class="declineButton"  @click="opencloseDeclineDialog">Decline</button>
+        </div>
+     </base-dialog>
+
+
         <div >
             <table >
                 <tr>
                     <td> {{publication_record.name}}</td>
-                    <td> {{publication_record.rollNo}}</td>
                     <td class="title_size">  {{publication_record.ptitle}}</td>
                     <td class="m_size"> {{publication_record.teamsize}}</td>
-                    <td class="m_size"> {{publication_record.mark}}</td>
-                    <td @click="opencloseDialog"> <button class="detailsbutton">Show Details</button> </td>
+                    <td class="details_size" @click="opencloseDialog"> <button class="detailsbutton">Show Details</button> </td>
                 </tr>
             </table>
 
@@ -50,12 +81,23 @@ export default {
      data(){
         return{
             showDialog:false,
+            showAcceptDialog:false,
+            showDeclineDialog:false
+
         };
      },
     methods:{
         opencloseDialog(){
             this.showDialog=!this.showDialog;           
         },
+        opencloseAcceptDialog(){
+            this.showAcceptDialog=!this.showAcceptDialog;  
+            this.showDialog=false;  
+        },
+        opencloseDeclineDialog(){
+            this.showDeclineDialog=!this.showDeclineDialog;  
+            this.showDialog=false; 
+        }
    }
 }
 </script>
@@ -66,8 +108,64 @@ export default {
 .title_size{
     width:40%;
 }
+.label_accept{
+  font-weight: bold;
+  font-size: 1rem;
+}
+.textarea_accept{
+  width:90%;
+  margin-top:0.8rem;
+  height:5rem;
+}
+.input_accept{
+  width:5%;
+  margin-left:1.5rem;
+  font-size:1.2rem;
+  margin-top:0.8rem;
+  height:1.5rem;
+}
+.accept_container{
+  display:flex;
+  justify-content:flex-start;
+
+}
+.remark_container{
+  width:100%;
+
+}
+.buttons_position{
+  position:absolute;
+  bottom:0;
+  /* background-color: orangered; */
+}
+.acceptButton{
+  background-color: #08441a;
+  margin-right:1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #ffffffdc;
+  font-size: 1rem;
+  padding: 12px 20px;
+  text-shadow: 0px 1px 0px #558ac0;
+  border:none;
+  font-family: 'Montserrat', sans-serif;
+}
+.declineButton{
+  background-color: #6d0707;
+  border:none;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #ffffffdc;
+  font-size: 1rem;
+  padding: 12px 20px;
+  text-shadow: 0px 1px 0px #558ac0;
+  font-family: 'Montserrat', sans-serif;
+}
 .m_size{
   width:10%;
+}
+.details_size{
+  width:5%;
 }
 .boldit{
     font-weight: bold;

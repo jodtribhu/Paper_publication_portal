@@ -135,12 +135,14 @@ export default {
 .constsize{
         font-family: 'Montserrat', sans-serif;
     font-weight: bold;
+    font-size:1.12rem;
     display: flex;
     justify-content: flex-end;
     width:50%;
 }
 .constsize2{
       font-family: 'Montserrat', sans-serif;
+        font-size:1.12rem;
     width:50%;
     text-align: left;
 }
