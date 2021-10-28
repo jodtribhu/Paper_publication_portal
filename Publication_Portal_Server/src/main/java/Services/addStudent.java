@@ -19,6 +19,7 @@ import utilities.Database;
 public class addStudent extends HttpServlet{
 	public void doPost(HttpServletRequest req,HttpServletResponse res)
 	{
+		utilities.Database d=new utilities.Database();
 	    try{
 	        StringBuilder sb = new StringBuilder();
 	        BufferedReader br = req.getReader();
@@ -29,10 +30,11 @@ public class addStudent extends HttpServlet{
 	        }
 	        JSONObject jObj = new JSONObject(sb.toString());
 	        String stuname = jObj.getString("stu_name");
-	        String stuemail= jObj.getString("stu_email");
+	        String stu_roll= jObj.getString("stu_roll");
 	        String stupassword = jObj.getString("stu_pass");
+	       
+	        d.addStudent(stuname,stu_roll,stupassword);
 	        
-	        System.out.println("stu name "+stuname+" stuemail "+stuemail +" stupassword "+stupassword);
 	        
 	        JSONObject json = new JSONObject();
 	        res.setContentType("application/json");

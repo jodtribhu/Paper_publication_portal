@@ -26,7 +26,7 @@
                 <input class="searchbar" type="text" v-model="searchkey" placeholder="Search">
             </div>
             <p v-for="faculty in list_faculties" :key="faculty.fID">
-                <faculty-item :id=faculty.fID :email=faculty.email :created_at=faculty.created_at :modified_at=faculty.modified_at></faculty-item>
+                <faculty-item  @messageFromStudentChild="childMessageRecieved" :lid=faculty.lid  :id=faculty.fID :email=faculty.email :created_at=faculty.created_at :modified_at=faculty.modified_at></faculty-item>
             </p>
             
 
@@ -53,6 +53,11 @@ export default {
     methods:{
         opencloseDialog(){
             this.showDialog=!this.showDialog;           
+        },
+        childMessageRecieved(message){
+          if(message=="valueChanged"){
+            this.loadfaculties();
+          }
         },
         async add_Faculty(){
             try {

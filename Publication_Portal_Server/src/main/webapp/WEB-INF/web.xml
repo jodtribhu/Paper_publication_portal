@@ -82,6 +82,14 @@
 		<url-pattern>/addpublication </url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>deleteAdminFaculty</servlet-name>
+	<servlet-class>Services.deleteAdminFaculty</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>deleteAdminFaculty</servlet-name>
+		<url-pattern>/deleteadminfaculty </url-pattern>
+	</servlet-mapping>
 
 
 </web-app>

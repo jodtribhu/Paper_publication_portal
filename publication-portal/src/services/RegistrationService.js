@@ -12,6 +12,9 @@ export default{
     getFaculty(){
         return Api().get('getadminfaculty');
     },
+    deleteFaculty(data){
+        return Api().post('deleteadminfaculty',data);
+    }
     
 }
 

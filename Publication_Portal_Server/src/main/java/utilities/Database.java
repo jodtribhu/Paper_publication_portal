@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Database  {
@@ -87,15 +89,62 @@ public class Database  {
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
 			   Statement stmt=con.createStatement();  
-			   String sql="Insert into faculty(Name,PhoneNO,DEPARTMENT,EMAIL,L_ID) VALUES ('"+name+ "',"+ "'None'" +","+ "'None'" + ",'"+email+"',"+"null"+");";
-			   System.out.println(sql);
+			   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+			   LocalDateTime now = LocalDateTime.now(); 
+			   String ldate=dtf.format(now);
+			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY) VALUES ('"+name+ "','"+ pass+"',"+ "'sample_salt'" + ","+"'sample_hash','"+ldate+"','"+ldate+"',"+"'Yes"+"');";
 			   stmt.executeUpdate(sql); 
+			   
+			   String sql4="Select * from login where USERNAME='"+name+"'";
+			   System.out.println(sql4);
+			   ResultSet rs=stmt.executeQuery(sql4);
+			   int login_id=-1;
+			   while(rs.next()) {
+				    login_id=rs.getInt(1);
+			   }
+			   
+			   String sql3="Insert into faculty(Name,PhoneNO,IDNO,DEPARTMENT,EMAIL,L_ID,CREATEDAT,DESIGNATION,CAMPUS) VALUES ('"+"Enter Name"+ "','"+ "Enter Phone "+"','"+name+ "',"+"'Enter department','"+email+"','"+login_id+"','"+ldate+"','"+"Enter Designation','"+"Enter Campus"+"');";
+			   stmt.executeUpdate(sql3); 
+			   System.out.println(sql3);
 			  }
 		   	catch(Exception e){ 
 		   		System.out.println(e);
 		   	} 
 		 
 	   }
+	   
+	   
+	   public void addStudent(String stuname,String stueroll,String stupassword)  {
+		   
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement();  
+			   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+			   LocalDateTime now = LocalDateTime.now(); 
+			   String ldate=dtf.format(now);
+			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY) VALUES ('"+stuname+ "','"+ stupassword+"',"+ "'sample_salt'" + ","+"'sample_hash','"+ldate+"','"+ldate+"',"+"'No"+"');";
+			   stmt.executeUpdate(sql); 
+			   
+			   String sql4="Select * from login where USERNAME='"+stuname+"'";
+			   System.out.println(sql4);
+			   ResultSet rs=stmt.executeQuery(sql4);
+			   int login_id=-1;
+			   while(rs.next()) {
+				    login_id=rs.getInt(1);
+			   }
+			   
+			   String sql3="Insert into student(Name,RollNO,EMAIL,PRE_RECORD,GRACEMARKS,L_ID,CAMPUS,SEX,PHONENO,DEPARTMENT) VALUES ('"+stuname+ "','"+ stueroll+"','"+"Enter Email"+ "',"+0+",'"+"0"+"',"+login_id+",'Enter Campus"+"','"+"Enter Sex"+"','"+"Enter Phone No','"+"Enter department"+"');";
+			   System.out.println(sql3);
+			   stmt.executeUpdate(sql3); 
+			   
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		 
+	   }
+	   
 	   public void addPublication(String student_publication_title,String student_publication_start,String student_publication_link,
 			   String student_journal_name,String student_conference_name,String student_publication_end,String student_publication_submitdate,
 			   String student_publication_isimp,String student_publication_issurv,String student_publication_isconf,String student_publication_isjor){   
@@ -153,6 +202,21 @@ public class Database  {
 		   		System.out.println(e);
 		   	} 
 		   return rs2; 
+		 
+	   }
+	   public void deleteAdminFaculty(int fid,int lid)  {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   
+			   stmt.executeUpdate("DELETE FROM login WHERE L_ID="+lid); 
+			   stmt.executeUpdate("DELETE FROM faculty WHERE F_ID="+fid); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		  
 		 
 	   }
 	   

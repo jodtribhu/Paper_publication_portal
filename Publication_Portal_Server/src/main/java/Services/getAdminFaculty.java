@@ -22,11 +22,13 @@ public class getAdminFaculty extends HttpServlet{
 			while(fs.next()) {
 					JSONObject obj = new JSONObject(); 
 					int loginid=fs.getInt(1);
+					obj.put("lid",fs.getInt(1));
 					obj.put("rollNo",fs.getString(2));
 					obj.put("created_at",fs.getString(6));
 					obj.put("modified_at",fs.getString(7));
 					
 					ResultSet fs2=d.getEachFaculty(loginid);
+
 					fs2.next();
 					obj.put("fID",fs2.getInt(1));
 					obj.put("name",fs2.getString(2));

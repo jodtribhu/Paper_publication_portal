@@ -1,15 +1,23 @@
 <template>
     <div  class="card">
+
         <em @click="deleteuser" class="fas  fa-user-times"></em>
-        <h4><em class="far fa-id-badge"> </em>   Faculty Id: <span>{{id}}</span></h4>
+        <h4><em class="far fa-id-badge"> </em>   Faculty Id: <span>{{id}} </span></h4>
         <h4><em class="far fa-envelope"></em> Faculty Email: <span>{{ email }}</span></h4>
         <p class="left">Created At : {{ created_at }} <span class="right">Modified At: {{ modified_at }}</span> </p>
     </div>
 </template>
 
 <script>
+import RegisterService from '@/services/RegistrationService.js';
 export default {
-    props:['id','email','created_at','modified_at'],
+    props:['id','email','created_at','modified_at','lid'],
+    methods:{
+      async deleteuser(){
+           await RegisterService.deleteFaculty({"fid":this.id,"lid":this.lid});
+           this.$emit('messageFromStudentChild','valueChanged')
+      },
+    }
 }
 </script>
 

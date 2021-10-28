@@ -12,7 +12,7 @@
                         </div>
                         <div class="admin_item">
                             <p class="label_dialog">Roll Number:</p>
-                            <input v-model="stu_email" class="input_dialog" >
+                            <input v-model="stu_roll" class="input_dialog" >
                         </div>
                         <div class="admin_item">
                             <p class="label_dialog">Password :</p>
@@ -20,14 +20,14 @@
                         </div>
                    </div>
 
-                    <button class="dialogaddbutton" @click="get_Student()">Done</button>
+                    <button class="dialogaddbutton" @click="add_Student()">Done</button>
             </base-dialog>
 
 
             <input class="searchbar" type="text" v-model="searchkey" placeholder="Search">
         </div>
         <p v-for="student in list_students" :key="student.sID">
-                <student-item :id="student.sID" :rollno="student.rollNo"  :name="student.name" :created_at="student.created_at" :modified_at="student.modified_at"></student-item>
+                <student-item  @messageFromStudentChild="childMessageRecieved" :id="student.sID" :rollno="student.rollNo"  :name="student.name" :created_at="student.created_at" :modified_at="student.modified_at"></student-item>
 
         </p>
     </admin-card>
@@ -51,10 +51,16 @@ export default {
         opencloseDialog(){
             this.showDialog=!this.showDialog;           
         },
+        childMessageRecieved(message){
+          if(message=="valueChanged"){
+            this.loadstudents();
+          }
+        },
         async add_Student(){
             try {
-                const response =await RegisterService.addStudent({stu_name:this.stu_name,stu_email:this.stu_email,stu_pass:this.stu_pass});
+                const response =await RegisterService.addStudent({stu_name:this.stu_name,stu_roll:this.stu_roll,stu_pass:this.stu_pass});
                  this.showDialog=!this.showDialog;
+                 this.loadstudents();
                 console.log(response.data);
                 if(response.status==200){
                     this.loadstudents();
