@@ -74,7 +74,7 @@ export default {
             try {
                   const response =await RegisterService.getFaculty()
             
-                  this.list_faculties=response.data.f;
+                  this.list_faculties=response.data.adminfaculty;
             } catch (error) {
                 console.log(error);
               

@@ -1,15 +1,15 @@
 <template>
     <div  class="card">
         <em @click="deletestudent" class="fas  fa-user-times"></em>
-        <h4><em class="far fa-address-card"> </em>   Student  Name: <span>{{id}}</span></h4>
+        <h4><em class="far fa-address-card"> </em>   Student  Name: <span>{{name}}</span></h4>
         <h4><em class="far fa-address-book"></em>  Student Roll Number: <span>{{rollno}}</span></h4>
-        <p class="left">Created At : {{ created_at }}  </p>
+        <p class="left">Created At : {{ created_at }} <span class="right">Modified At: {{ modified_at }}</span> </p>
     </div>
 </template>
 
 <script>
 export default {
-    
+    props:['id','name','created_at','modified_at','rollno'],
 }
 </script>
 

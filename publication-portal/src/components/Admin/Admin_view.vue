@@ -1,9 +1,9 @@
 <template>
     <div>
         <the-header></the-header>
-        <div class="style_font">
+        <!-- <div class="style_font">
             <p class="letter" > <span class="title">A</span>D<span class="title">M</span>I<span class="title">N</span> </p>
-        </div>
+        </div> -->
 
         <div class="center">
             <div class="tabbed_view">

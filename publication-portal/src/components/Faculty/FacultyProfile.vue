@@ -8,16 +8,12 @@
                 <p class="each_item_answer"> {{faculty.name}}</p>
             </div>
             <div  class="each_item"> 
-                <p class="each_item_label">Faculty Roll Number:</p>
-                <p  class="each_item_answer"> Sample Faculty Roll</p>
-            </div>
-            <div  class="each_item"> 
-                <p class="each_item_label">Gender:</p>
-                <p  class="each_item_answer"> Sample Gender</p>
+                <p class="each_item_label">Faculty ID Number:</p>
+                <p  class="each_item_answer"> {{faculty.IDNO}}</p>
             </div>
             <div  class="each_item"> 
                 <p class="each_item_label">Campus:</p>
-                <p  class="each_item_answer"> Sample Campus</p>
+                <p  class="each_item_answer"> {{faculty.campus}}</p>
             </div>
         </div>
 
@@ -28,7 +24,7 @@
             </div>
             <div  class="each_item"> 
                 <p class="each_item_label">Designation:</p>
-                <p  class="each_item_answer"> Sample Designation</p>
+                <p  class="each_item_answer"> {{faculty.designation}}</p>
             </div>
             <div  class="each_item"> 
                 <p class="each_item_label">Email:</p>

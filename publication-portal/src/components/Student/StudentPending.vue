@@ -1,10 +1,10 @@
 <template>
     <base-card class="bg_color">
-        <h2>Pending Publication</h2>
-        <student-pending-card></student-pending-card>
-        <student-pending-card></student-pending-card>
-        <student-pending-card></student-pending-card>
-        <student-pending-card></student-pending-card>
+        <h2 >Pending Publication</h2>
+        <p @click="check()" v-for="each_pending in pending" :key="each_pending.PID">
+          <student-pending-card :pendingdetails="each_pending"></student-pending-card>
+        </p>
+
     </base-card>
 </template>
 
@@ -12,7 +12,14 @@
 import BaseCard from '../layout/BaseCard.vue'
 import StudentPendingCard from './StudentPendingCard.vue'
 export default {
+  props:['pending'],
+
   components: { BaseCard, StudentPendingCard },
+  methods:{
+    check(){
+      console.log("Inside student pending"+ this.pending);
+    }
+  }
     
 }
 </script>

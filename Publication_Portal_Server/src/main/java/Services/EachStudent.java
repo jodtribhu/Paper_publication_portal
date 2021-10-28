@@ -16,20 +16,20 @@ public class EachStudent extends HttpServlet{
 	{			        	
 		utilities.Database d=new utilities.Database();
 		try {
-			ResultSet fs=d.getEachStudent();
+			ResultSet fs=d.getEachStudent(1);
 
 			while(fs.next()) {
 					JSONObject obj = new JSONObject(); 
 					obj.put("sID",fs.getInt(1));
 					obj.put("name",fs.getString(2));
 					obj.put("rollNo",fs.getString(3));
-					obj.put("phoneNO",fs.getString(4));
-					obj.put("email",fs.getString(5));
-					obj.put("preRecord",fs.getInt(6));
-					obj.put("isEligibleDist",fs.getString(7));
-					obj.put("isELigibleGrace",fs.getString(8));
-					obj.put("graceMarks",fs.getInt(9));
-					obj.put("lID",fs.getString(10));
+					obj.put("phoneNO",fs.getString(11));
+					obj.put("email",fs.getString(4));
+					obj.put("graceMarks",fs.getInt(6));
+					obj.put("campus",fs.getString(8));
+					obj.put("sex",fs.getString(9));
+					obj.put("phoneno",fs.getString(10));
+					obj.put("department",fs.getString(11));
 				     res.setContentType("application/json");
 				     res.setHeader("Cache-Control", "nocache");
 				     res.setCharacterEncoding("utf-8");

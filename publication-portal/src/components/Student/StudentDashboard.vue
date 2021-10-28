@@ -6,40 +6,41 @@
                 <div >
                     <div class="each_item"> 
                         <p class="each_item_label">Name:</p>
-                        <p class="each_item_answer"> Sample Name</p>
+                        <p class="each_item_answer"> {{student.name}}</p>
                     </div>
                     <div  class="each_item"> 
                         <p class="each_item_label">Student Roll Number:</p>
-                        <p  class="each_item_answer"> Sample Student  Roll</p>
+                        <p  class="each_item_answer"> {{student.rollNo}}</p>
                     </div>
                     <div  class="each_item"> 
                         <p class="each_item_label">Gender:</p>
-                        <p  class="each_item_answer"> Sample Gender</p>
+                        <p  class="each_item_answer"> {{student.sex}}</p>
                     </div>
                     <div  class="each_item"> 
                         <p class="each_item_label">Campus:</p>
-                        <p  class="each_item_answer"> Sample Campus</p>
+                        <p  class="each_item_answer"> {{student.campus}}</p>
                     </div>
                 </div>
 
                 <div>
                     <div  class="each_item"> 
                         <p class="each_item_label">Department:</p>
-                        <p  class="each_item_answer"> Sample Department</p>
+                        <p  class="each_item_answer">{{student.department}}</p>
                     </div>
-                    <!-- <div  class="each_item"> 
-                        <p class="each_item_label">Designation:</p>
-                        <p  class="each_item_answer"> Sample Designation</p>
-                    </div> -->
+                    <div  class="each_item"> 
+                        <p class="each_item_label">Grace Marks:</p>
+                        <p  class="each_item_answer"> {{student.graceMarks}}</p>
+                    </div>
                     <div  class="each_item"> 
                         <p class="each_item_label">Email:</p>
-                        <p  class="each_item_answer"> Sample Email</p>
+                        <p  class="each_item_answer"> {{student.email}}</p>
                     </div>
                     <div  class="each_item"> 
                         <p class="each_item_label">Mobile:</p>
-                        <p  class="each_item_answer"> Sample Mobile</p>
+                        <p  class="each_item_answer"> {{student.phoneNO}}</p>
                     </div>
                 </div>
+
 
                 </div>
 
@@ -48,10 +49,11 @@
 
                     <div class="container_top" >
                         <div class="container">
-                                <div class="container-items1"><p class="block">10</p> <p class="block">  Accepted Publications </p> </div>
-                                <div class="container-items2"><p class="block">2</p><p class="block"> Rejected Publications </p></div>
-                                <div class="container-items3"><p class="block">4</p><p class="block"> Pending Publications </p></div>
-                                <div class="container-items4"><p class="block">16</p><p class="block"> Total Publications</p> </div>
+                               
+                                <div class="container-items1"><p class="block">{{publication_count.accepted}}</p> <p class="block">  Accepted Publications </p> </div>
+                                <div class="container-items2"><p class="block">{{publication_count.rejected}}</p><p class="block"> Rejected Publications </p></div>
+                                <div class="container-items3"><p class="block">{{publication_count.pending}}</p><p class="block"> Pending Publications </p></div>
+                                <div class="container-items4"><p class="block">{{publication_count.total}}</p><p class="block"> Total Publications</p> </div>
                         </div>            
                         <div class="pcard">
                             <div>
@@ -71,9 +73,14 @@
 </template>
 
 <script>
+import GetEach from '@/services/GetEach.js';
+
+import EachStudentPublication from '@/services/EachStudentPublication.js';
 export default {
     data(){
         return{
+            student:{},
+            publication_count:{},
             publicationchartOptions: {
                             chart: {fontFamily: 'Montserrat, sans-serif'},
                             colors:['#13a608','#ff9a1f','#f72027'],
@@ -87,7 +94,40 @@ export default {
                             labels:['Accepted','Pending','Rejected']
                         },
 
-            publicationseries: [10,4,2], 
+            publicationseries: [], 
+        }
+    },
+    created(){
+        this.loadeachstudent();
+        this.loadthePublications();
+    },
+    methods:{
+        async loadeachstudent(){
+              const response =await GetEach.getEachStudent();
+              this.student=response.data;
+          },
+        async loadthePublications(){
+            const response =await EachStudentPublication.getEachStudentPublciation();
+            console.log("IN "+response.data.publications[0].title);
+            this.pending_publication = response.data.publications.filter(function (e) {
+                        return e.p_status =="Pending";
+            });
+
+            console.log("All pending "+this.pending_publication[0].title );
+            this.accepted_publication = response.data.publications.filter(function (e) {
+                        return e.p_status=="Accepted";
+            });
+            this.rejected_publication = response.data.publications.filter(function (e) {
+                        return e.p_status=="Rejected";
+            });
+            var total=this.pending_publication.length+this.accepted_publication.length+this.rejected_publication.length;
+            this.publication_count={'pending':this.pending_publication.length,'accepted':this.accepted_publication.length,'rejected':this.rejected_publication.length,'total':total}
+            var listArray = []
+            listArray.push(this.accepted_publication.length)
+            listArray.push(this.pending_publication.length)
+            listArray.push(this.rejected_publication.length)
+
+            this.publicationseries=listArray;
         }
     }
 }

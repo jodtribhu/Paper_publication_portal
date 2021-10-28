@@ -17,16 +17,18 @@ public class EachFaculty extends HttpServlet{
 	{			        	
 		utilities.Database d=new utilities.Database();
 		try {
-			ResultSet fs=d.getEachFaculty();
+			ResultSet fs=d.getEachFaculty(4);
 
 			while(fs.next()) {
 				JSONObject obj = new JSONObject(); 
 				obj.put("fID",fs.getInt(1));
 				obj.put("name",fs.getString(2));
 				obj.put("phoneNO",fs.getString(3));
-				obj.put("email",fs.getString(5));
-				obj.put("department",fs.getString(4));
-				obj.put("lID",fs.getInt(6));
+				obj.put("IDNO",fs.getString(4));
+				obj.put("department",fs.getString(5));
+				obj.put("email",fs.getString(6));
+				obj.put("designation",fs.getString(9));
+				obj.put("campus",fs.getString(10));
 			     res.setContentType("application/json");
 			     res.setHeader("Cache-Control", "nocache");
 			     res.setCharacterEncoding("utf-8");

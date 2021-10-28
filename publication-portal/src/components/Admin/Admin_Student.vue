@@ -27,7 +27,7 @@
             <input class="searchbar" type="text" v-model="searchkey" placeholder="Search">
         </div>
         <p v-for="student in list_students" :key="student.sID">
-                <student-item :id="student.sID"  :name="student.name" :created_at="student.created_at" :modified_at="student.modified_at"></student-item>
+                <student-item :id="student.sID" :rollno="student.rollNo"  :name="student.name" :created_at="student.created_at" :modified_at="student.modified_at"></student-item>
 
         </p>
     </admin-card>
@@ -67,8 +67,8 @@ export default {
         async loadstudents(){
             try {
                   const response =await RegisterService.getStudent()
-                  this.list_students=response.data.students;
-                  console.log(response);
+                  this.list_students=response.data.adminstudent;
+                  console.log(response.data.adminstudent);
             } catch (error) {
                 console.log(error);
               

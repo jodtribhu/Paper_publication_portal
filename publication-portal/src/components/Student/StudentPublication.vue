@@ -20,9 +20,9 @@
                 </div>
 
                 
-                <student-pending  v-if="gotoComponentDashboard=='StudentPending'"></student-pending >
-                <student-accepted  v-if="gotoComponentDashboard=='StudentAccepted'"></student-accepted >
-                <student-rejected v-if="gotoComponentDashboard=='StudentRejected'"></student-rejected >
+                <student-pending  :pending="pending_publication"  v-if="gotoComponentDashboard=='StudentPending'"></student-pending >
+                <student-accepted :accepted2="accepted_publication"   v-if="gotoComponentDashboard=='StudentAccepted'"></student-accepted >
+                <student-rejected :rejected="rejected_publication"  v-if="gotoComponentDashboard=='StudentRejected'"></student-rejected >
             </div> 
     </div>
 </template>
@@ -30,12 +30,22 @@
 import StudentAccepted from './StudentAccepted.vue';
 import StudentRejected from './StudentRejected.vue';
 import StudentPending from './StudentPending.vue';
+
+import EachStudentPublication from '@/services/EachStudentPublication.js';
+
 export default {
       components: { StudentAccepted,StudentRejected,StudentPending},
       data(){
       return{
-          gotoComponentDashboard:"StudentPending"
+          gotoComponentDashboard:"StudentPending",
+          pending_publication:[{}],
+          accepted_publication:[{}],
+          rejected_publication:[{}]
+
             };
+        },
+        mounted(){
+            this.loadPublications();
         },
     methods:{
           executeAccepted(){
@@ -46,7 +56,24 @@ export default {
           },
            executeRejected(){
             this.gotoComponentDashboard="StudentRejected"
-          }
+          },
+        async loadPublications(){
+            console.log("INside the loadpending");
+            const response =await EachStudentPublication.getEachStudentPublciation();
+            console.log("IN "+response.data.publications[0].title);
+            this.pending_publication = response.data.publications.filter(function (e) {
+                        return e.p_status =="Pending";
+            });
+            console.log("All pending "+this.pending_publication[0].title );
+            this.accepted_publication = response.data.publications.filter(function (e) {
+                        return e.p_status=="Accepted";
+            });
+            this.rejected_publication = response.data.publications.filter(function (e) {
+                        return e.p_status=="Rejected";
+            });
+
+            return ;
+        }
       }
 }
 </script>

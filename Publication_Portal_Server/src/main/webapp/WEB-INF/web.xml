@@ -45,6 +45,43 @@
 		<servlet-name>EachStudent</servlet-name>
 		<url-pattern>/geteachstudent </url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>getEachStudentPublication</servlet-name>
+	<servlet-class>Services.getEachStudentPublication</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getEachStudentPublication</servlet-name>
+		<url-pattern>/geteachstudentpublication </url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>getAdminFaculty</servlet-name>
+	<servlet-class>Services.getAdminFaculty</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getAdminFaculty</servlet-name>
+		<url-pattern>/getadminfaculty </url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>getAdminStudent</servlet-name>
+	<servlet-class>Services.getAdminStudent</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getAdminStudent</servlet-name>
+		<url-pattern>/getadminstudent </url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>addPublication</servlet-name>
+	<servlet-class>Services.addPublication</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>addPublication</servlet-name>
+		<url-pattern>/addpublication </url-pattern>
+	</servlet-mapping>
+	
 
 
 </web-app>

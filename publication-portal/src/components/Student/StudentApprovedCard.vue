@@ -1,11 +1,11 @@
 <template>
-    <div class='paper'>   
+    <div class='paper'>  
          <div class="stuinfo">
-            <p class="title">Sample Paper Title</p>
+            <p class="title">{{accepteddetails2.title}} </p>
             <div class="container_name">    
                 <div class="stu_info_child">
                     <p class="constsize_title ">Student Name : </p>
-                    <p class="constsize_title2 ">James Bond</p>
+                    <p class="constsize_title2 ">{{student.name}}</p>
                 </div>
                 <i @click="toggleButton()" class="far fa-caret-square-down"></i>
             </div>
@@ -16,33 +16,44 @@
              <div>        
                 <div class="flex-ele ">
                     <p class="constsize"><span class="centeralign">Roll Number:</span></p>
-                    <p class="ele_result constsize2">CB.EN.U4CSE18007</p>
+                    <p class="ele_result constsize2">{{student.rollNo}}</p>
                 </div>
             </div>
             <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Eligibility:</span></p>
-                <p class="eli_result constsize2">Distinction</p>
+                    <p v-if="accepteddetails2.is_eligible_dist=='Yes'" class="eli_result constsize2">Distinction</p>
+                    <p v-if="accepteddetails2.is_eligible_grace=='Yes'" class="eli_result constsize2">Grace Marks</p>
             </div>
             <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Grace Marks:</span></p>
                 <p class="gra_result constsize2">NIL</p>
             </div>
-            <button class="button">Open PDF</button>                   
+            <button class="button" >Open PDF</button>                   
         </div>
     </div>
 </template>
 
 <script>
+import GetEach from '@/services/GetEach.js';
 export default {
+    props:['accepteddetails2'],
     data(){
         return{
             isActive:false,
+            student:{}
         }
+    },
+    created(){
+        this.loadeachstudent();
     },
     methods:{
         toggleButton(){
             this.isActive=!this.isActive;
-        }
+        },
+         async loadeachstudent(){
+              const response =await GetEach.getEachStudent();
+              this.student=response.data;
+          }
     }
 }
 </script>

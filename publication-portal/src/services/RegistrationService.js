@@ -7,11 +7,10 @@ export default{
         return Api().post('addstudent',data);
     },
     getStudent(){
-        return Api().get('addstudent');
+        return Api().get('getadminstudent');
     },
     getFaculty(){
-        console.log("INTO IT "+ Api().get('addfaculty'));
-        return Api().get('addfaculty');
+        return Api().get('getadminfaculty');
     },
     
 }

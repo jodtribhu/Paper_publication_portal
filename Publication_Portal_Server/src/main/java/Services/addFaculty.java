@@ -56,9 +56,12 @@ public class addFaculty extends HttpServlet
 				obj.put("fID",fs.getInt(1));
 				obj.put("name",fs.getString(2));
 				obj.put("phoneNO",fs.getString(3));
-				obj.put("email",fs.getString(5));
-				obj.put("department",fs.getString(4));
-				obj.put("lID",fs.getInt(6));
+				obj.put("idno",fs.getString(4));
+				obj.put("department",fs.getString(5));
+				obj.put("email",fs.getString(6));
+				obj.put("lID",fs.getInt(7));
+				obj.put("designation",fs.getString(9));
+				obj.put("campus",fs.getString(10));
 				System.out.println("Inside");
 				array.put(obj);	
 			}

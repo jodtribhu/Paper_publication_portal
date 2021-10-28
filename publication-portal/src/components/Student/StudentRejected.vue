@@ -1,8 +1,9 @@
 <template>
     <base-card class="bg_color">
         <h2>Rejected Publication</h2>
-        <student-rejected-card></student-rejected-card>
-        <student-rejected-card></student-rejected-card>
+        <p  v-for="each_rejected in rejected" :key="each_rejected.PID">
+          <student-rejected-card :rejecteddetails="each_rejected"></student-rejected-card>
+        </p>
     </base-card>
 </template>
 
@@ -10,6 +11,7 @@
 import BaseCard from '../layout/BaseCard.vue'
 import StudentRejectedCard from './StudentRejectedCard.vue'
 export default {
+  props:['rejected'],
   components: { BaseCard, StudentRejectedCard },
     
 }

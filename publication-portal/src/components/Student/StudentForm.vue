@@ -213,12 +213,20 @@ export default {
             if(this.student_conference_name==''){
                 this.student_conference_name_error=true
             }
-
+            if(this)
             try {
-                  const response =await FormServices.addForm({student_name:this.student_name,student_roll_no:this.student_roll_no,student_email:this.student_email,
-                  student_publication_title:this.student_publication_title,student_publication_start:this.student_publication_start,student_publication_link:this.student_publication_link,
-                  student_journal_name:this.student_journal_name,student_conference_name:this.student_conference_name
-                  ,team_mates:this.addPerson
+                  const response =await FormServices.addPublication(
+                {student_publication_title:this.student_publication_title,
+                  student_publication_start:this.student_publication_start,
+                  student_publication_link:this.student_publication_link,
+                  student_journal_name:this.student_journal_name,
+                  student_conference_name:this.student_conference_name,
+                  student_publication_end:this.student_publication_end,
+                  student_publication_submitdate:new Date(),
+                  student_publication_isimp:this.student_implementation,
+                  student_publication_issurv:this.student_survey,
+                  student_publication_isconf:this.conference_checked,
+                  student_publication_isjor:this.journal_checked
                   })
 
                 //   if(response.data.registration=="Successfull"){

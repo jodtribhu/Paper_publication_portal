@@ -1,11 +1,11 @@
 <template>
     <div class='paper'>   
          <div class="stuinfo">
-            <p class="title">Sample Paper Title</p>
+            <p class="title">{{pendingdetails.title}}</p>
             <div class="container_name">    
                 <div class="stu_info_child">
                     <p class="constsize_title ">Student Name : </p>
-                    <p class="constsize_title2 ">James Bond</p>
+                    <p class="constsize_title2 "> {{student.name}}</p>
                 </div>
                 <i @click="toggleButton()" class="far fa-caret-square-down"></i>
             </div>
@@ -16,12 +16,13 @@
              <div>        
                 <div class="flex-ele ">
                     <p class="constsize"><span class="centeralign">Roll Number:</span></p>
-                    <p class="ele_result constsize2">CB.EN.U4CSE18007</p>
+                    <p class="ele_result constsize2">{{student.rollNo}}</p>
                 </div>
             </div>
             <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Eligibility:</span></p>
-                <p class="eli_result constsize2">Distinction</p>
+                <p v-if="pendingdetails.is_eligible_dist=='Yes'" class="eli_result constsize2">Distinction</p>
+                <p v-if="pendingdetails.is_eligible_grace=='Yes'" class="eli_result constsize2">Grace Marks</p>
             </div>
             <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Submitted On:</span></p>
@@ -33,16 +34,27 @@
 </template>
 
 <script>
+import GetEach from '@/services/GetEach.js';
 export default {
+    
+    props:['pendingdetails'],
     data(){
         return{
             isActive:false,
+            student:{}
         }
+    },
+    mounted(){
+        this.loadeachstudent();
     },
     methods:{
         toggleButton(){
-            this.isActive=!this.isActive;
-        }
+            this.isActive=!this.isActive; console.log(this.pendingdetails);
+        },
+        async loadeachstudent(){
+              const response =await GetEach.getEachStudent();
+              this.student=response.data;
+          }
     }
 }
 </script>
