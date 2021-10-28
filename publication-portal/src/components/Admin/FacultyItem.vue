@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    
+    props:['id','email','created_at','modified_at'],
 }
 </script>
 

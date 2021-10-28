@@ -8,43 +8,72 @@
                    <div class="admin_dialog">
                         <div class="admin_item">
                             <p class="label_dialog" >Student Name:</p>
-                            <input v-model="person_name" class="input_dialog" >
+                            <input v-model="stu_name" class="input_dialog" >
                         </div>
                         <div class="admin_item">
                             <p class="label_dialog">Roll Number:</p>
-                            <input v-model="person_name" class="input_dialog" >
+                            <input v-model="stu_email" class="input_dialog" >
                         </div>
                         <div class="admin_item">
                             <p class="label_dialog">Password :</p>
-                            <input v-model="person_email" class="input_dialog"  type="text">
+                            <input v-model="stu_pass" class="input_dialog"  type="text">
                         </div>
                    </div>
 
-                    <button class="dialogaddbutton" @click="add_Student()">Done</button>
+                    <button class="dialogaddbutton" @click="get_Student()">Done</button>
             </base-dialog>
 
 
             <input class="searchbar" type="text" v-model="searchkey" placeholder="Search">
         </div>
-        <student-item></student-item>
-        <student-item></student-item>
-        <student-item></student-item>
+        <p v-for="student in list_students" :key="student.sID">
+                <student-item :id="student.sID"  :name="student.name" :created_at="student.created_at" :modified_at="student.modified_at"></student-item>
+
+        </p>
     </admin-card>
 </template>
 
 <script>
+import RegisterService from '@/services/RegistrationService.js';
 import StudentItem from './StudentItem.vue';
 export default {
     components: {StudentItem},
     data(){
         return{
             showDialog:false,
+            list_students:[]
         }
+    },
+    created() {
+        this.loadstudents();
     },
     methods:{
         opencloseDialog(){
             this.showDialog=!this.showDialog;           
         },
+        async add_Student(){
+            try {
+                const response =await RegisterService.addStudent({stu_name:this.stu_name,stu_email:this.stu_email,stu_pass:this.stu_pass});
+                 this.showDialog=!this.showDialog;
+                console.log(response.data);
+                if(response.status==200){
+                    this.loadstudents();
+                }
+            } catch (error) {
+                console.log(error);
+              
+            }
+        },
+        async loadstudents(){
+            try {
+                  const response =await RegisterService.getStudent()
+                  this.list_students=response.data.students;
+                  console.log(response);
+            } catch (error) {
+                console.log(error);
+              
+            }
+        }
     }
     
 }

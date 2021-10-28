@@ -12,10 +12,9 @@
                 <faculty-dashboard v-if="gotoComponent=='Dashboard'" > </faculty-dashboard> 
             </div>
             
-           
         </div>
 
-    </div>
+    </div>  
     
 </template>
 <script>

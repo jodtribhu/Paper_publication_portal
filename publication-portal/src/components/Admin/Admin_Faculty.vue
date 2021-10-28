@@ -4,19 +4,19 @@
                     <div class="admin_dialog">
                         <div class="admin_item">
                             <p class="label_dialog" >Faculty Name:</p>
-                            <input v-model="person_name" class="input_dialog" >
+                            <input v-model="faculty_name" class="input_dialog" >
                         </div>
                         <div class="admin_item">
                             <p class="label_dialog">Faculty Email:</p>
-                            <input v-model="person_name" type="email"  class="input_dialog" >
+                            <input v-model="faculty_email" type="email"  class="input_dialog" >
                         </div>
                         <div class="admin_item">
                             <p class="label_dialog">Password :</p>
-                            <input v-model="person_email" class="input_dialog" >
+                            <input v-model="faculty_password" class="input_dialog" >
                         </div>
                     </div>
 
-                    <button class="dialogaddbutton" @click="add_Contributer">Done</button>
+                    <button class="dialogaddbutton" @click="add_Faculty()">Done</button>
             </base-dialog>
 
 
@@ -25,26 +25,62 @@
                 <button @click="opencloseDialog">Add New Faculty</button>
                 <input class="searchbar" type="text" v-model="searchkey" placeholder="Search">
             </div>
-            <faculty-item></faculty-item>
-            <faculty-item></faculty-item>
-            <faculty-item></faculty-item>
-        
+            <p v-for="faculty in list_faculties" :key="faculty.fID">
+                <faculty-item :id=faculty.fID :email=faculty.email :created_at=faculty.created_at :modified_at=faculty.modified_at></faculty-item>
+            </p>
+            
+
     </admin-card>
 </template>
 
 <script>
+import RegisterService from '@/services/RegistrationService.js';
 import FacultyItem from './FacultyItem.vue';
 export default {
     components: {FacultyItem},
     data(){
         return{
             showDialog:false,
+            faculty_name:'',
+            faculty_email:'',
+            faculty_password:'',
+            list_faculties:[]
         }
+    },
+    created() {
+        this.loadfaculties();
     },
     methods:{
         opencloseDialog(){
             this.showDialog=!this.showDialog;           
         },
+        async add_Faculty(){
+            try {
+                  const response =await RegisterService.addFaculty({fname:this.faculty_name,femail:this.faculty_email,fpassword:this.faculty_password})
+                    this.showDialog=!this.showDialog;
+                //   if(response.data.registration=="Successfull"){
+                //       this.$router.replace({name: 'admin', params: { load: "Faculty" }});
+                //   }
+                if(response.status==200){
+                    this.loadfaculties();
+                }
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+              
+            }
+        },
+        async loadfaculties(){
+            try {
+                  const response =await RegisterService.getFaculty()
+            
+                  this.list_faculties=response.data.f;
+            } catch (error) {
+                console.log(error);
+              
+            }
+        }
+    
     }
     
 }

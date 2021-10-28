@@ -5,7 +5,7 @@
         <div >
             <div class="each_item"> 
                 <p class="each_item_label">Name:</p>
-                <p class="each_item_answer"> Sample Name</p>
+                <p class="each_item_answer"> {{faculty.name}}</p>
             </div>
             <div  class="each_item"> 
                 <p class="each_item_label">Faculty Roll Number:</p>
@@ -24,7 +24,7 @@
         <div>
             <div  class="each_item"> 
                 <p class="each_item_label">Department:</p>
-                <p  class="each_item_answer"> Sample Department</p>
+                <p  class="each_item_answer"> {{faculty.department}}</p>
             </div>
             <div  class="each_item"> 
                 <p class="each_item_label">Designation:</p>
@@ -32,11 +32,11 @@
             </div>
             <div  class="each_item"> 
                 <p class="each_item_label">Email:</p>
-                <p  class="each_item_answer"> Sample Email</p>
+                <p  class="each_item_answer"> {{faculty.email}}</p>
             </div>
             <div  class="each_item"> 
                 <p class="each_item_label">Mobile:</p>
-                <p  class="each_item_answer"> Sample Mobile</p>
+                <p  class="each_item_answer"> {{faculty.phoneNO}}</p>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
 
 <script>
 export default {
-    
+    props:['faculty'],
 }
 </script>
 <style scoped>

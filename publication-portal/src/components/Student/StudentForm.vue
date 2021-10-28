@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import FormServices from '@/services/FormServices.js';
 import FormOutercard from '../layout/FormOutercard.vue';
 export default {
      components: { FormOutercard},
@@ -184,7 +185,7 @@ export default {
             
             return this.x
         },
-        submitForm(){
+        async submitForm(){
             if(this.student_name==''){
                 this.student_name_error=true
             }
@@ -203,7 +204,7 @@ export default {
             if(this.student_publication_link==''){
                 this.student_publication_link_error=true
             }
-            if(this.student_publication_end_error==''){
+            if(this.student_publication_end==''){
                this.student_publication_end_error=true
             }
             if(this.student_journal_name==''){
@@ -212,6 +213,24 @@ export default {
             if(this.student_conference_name==''){
                 this.student_conference_name_error=true
             }
+
+            try {
+                  const response =await FormServices.addForm({student_name:this.student_name,student_roll_no:this.student_roll_no,student_email:this.student_email,
+                  student_publication_title:this.student_publication_title,student_publication_start:this.student_publication_start,student_publication_link:this.student_publication_link,
+                  student_journal_name:this.student_journal_name,student_conference_name:this.student_conference_name
+                  ,team_mates:this.addPerson
+                  })
+
+                //   if(response.data.registration=="Successfull"){
+                //       this.$router.replace({name: 'admin', params: { load: "Faculty" }});
+                //   }
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+              
+            }
+
+
 
         }
     }

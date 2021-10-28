@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <faculty-profile v-if="gotoComponentDashboard=='ProfileInfo'"></faculty-profile>
+                <faculty-profile v-if="gotoComponentDashboard=='ProfileInfo'" :faculty="getEach"> </faculty-profile>
                 <faculty-paper v-if="gotoComponentDashboard=='PaperList'"></faculty-paper>
             </div>
 
@@ -27,21 +27,32 @@
 </template>
 
 <script>
+import GetEach from '@/services/GetEach.js';
+
 import FacultyProfile from './FacultyProfile.vue';
 import FacultyPaper from './FacultyPaper.vue';
 export default {
       components: { FacultyPaper,FacultyProfile},
       data(){
       return{
-          gotoComponentDashboard:"ProfileInfo"
+                gotoComponentDashboard:"ProfileInfo",
+                getEach:{}
             };
         },
+    created(){
+        this.loadeachfaculty();
+    },
     methods:{
           executeProfileInfo(){
             this.gotoComponentDashboard="ProfileInfo"
           },
            executePaperList(){
             this.gotoComponentDashboard="PaperList"
+          },
+          async loadeachfaculty(){
+              const response =await GetEach.getEachFaculty();
+              console.log("INSIDE");
+              this.getEach=response.data;
           }
       }
 }
