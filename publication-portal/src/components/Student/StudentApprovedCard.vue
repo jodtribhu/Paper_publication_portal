@@ -28,7 +28,7 @@
                 <p class="constsize"><span class="centeralign">Grace Marks:</span></p>
                 <p class="gra_result constsize2">NIL</p>
             </div>
-            <button class="button" >Open PDF</button>                   
+            <button class="button" @click="openPDF(accepteddetails2.link)">Open PDF</button>                   
         </div>
     </div>
 </template>
@@ -53,6 +53,9 @@ export default {
          async loadeachstudent(){
               const response =await GetEach.getEachStudent();
               this.student=response.data;
+          },
+          openPDF(link){
+                window.open(link, "_blank");
           }
     }
 }

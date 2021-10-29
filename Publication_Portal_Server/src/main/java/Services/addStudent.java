@@ -47,35 +47,35 @@ public class addStudent extends HttpServlet{
 	    }
 		
 	}
-	public void doGet(HttpServletRequest req,HttpServletResponse res) throws IOException
-	{			        	
-			utilities.Database d=new utilities.Database();
-			try {
-				ResultSet fs=d.getStudent();
-				JSONArray array = new JSONArray();
-				while(fs.next()) {
-					JSONObject obj = new JSONObject(); 
-
-					obj.put("sID",fs.getInt(1));
-					obj.put("name",fs.getString(2));
-					obj.put("rollNo",fs.getString(3));
-					obj.put("phoneNO",fs.getString(11));
-					obj.put("email",fs.getString(4));
-					obj.put("graceMarks",fs.getInt(6));
-					obj.put("campus",fs.getString(8));
-					obj.put("sex",fs.getString(9));
-					obj.put("phoneno",fs.getString(10));
-					obj.put("department",fs.getString(11));
-
-					array.put(obj);	
-				}
-				JSONObject obj2 = new JSONObject(); 	
-				 obj2.put("students",array);
-			     PrintWriter out2 = res.getWriter(); 
-			     out2.println(obj2);
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-	}
+//	public void doGet(HttpServletRequest req,HttpServletResponse res) throws IOException
+//	{			        	
+//			utilities.Database d=new utilities.Database();
+//			try {
+//				ResultSet fs=d.getStudent();
+//				JSONArray array = new JSONArray();
+//				while(fs.next()) {
+//					JSONObject obj = new JSONObject(); 
+//
+//					obj.put("sID",fs.getInt(1));
+//					obj.put("name",fs.getString(2));
+//					obj.put("rollNo",fs.getString(3));
+//					obj.put("phoneNO",fs.getString(11));
+//					obj.put("email",fs.getString(4));
+//					obj.put("graceMarks",fs.getInt(6));
+//					obj.put("campus",fs.getString(8));
+//					obj.put("sex",fs.getString(9));
+//					obj.put("phoneno",fs.getString(10));
+//					obj.put("department",fs.getString(11));
+//
+//					array.put(obj);	
+//				}
+//				JSONObject obj2 = new JSONObject(); 	
+//				 obj2.put("students",array);
+//			     PrintWriter out2 = res.getWriter(); 
+//			     out2.println(obj2);
+//
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//	}
 }

@@ -36,6 +36,8 @@ public class getEachStudentPublication extends HttpServlet{
 				obj.put("p_status",fs.getString(12));
 				obj.put("is_eligible_dist",fs.getString(13));
 				obj.put("is_eligible_grace",fs.getString(14));
+				obj.put("link",fs.getString(15));
+				obj.put("s_date",fs.getString(16));
 				array.put(obj);	
 			}
 			

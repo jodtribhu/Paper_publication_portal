@@ -38,8 +38,13 @@ public class addPublication extends HttpServlet{
 	        String student_publication_issurv = jObj.getString("student_publication_issurv");
 	        String student_publication_isconf = jObj.getString("student_publication_isconf");
 	        String student_publication_isjor = jObj.getString("student_publication_isjor");
+	        String addp1 = jObj.getString("addPerson1");
+	        String addp2 = jObj.getString("addPerson2");
+	        String addp3 = jObj.getString("addPerson3");
+	        String addp4 = jObj.getString("addPerson4");
+	        
 	        utilities.Database d=new utilities.Database();
-	        d.addPublication(student_publication_title,student_publication_start,student_publication_link,student_journal_name,student_conference_name,student_publication_end,student_publication_submitdate,student_publication_isimp,student_publication_issurv,student_publication_isconf,student_publication_isjor);
+	        d.addPublication(student_publication_title,student_publication_start,student_publication_link,student_journal_name,student_conference_name,student_publication_end,student_publication_submitdate,student_publication_isimp,student_publication_issurv,student_publication_isconf,student_publication_isjor,addp1,addp2,addp3,addp4);
 	    	    
 	        res.setContentType("application/json");
 	        res.setHeader("Cache-Control", "nocache");

@@ -1,5 +1,5 @@
 <template>
-    <div class='paper'>   
+    <div class='paper'>  
          <div class="stuinfo">
             <p class="title">{{pendingdetails.title}}</p>
             <div class="container_name">    
@@ -26,9 +26,10 @@
             </div>
             <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Submitted On:</span></p>
-                <p class="gra_result constsize2">Sample Date</p>
+                <p class="gra_result constsize2">{{pendingdetails.s_date}}</p>
             </div>
-            <button class="button">Claim</button>                   
+            <button class="button">Claim</button>   
+            <button class="button2" @click="openPDF(pendingdetails.link)">Open PDF</button>                  
         </div>
     </div>
 </template>
@@ -46,6 +47,7 @@ export default {
     },
     mounted(){
         this.loadeachstudent();
+      
     },
     methods:{
         toggleButton(){
@@ -54,6 +56,10 @@ export default {
         async loadeachstudent(){
               const response =await GetEach.getEachStudent();
               this.student=response.data;
+          },
+        openPDF(link){
+            console.log(link);
+                window.open(link, "_blank");
           }
     }
 }
@@ -167,6 +173,24 @@ export default {
     border-style:none;
 }
 .button:hover{
+    background-color: rgba(69, 70, 82, 0.753);
+    color:white;
+}
+
+.button2{
+    margin-top: 25px;
+    width:8rem;
+    height:40px;
+    background-color: rgb(24, 11, 99);
+    font-family: 'Montserrat', sans-serif;
+    font-size:1rem;
+    border-radius:12px;
+    color:rgb(212, 206, 195);
+    cursor: pointer;
+    border-style:none;
+    margin-left:0.2rem;
+}
+.button2:hover{
     background-color: rgba(69, 70, 82, 0.753);
     color:white;
 }

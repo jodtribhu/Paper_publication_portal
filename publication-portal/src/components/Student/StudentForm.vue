@@ -65,6 +65,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="published_twocolumn_scopus">
+                            <label class="label_container"><input type="radio" >Scopus Indexed</label>
+                        </div>
                         <div class="published_twocolumn">
                             <label class="label_container"><input @click="journal_check" class="check"  name="test" type="radio" >Published in a Journal
                                 
@@ -73,6 +76,8 @@
                                
                             </label>
                         </div>
+
+
 
 
 
@@ -213,25 +218,91 @@ export default {
             if(this.student_conference_name==''){
                 this.student_conference_name_error=true
             }
-            if(this)
+
             try {
-                  const response =await FormServices.addPublication(
+                var is_jo="No";
+                var is_conf="No";
+                var stu_imp="No";
+                var stu_surv="No";
+
+                if(this.student_publication_isjor==true){
+                    is_jo="Yes";    
+                }
+                if(this.student_publication_isconf==true){
+                    is_conf="Yes";    
+                }
+                if(this.student_implementation==true){
+                    stu_imp="Yes"
+                }
+                if(this.student_survey==true){
+                    stu_surv="Yes"
+                }
+                const date = new Date()
+                const dateFormatter = Intl.DateTimeFormat('sv-SE');
+                dateFormatter.format(date)
+                var addp1='';
+                var addp2='';
+                var addp3='';
+                var addp4='';
+                addp1='1'
+                for (let i = 0; i < this.addPerson.length; i++) {
+                    if(i==0){
+                         addp2=this.addPerson[i].RollNo
+                    }
+                    if(i==1){
+                         addp3=this.addPerson[i].RollNo
+                    }
+                    if(i==2){
+                         addp4=this.addPerson[i].RollNo
+                    }
+
+                }
+                  const response =await FormServices.addForm(
                 {student_publication_title:this.student_publication_title,
                   student_publication_start:this.student_publication_start,
                   student_publication_link:this.student_publication_link,
                   student_journal_name:this.student_journal_name,
                   student_conference_name:this.student_conference_name,
                   student_publication_end:this.student_publication_end,
-                  student_publication_submitdate:new Date(),
-                  student_publication_isimp:this.student_implementation,
-                  student_publication_issurv:this.student_survey,
-                  student_publication_isconf:this.conference_checked,
-                  student_publication_isjor:this.journal_checked
+                  student_publication_submitdate:dateFormatter.format(date),
+                  addPerson1:addp1,
+                  addPerson2:addp2,
+                  addPerson3:addp3,
+                  addPerson4:addp4,
+                  student_publication_isimp:stu_imp,
+                  student_publication_issurv:stu_surv,
+                  student_publication_isconf:is_conf,
+                  student_publication_isjor:is_jo
                   })
 
-                //   if(response.data.registration=="Successfull"){
-                //       this.$router.replace({name: 'admin', params: { load: "Faculty" }});
-                //   }
+               
+            this.student_publication_title='';
+            this.student_publication_start='';
+            this.student_publication_end='';
+            this.student_journal_name='';
+            this.student_conference_name='';
+            this.student_publication_link='';
+            this.student_name_error=false;
+            this.student_roll_no_error=false;
+            this.student_email_error=false;
+            this.student_publication_title_error=false;
+            this.student_publication_start_error=false;
+            this.student_publication_end_error=false;
+            this.student_journal_name_error=false;
+            this.student_survey=false;
+            this.student_implementation=false;
+            
+            this.isAddClass='';
+            this.person_name='';
+            this.person_roll_no='';
+            this.person_email='';
+            this.addPerson=[];
+            this.showDialog=false;
+            this.journal_checke=false;
+            this.conference_checked=false;
+
+
+                  
                 console.log(response.data);
             } catch (error) {
                 console.log(error);
@@ -309,8 +380,17 @@ export default {
     font-family: 'Montserrat', sans-serif;
     font-size:1rem;
     font-weight: bold;
+    padding-left:0.2rem;
 }
-
+.published_twocolumn_scopus{
+    padding-left:0.2rem;
+    display: flex;
+    justify-content:space-between;
+    padding-top:2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size:1rem;
+    font-weight: bold;
+}
 /*input*/
 
 .input_form:focus{

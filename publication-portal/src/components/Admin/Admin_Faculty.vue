@@ -3,7 +3,7 @@
             <base-dialog :show=showDialog class="dialogbox " title="Add New Faculty" @close="opencloseDialog" >
                     <div class="admin_dialog">
                         <div class="admin_item">
-                            <p class="label_dialog" >Faculty Name:</p>
+                            <p class="label_dialog" >Faculty Roll No:</p>
                             <input v-model="faculty_name" class="input_dialog" >
                         </div>
                         <div class="admin_item">

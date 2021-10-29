@@ -147,7 +147,8 @@ public class Database  {
 	   
 	   public void addPublication(String student_publication_title,String student_publication_start,String student_publication_link,
 			   String student_journal_name,String student_conference_name,String student_publication_end,String student_publication_submitdate,
-			   String student_publication_isimp,String student_publication_issurv,String student_publication_isconf,String student_publication_isjor){   
+			   String student_publication_isimp,String student_publication_issurv,String student_publication_isconf,String student_publication_isjor,String addp1,String addp2,String addp3,String addp4){   
+		  System.out.println("Student Publication Link"+student_publication_link);
 		   try{  
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
@@ -164,12 +165,68 @@ public class Database  {
 			   		+ "'"+student_publication_isimp+"',"   
 			   		+ "'"+"Pending"+"',"   
 			   		+ "'"+"Yes"+"',"   
-			   		+ "'"+"No"+"',"
-			   		+0+","
+			   		+ "'"+"No"+"','"
+			   		+student_publication_link+"',"
 			   		+ "'"+student_publication_submitdate+"'"
 			   		+");";
 			   System.out.println(sql);
-			   stmt.executeUpdate(sql); 
+			   stmt.executeUpdate(sql);
+			   System.out.println(addp1+" addsad "+addp2+" ADASD"+addp3+"DADSA"+addp4);
+			   
+			   Statement stmt2=con.createStatement();
+			   String sql2="Select P_ID from paper where TITLE='"+student_publication_title+"'";
+			   System.out.println(sql2);
+			   ResultSet rs4 =stmt2.executeQuery(sql2);
+			   int p_Id=-1;
+			   while(rs4.next()) {
+				    p_Id=rs4.getInt(1);
+			   }
+			   Statement stmt3=con.createStatement();
+			   Statement stmt4=con.createStatement();
+			   if(!addp1.isEmpty()) {
+				   String sql3="Insert into student_paper(S_ID,P_ID,IS_CLAIMED,MARKS) VALUES ("+addp1+","+p_Id+","+"'No',"+"0"+")";
+				   System.out.println(sql3);
+				   stmt.executeUpdate(sql3);
+			   }
+			   if(!addp2.isEmpty()) {
+				  
+				   String sql4="Select S_ID from student where RollNO='"+addp2+"'";
+				   ResultSet fs5=stmt4.executeQuery(sql4);
+				   int s_id=-1;
+				   while(fs5.next()) {
+					   s_id=fs5.getInt(1);
+				   }
+				   
+				   
+				   String sql3="Insert into student_paper(S_ID,P_ID,IS_CLAIMED,MARKS) VALUES ("+s_id+","+p_Id+","+"'No',"+"0"+")";
+				   System.out.println(sql3);
+				   stmt3.executeUpdate(sql3);
+			   }
+			 
+			   if(!addp3.isEmpty()) {
+				   String sql4="Select S_ID from student where RollNO='"+addp3+"'";
+				   ResultSet fs5=stmt4.executeQuery(sql4);
+				   int s_id=-1;
+				   while(fs5.next()) {
+					   s_id=fs5.getInt(1);
+				   }
+				   String sql3="Insert into student_paper(S_ID,P_ID,IS_CLAIMED,MARKS) VALUES ("+s_id+","+p_Id+","+"'No',"+"0"+")";
+				   System.out.println(sql3);
+				   stmt3.executeUpdate(sql3);
+			   }
+			
+			   if(!addp4.isEmpty()) {
+				   String sql4="Select S_ID from student where RollNO='"+addp4+"'";
+				   ResultSet fs5=stmt4.executeQuery(sql4);
+				   int s_id=-1;
+				   while(fs5.next()) {
+					   s_id=fs5.getInt(1);
+				   }
+				   String sql3="Insert into student_paper(S_ID,P_ID,IS_CLAIMED,MARKS) VALUES ("+s_id+","+p_Id+","+"'No',"+"0"+")";
+				   System.out.println(sql3);
+				   stmt3.executeUpdate(sql3);
+			   }
+			   
 			  }
 		   	catch(Exception e){ 
 		   		System.out.println(e);

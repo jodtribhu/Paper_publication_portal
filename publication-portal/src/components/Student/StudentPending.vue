@@ -15,6 +15,7 @@ export default {
   props:['pending'],
 
   components: { BaseCard, StudentPendingCard },
+
   methods:{
     check(){
       console.log("Inside student pending"+ this.pending);
