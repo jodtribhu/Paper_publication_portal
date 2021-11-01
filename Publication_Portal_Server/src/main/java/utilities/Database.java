@@ -289,6 +289,38 @@ public class Database  {
 		  
 		 
 	   }
+	   public ResultSet getEachStudentPublicationTeamStatus(int p_id)  {
+		   ResultSet rs2=null;
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			  return stmt.executeQuery("Select * from student_paper where P_ID="+p_id); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		  return rs2;
+		 
+	   }
+	   
+	   public ResultSet getEachMateName(int s_id)  {
+		   ResultSet rs2=null;
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement();  
+			   return stmt.executeQuery("Select name,S_ID from student where S_ID="+s_id); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		   return rs2; 
+		 
+	   }
+	   
+	   
+	   
 
 
 }

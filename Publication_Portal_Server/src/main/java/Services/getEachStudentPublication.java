@@ -20,6 +20,7 @@ public class getEachStudentPublication extends HttpServlet{
 		try {
 			ResultSet fs=d.getEachStudentPublication(1);
 			JSONArray array = new JSONArray();
+			JSONArray array2 = new JSONArray();
 			while(fs.next()) {
 				JSONObject obj = new JSONObject(); 
 				obj.put("PID",fs.getInt(1));
@@ -42,12 +43,33 @@ public class getEachStudentPublication extends HttpServlet{
 				obj.put("marks",fs.getString(20));
 				obj.put("p_status",fs.getString(21));
 				obj.put("sp_id",fs.getInt(16));
+				
+				
+				//TeamMates
+				 array2 = new JSONArray();
+		
+				
+				ResultSet fs4=d.getEachStudentPublicationTeamStatus(fs.getInt(1));
+				while(fs4.next()) {
+			
+					ResultSet fs5=d.getEachMateName(fs4.getInt(2));
+					JSONObject obj3 = new JSONObject();
+					while(fs5.next()) {
+					obj3.put("mate_name",fs5.getString(1));
+					obj3.put("mate_id",fs5.getString(2));
+					obj3.put("mate_status",fs4.getString(6));
+					obj3.put("mate_claimed_status",fs4.getString(4));
+					}
+					array2.put(obj3);
+				}
+				obj.put("team",array2);
 				array.put(obj);	
 			}
 			
 			
 			JSONObject obj2 = new JSONObject(); 	
 			obj2.put("publications",array);
+	
 		    res.setContentType("application/json");
 		    res.setHeader("Cache-Control", "nocache");
 		    res.setCharacterEncoding("utf-8");

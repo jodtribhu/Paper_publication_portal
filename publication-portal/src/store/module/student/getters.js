@@ -16,7 +16,7 @@ export default {
     },
     getRejectedPublication(state)
     {
-        return state.logged_in_student_publication_accepted
+        return state.logged_in_student_publication_rejected
     },
     getClaimedPublication(state){
         return state.logged_in_student_publication_claimed

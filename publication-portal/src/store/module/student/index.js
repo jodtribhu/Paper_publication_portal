@@ -9,6 +9,7 @@ export default{
             logged_in_student_publication_accepted:[],
             logged_in_student_publication_rejected:[],
             logged_in_student_publication_claimed:[],
+         
             logged_in_student_publication_total:0
         };
         

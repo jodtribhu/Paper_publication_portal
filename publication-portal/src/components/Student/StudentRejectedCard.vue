@@ -1,5 +1,19 @@
 <template>
     <div class='paper'>   
+        <base-dialog :show=showDialog  title="Team Mates" @close="opencloseDialog">
+            <div>
+                <div v-for="member in rejecteddetails_team(student.sID)" :key=member.name>
+                        <div class="student_name">
+                            <p> <span class="boldit">Student Name</span>  : <span>{{member.mate_name}}</span> </p>
+                        </div>
+                        
+                        <div class="student_name">
+                            <p> <span class="boldit">Paper Status</span>  : <span>{{getStatus(member.mate_status,member.mate_claimed_status)}}</span> </p>
+                        </div>
+                        <hr v-if="rejecteddetails_team(student.sID).length>1">
+                </div>
+            </div>
+        </base-dialog>  
 
          <div class="stuinfo">
             <p class="title">{{rejecteddetails.title}}</p>
@@ -25,11 +39,12 @@
                     <p v-if="rejecteddetails.is_eligible_dist=='Yes'" class="eli_result constsize2">Distinction</p>
                     <p v-if="rejecteddetails.is_eligible_grace=='Yes'" class="eli_result constsize2">Grace Marks</p>
             </div>
-            <div class="flex-ele ">
+            <!-- <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Grace Marks:</span></p>
                 <p class="gra_result constsize2">NIL</p>
-            </div>
-            <button class="button"  @click="openPDF(rejecteddetails.link)">Open PDF</button>                   
+            </div> -->
+            <button class="button"  @click="openPDF(rejecteddetails.link)">Open PDF</button>     
+             <button class="button" @click="opencloseDialog()" v-if="rejecteddetails_team(student.sID).length>0">Team Status</button>                     
         </div>
     </div>
 </template>
@@ -40,6 +55,7 @@ export default {
     data(){
         return{
             isActive:false,
+            showDialog:false,
            
         }
     },
@@ -47,9 +63,30 @@ export default {
         toggleButton(){
             this.isActive=!this.isActive;
         },
-         openPDF(link){
+        openPDF(link){
                 window.open(link, "_blank");
-          }
+          },
+        opencloseDialog(){
+             this.showDialog=!this.showDialog;  
+        },  
+        rejecteddetails_team(id){
+          var team2=this.rejecteddetails.team.filter(function (e) {
+                    return e.mate_id != id;
+        });
+        
+            return team2;
+        },
+        getStatus(status,c_status){
+            if(status=="Pending" && c_status=="Yes"){
+                return "Claimed"
+            }
+            else if(status=="Pending" && c_status=="No"){
+                return "Claimed"
+            }
+            else{
+                return status;
+            }              
+        }
     }
 }
 </script>
@@ -102,7 +139,10 @@ export default {
     width:80%
 }
 
-
+.boldit{
+    font-weight: bold;
+    font-size:1.2rem;
+}
 .intro{
     display:flex;
     justify-content: space-around;
@@ -153,6 +193,8 @@ export default {
 }
 .button{
     margin-top: 25px;
+    margin-left:1rem;
+    margin-right:1rem;
     width:8rem;
     height:40px;
     background-color: rgb(24, 11, 99);

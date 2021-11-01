@@ -2,7 +2,7 @@
 <div class="margin">
     <dashboard-card >
     <div class="card container_flex">
-        <div >
+        <div class="container_flex_each class1">
             <div class="each_item"> 
                 <p class="each_item_label">Name:</p>
                 <p class="each_item_answer"> {{faculty.name}}</p>
@@ -17,23 +17,26 @@
             </div>
         </div>
 
-        <div>
-            <div  class="each_item"> 
-                <p class="each_item_label">Department:</p>
-                <p  class="each_item_answer"> {{faculty.department}}</p>
+        <div class="container_flex_each class2">
+            <div class="align">
+                <div  class="each_item"> 
+                    <p class="each_item_label">Department:</p>
+                    <p  class="each_item_answer"> {{faculty.department}}</p>
+                </div>
+                <div  class="each_item"> 
+                    <p class="each_item_label">Designation:</p>
+                    <p  class="each_item_answer"> {{faculty.designation}}</p>
+                </div>
+                <div  class="each_item"> 
+                    <p class="each_item_label">Email:</p>
+                    <p  class="each_item_answer"> {{faculty.email}}</p>
+                </div>
+                <div  class="each_item"> 
+                    <p class="each_item_label">Mobile:</p>
+                    <p  class="each_item_answer"> {{faculty.phoneNO}}</p>
+                </div>
             </div>
-            <div  class="each_item"> 
-                <p class="each_item_label">Designation:</p>
-                <p  class="each_item_answer"> {{faculty.designation}}</p>
-            </div>
-            <div  class="each_item"> 
-                <p class="each_item_label">Email:</p>
-                <p  class="each_item_answer"> {{faculty.email}}</p>
-            </div>
-            <div  class="each_item"> 
-                <p class="each_item_label">Mobile:</p>
-                <p  class="each_item_answer"> {{faculty.phoneNO}}</p>
-            </div>
+
         </div>
 
     </div>
@@ -51,7 +54,16 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+.container_flex_each{
+        width:100%;    
+}
+.align{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    
 
+}
 .card{
     background-color:rgba(143, 160, 165, 0.781);
     border-radius: 0 24px 24px 24px;
@@ -62,11 +74,10 @@ export default {
     padding-left:4rem;
     padding-right:4rem;
     display: flex;
-    justify-content:space-between;
 }
 .each_item{
     display: flex;
-    
+    width:60%;
     font-size:1.2rem;
   
 }

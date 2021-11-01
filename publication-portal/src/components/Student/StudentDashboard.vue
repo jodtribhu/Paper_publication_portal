@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div>
+                <div class="container_flex_item">
                     <div  class="each_item"> 
                         <p class="each_item_label">Department:</p>
                         <p  class="each_item_answer">{{student.department}}</p>
@@ -147,6 +147,9 @@ export default {
 .margin_Correct{
     margin-bottom: 2rem;
     overflow: hidden;
+}
+.container_flex_item{
+    width:38%;
 }
 h1{
     text-align: center;

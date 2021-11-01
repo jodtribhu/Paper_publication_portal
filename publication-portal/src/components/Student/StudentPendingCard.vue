@@ -1,5 +1,19 @@
 <template>
     <div class='paper'>  
+        <base-dialog :show=showDialog  title="Team Mates" @close="opencloseDialog">
+            <div>
+                <div v-for="member in pendingdetails_team(student.sID)" :key=member.name>
+                        <div class="student_name">
+                            <p> <span class="boldit">Student Name</span>  : <span>{{member.mate_name}}</span> </p>
+                        </div>
+                        
+                        <div class="student_name">
+                            <p> <span class="boldit">Paper Status</span>  : <span>{{getStatus(member.mate_status,member.mate_claimed_status)}}</span> </p>
+                        </div>
+                        <hr v-if="pendingdetails_team(student.sID).length>1">
+                </div>
+            </div>
+        </base-dialog>  
          <div class="stuinfo">
             <p class="title">{{pendingdetails.title}}</p>
             <div class="container_name">    
@@ -29,7 +43,8 @@
                 <p class="gra_result constsize2">{{pendingdetails.s_date}}</p>
             </div>
             <button class="button" @click="claimPublication(pendingdetails.sp_id)">Claim</button>   
-            <button class="button2" @click="openPDF(pendingdetails.link)">Open PDF</button>                  
+            <button class="button" @click="openPDF(pendingdetails.link)">Open PDF</button>  
+            <button class="button" @click="opencloseDialog()" v-if="pendingdetails_team(student.sID).length>0">Team Status</button>                  
         </div>
     </div>
 </template>
@@ -42,6 +57,7 @@ export default {
     data(){
         return{
             isActive:false,
+            showDialog:false,
         }
     },
     methods:{
@@ -57,7 +73,29 @@ export default {
             await EachStudentPublication.claimPublication({"sp_id":sp_id});
             this.$emit('claimedit');
         
-          }
+          },
+
+        opencloseDialog(){
+             this.showDialog=!this.showDialog;  
+        },  
+        pendingdetails_team(id){
+          var team2=this.pendingdetails.team.filter(function (e) {
+                    return e.mate_id != id;
+        });
+        
+            return team2;
+        },
+        getStatus(status,c_status){
+            if(status=="Pending" && c_status=="Yes"){
+                return "Claimed"
+            }
+            else if(status=="Pending" && c_status=="No"){
+                return "Claimed"
+            }
+            else{
+                return status;
+            }              
+        }
     }
 }
 </script>
@@ -82,6 +120,10 @@ export default {
     padding-bottom: 10px;
     margin:auto;
     margin-bottom:2rem;
+}
+.boldit{
+    font-weight: bold;
+    font-size:1.2rem;
 }
 .title{
     font-family: 'Montserrat', sans-serif;
@@ -159,6 +201,8 @@ export default {
 }
 .button{
     margin-top: 25px;
+    margin-left:1rem;
+    margin-right:1rem;
     width:8rem;
     height:40px;
     background-color: rgb(24, 11, 99);

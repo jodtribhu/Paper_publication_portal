@@ -20,6 +20,7 @@ export default{
         });
         
         
+
         state.logged_in_student_publication_total =state.logged_in_student_publication_pending.length+ state.logged_in_student_publication_accepted.length+state.logged_in_student_publication_rejected.length+state.logged_in_student_publication_claimed.length;
         
     }
