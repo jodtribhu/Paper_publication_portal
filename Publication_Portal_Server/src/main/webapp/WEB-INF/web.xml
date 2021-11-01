@@ -91,5 +91,13 @@
 		<url-pattern>/claimpublication </url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>editStudent</servlet-name>
+	<servlet-class>Services.editStudent</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>editStudent</servlet-name>
+		<url-pattern>/editstudent </url-pattern>
+	</servlet-mapping>
 
 </web-app>

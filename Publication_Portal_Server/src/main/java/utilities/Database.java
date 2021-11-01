@@ -318,6 +318,20 @@ public class Database  {
 		   return rs2; 
 		 
 	   }
+	   public void editStudent(int s_id,String editname,String editroll ,String editdept ,String editgender ,String editcampus ,String editmobile,String editemail)  {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   stmt.executeUpdate("Update student SET Name='"+editname+"',RollNO='" +editroll+"',EMAIL='"+editemail+"',CAMPUS='"+editcampus+"',SEX='"+editgender+"',PHONENO='"+editmobile+"',DEPARTMENT='"+editdept+"' where s_id="+s_id); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		  
+		 
+	   }
+	   
 	   
 	   
 	   

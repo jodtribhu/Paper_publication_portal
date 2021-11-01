@@ -1,8 +1,47 @@
 <template>
     <div class="margin_Correct">
+        <base-dialog :show=showDialog  title="Team Mates" @close="opencloseDialog">
+            <div class="input_cont">
+                <div class="each_input">
+                    <label class="input_label" for="" >Name:</label>
+                    <input class="input_text" v-model="editname" type="text" >
+                </div>
+                <div class="each_input">
+                    <label class="input_label" for="">Roll Number:</label>
+                    <input class="input_text" v-model="editroll" type="text" >
+                </div>
+                 <div class="each_input">
+                    <label class="input_label" for="">Mail:</label>
+                    <input class="input_text" v-model="editemail" type="text" >
+                </div>
+                <div class="each_input"> 
+                    <label class="input_label" for="">Department:</label>
+                    <input class="input_text" v-model="editdept" type="text" >
+                </div>
+                <div class="each_input">
+                    <label class="input_label" for="">Gender:</label>
+                    <input class="input_text" v-model="editgender" type="text" >
+                </div>
+                <div class="each_input">
+                    <label class="input_label" for="">Campus:</label>
+                    <input class="input_text" v-model="editcampus"  type="text" >
+                </div>
+                <div class="each_input">
+                    <label class="input_label" for="">Mobile Number:</label>
+                    <input class="input_text" type="text" v-model="editmobile"  >
+                </div>
+                <button class="button" @click="editStudent()">Edit</button>
+            </div>
+        </base-dialog>  
+
+
+
         <student-card>
             <h1>Dashboard</h1>
              <div class="card container_flex">
+                <div class="edit" @click="opencloseDialog">
+                    <i class="far fa-edit"></i>
+                </div>
                 <div >
                     <div class="each_item"> 
                         <p class="each_item_label">Name:</p>
@@ -74,11 +113,20 @@
 </template>
 
 <script>
-
+import GetEach from '@/services/GetEach';
 export default {
     data(){
         return{
             student:{},
+            editname:'',
+            editroll:'',
+            editdept:'',
+            editgender:'',
+            editcampus:'',
+            editmobile:'',
+            editemail:'',
+            showDialog:false,
+            
             publication_count:{},
             publicationchartOptions: {
                             chart: {fontFamily: 'Montserrat, sans-serif'},
@@ -115,13 +163,31 @@ export default {
                 listArray.push(this.$store.getters.getClaimedPublication.length)
                 listArray.push(this.$store.getters.getRejectedPublication.length)
                 this.publicationseries=listArray;
+                this.editname=this.student.name
+                this.editroll=this.student.rollNo
+                this.editdept=this.student.department
+                this.editgender=this.student.sex
+                this.editcampus=this.student.campus
+                this.editmobile=this.student.phoneno
+                this.editemail=this.student.email
          }
+
         
     },
     methods:{
+        opencloseDialog(){
+             this.showDialog=!this.showDialog;  
+        },  
         async loadeachstudent(){
               await this.$store.dispatch("loadstudent");
               this.student= this.$store.getters.getLoggedInStudent;
+                this.editname=this.student.name
+                this.editroll=this.student.rollNo
+                this.editdept=this.student.department
+                this.editgender=this.student.sex
+                this.editcampus=this.student.campus
+                this.editmobile=this.student.phoneno
+                this.editemail=this.student.email
           },
         async loadthePublications(){
             await this.$store.dispatch("loadpublication");
@@ -136,6 +202,12 @@ export default {
             listArray.push(this.$store.getters.getClaimedPublication.length)
             listArray.push(this.$store.getters.getRejectedPublication.length)
             this.publicationseries=listArray;
+        },
+        async editStudent(){
+            this.showDialog=!this.showDialog;  
+            await GetEach.editEachStudent({"s_id":this.student.sID,"editname":this.editname,"editroll":this.editroll,
+            "editdept":this.editdept,"editgender":this.editgender,"editcampus":this.editcampus,"editmobile":this.editmobile,"editemail":this.editemail})
+            await this.loadeachstudent();
         }
     }
 }
@@ -148,8 +220,49 @@ export default {
     margin-bottom: 2rem;
     overflow: hidden;
 }
+.button{
+    position:absolute;
+    bottom:1rem;
+    left:1rem;
+    width:8rem;
+    height:40px;
+    background-color: rgb(24, 11, 99);
+    font-family: 'Montserrat', sans-serif;
+    font-size:1rem;
+    border-radius:12px;
+    color:rgb(212, 206, 195);
+    cursor: pointer;
+    border-style:none;
+}
+.button:hover{
+    background-color: rgba(69, 70, 82, 0.753);
+    color:white;
+}
+
 .container_flex_item{
     width:38%;
+}
+.input_label{
+    font-size: 1.2rem;
+    font-weight:bold;
+}
+.input_text{
+    font-size:1.2rem;
+}
+.input_cont{
+    width:80%;
+    padding-bottom: 2rem;
+}
+.each_input{
+    display: flex;
+    padding-top:1rem;
+    justify-content: space-between;
+}
+.edit{
+    position:absolute;
+    right:1rem;
+    top:1rem;
+    font-size:1.5rem;
 }
 h1{
     text-align: center;
@@ -159,6 +272,7 @@ h1{
 }
 .card{
     background-color:rgba(129, 145, 150, 0.822);
+    position: relative;
     border-radius: 24px 24px 24px 24px;
 }
 .next_spacing{

@@ -8,5 +8,9 @@ export default{
         console.log("inside getEachStudent");
         return Api().get('geteachstudent');
     },
+    editEachStudent(data){
+        console.log("inside editstudent");
+        return Api().post('editstudent',data);
+    },
 
 }
