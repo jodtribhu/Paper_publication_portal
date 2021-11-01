@@ -3,7 +3,7 @@
             <h2>Approved Publication </h2>
             
              <p @click="check()" v-for="each_accepted in accepted2" :key="each_accepted.PID">
-                <student-approved-card :accepteddetails2="each_accepted"></student-approved-card>
+                <student-approved-card :student="student" :accepteddetails2="each_accepted"></student-approved-card>
             </p>
        
     </base-card>
@@ -13,7 +13,7 @@
 import StudentApprovedCard from './StudentApprovedCard.vue'
 
 export default {
-   props:['accepted2'],
+   props:['accepted2','student'],
   components: {  StudentApprovedCard },
     
 }

@@ -1,12 +1,11 @@
 <template>
-    <div class='paper'>   
-
+    <div class='paper'>  
          <div class="stuinfo">
-            <p class="title">{{rejecteddetails.title}}</p>
+            <p class="title">{{claimeddetails.title}}</p>
             <div class="container_name">    
                 <div class="stu_info_child">
                     <p class="constsize_title ">Student Name : </p>
-                    <p class="constsize_title2 ">{{student.name}}</p>
+                    <p class="constsize_title2 "> {{student.name}}</p>
                 </div>
                 <i @click="toggleButton()" class="far fa-caret-square-down"></i>
             </div>
@@ -22,32 +21,33 @@
             </div>
             <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Eligibility:</span></p>
-                    <p v-if="rejecteddetails.is_eligible_dist=='Yes'" class="eli_result constsize2">Distinction</p>
-                    <p v-if="rejecteddetails.is_eligible_grace=='Yes'" class="eli_result constsize2">Grace Marks</p>
+                <p v-if="claimeddetails.is_eligible_dist=='Yes'" class="eli_result constsize2">Distinction</p>
+                <p v-if="claimeddetails.is_eligible_grace=='Yes'" class="eli_result constsize2">Grace Marks</p>
             </div>
             <div class="flex-ele ">
-                <p class="constsize"><span class="centeralign">Grace Marks:</span></p>
-                <p class="gra_result constsize2">NIL</p>
+                <p class="constsize"><span class="centeralign">Submitted On:</span></p>
+                <p class="gra_result constsize2">{{claimeddetails.s_date}}</p>
             </div>
-            <button class="button"  @click="openPDF(rejecteddetails.link)">Open PDF</button>                   
+            <button class="button2" @click="openPDF(claimeddetails.link)">Open PDF</button>                  
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props:['rejecteddetails','student'],
+    
+    props:['claimeddetails','student'],
     data(){
         return{
             isActive:false,
-           
         }
     },
     methods:{
         toggleButton(){
-            this.isActive=!this.isActive;
+            this.isActive=!this.isActive; console.log(this.claimeddetails);
         },
-         openPDF(link){
+        openPDF(link){
+            console.log(link);
                 window.open(link, "_blank");
           }
     }
@@ -65,7 +65,7 @@ export default {
 }
 .paper{
     border:0.15rem solid ;
-    border-color: #640404;
+    border-color: #616806;
     background-color: white;
     border-radius: 15px;
     height:max-content;
@@ -131,9 +131,7 @@ export default {
 .eli_result{
     color:green;
 }
-.gra_result{
-    color:blue;
-}
+
 .centeralign{
     text-align: left;
     width: 45%;
@@ -164,6 +162,24 @@ export default {
     border-style:none;
 }
 .button:hover{
+    background-color: rgba(69, 70, 82, 0.753);
+    color:white;
+}
+
+.button2{
+    margin-top: 25px;
+    width:8rem;
+    height:40px;
+    background-color: rgb(24, 11, 99);
+    font-family: 'Montserrat', sans-serif;
+    font-size:1rem;
+    border-radius:12px;
+    color:rgb(212, 206, 195);
+    cursor: pointer;
+    border-style:none;
+    margin-left:0.2rem;
+}
+.button2:hover{
     background-color: rgba(69, 70, 82, 0.753);
     color:white;
 }

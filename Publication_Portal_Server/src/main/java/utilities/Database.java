@@ -74,7 +74,7 @@ public class Database  {
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
 			   Statement stmt=con.createStatement();  
-			   return stmt.executeQuery("Select * from paper where P_ID IN (Select P_ID from student_paper where S_ID=" +student_id+ ") "); 
+			   return stmt.executeQuery("Select * from paper,student_paper where paper.P_ID IN (Select P_ID from student_paper where S_ID=" +student_id+ ")  && paper.P_ID=student_paper.P_ID && student_paper.S_ID="+student_id); 
 			  }
 		   	catch(Exception e){ 
 		   		System.out.println(e);
@@ -276,7 +276,19 @@ public class Database  {
 		  
 		 
 	   }
-	   
+	   public void claimPublication(int sp_id)  {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   stmt.executeUpdate("Update student_paper SET IS_CLAIMED='Yes' where sp_id="+sp_id); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		  
+		 
+	   }
 
 
 }

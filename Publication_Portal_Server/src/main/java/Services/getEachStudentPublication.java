@@ -33,11 +33,15 @@ public class getEachStudentPublication extends HttpServlet{
 				obj.put("cname",fs.getString(9));
 				obj.put("is_sur",fs.getString(10));
 				obj.put("is_imp",fs.getString(11));
-				obj.put("p_status",fs.getString(12));
-				obj.put("is_eligible_dist",fs.getString(13));
-				obj.put("is_eligible_grace",fs.getString(14));
-				obj.put("link",fs.getString(15));
-				obj.put("s_date",fs.getString(16));
+				
+				obj.put("is_eligible_dist",fs.getString(12));
+				obj.put("is_eligible_grace",fs.getString(13));
+				obj.put("link",fs.getString(14));
+				obj.put("s_date",fs.getString(15));
+				obj.put("is_claimed",fs.getString(19));
+				obj.put("marks",fs.getString(20));
+				obj.put("p_status",fs.getString(21));
+				obj.put("sp_id",fs.getInt(16));
 				array.put(obj);	
 			}
 			

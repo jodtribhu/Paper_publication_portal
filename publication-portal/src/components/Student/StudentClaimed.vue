@@ -1,8 +1,8 @@
 <template>
     <base-card class="bg_color">
-        <h2 >Pending Publication</h2>
-        <p @click="check()" v-for="each_pending in pending" :key="each_pending.PID">
-          <student-pending-card @claimedit="claimedit_pending()" :student="student" :pendingdetails="each_pending"></student-pending-card>
+        <h2 >Claimed Publication</h2>
+        <p @click="check()" v-for="each_claimed in claimed" :key="each_claimed.PID">
+          <student-claimed-card :student="student" :claimeddetails="each_claimed"></student-claimed-card>
         </p>
 
     </base-card>
@@ -10,21 +10,16 @@
 
 <script>
 import BaseCard from '../layout/BaseCard.vue'
-import StudentPendingCard from './StudentPendingCard.vue'
+import StudentClaimedCard from './StudentClaimedCard.vue'
 export default {
-  props:['pending','student'],
+  props:['claimed','student'],
 
-  components: { BaseCard, StudentPendingCard },
+  components: { BaseCard, StudentClaimedCard },
 
   methods:{
     check(){
-      console.log("Inside student pending"+ this.pending);
-    },
-    claimedit_pending(){
-       console.log("inside refresh 1");
-      this.$emit('claimed_it_p');
+      console.log("Inside student claimed"+ this.claimed);
     }
-
   }
     
 }

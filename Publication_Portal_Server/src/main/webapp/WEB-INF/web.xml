@@ -81,6 +81,15 @@
 		<servlet-name>deleteAdminFaculty</servlet-name>
 		<url-pattern>/deleteadminfaculty </url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>claimPublication</servlet-name>
+	<servlet-class>Services.claimPublication</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>claimPublication</servlet-name>
+		<url-pattern>/claimpublication </url-pattern>
+	</servlet-mapping>
 
 
 </web-app>

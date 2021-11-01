@@ -14,6 +14,7 @@ import StudentHeader from './components/layout/StudentHeader.vue';
 import StudentSidebar from './components/layout/StudentSidebar.vue';
 import StudentCard from './components/layout/StudentCard.vue';
 import VueApexCharts from "vue3-apexcharts";
+import store from './store/index.js';
 
 const app=createApp(App);
 app.component('form-card',Formcard);
@@ -30,4 +31,5 @@ app.component('student-sidebar',StudentSidebar);
 app.component('student-card',StudentCard);
 app.use(router);
 app.use(VueApexCharts);
+app.use(store);
 app.mount('#app');

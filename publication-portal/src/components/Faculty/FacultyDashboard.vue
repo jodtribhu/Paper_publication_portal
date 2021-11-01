@@ -27,8 +27,6 @@
 </template>
 
 <script>
-import GetEach from '@/services/GetEach.js';
-
 import FacultyProfile from './FacultyProfile.vue';
 import FacultyPaper from './FacultyPaper.vue';
 export default {
@@ -40,7 +38,13 @@ export default {
             };
         },
     created(){
-        this.loadeachfaculty();
+         if(this.$store.getters.checkFaculty)
+         {
+               this.loadeachfaculty(); 
+         }
+         else{
+              this.getEach= this.$store.getters.getLoggedInFaculty;
+         }
     },
     methods:{
           executeProfileInfo(){
@@ -50,9 +54,9 @@ export default {
             this.gotoComponentDashboard="PaperList"
           },
           async loadeachfaculty(){
-              const response =await GetEach.getEachFaculty();
-              console.log("INSIDE");
-              this.getEach=response.data;
+              await this.$store.dispatch("loadfaculty");
+              this.getEach= this.$store.getters.getLoggedInFaculty;
+              console.log(this.getEach.name);
           }
       }
 }

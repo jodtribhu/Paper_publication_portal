@@ -28,38 +28,35 @@
                 <p class="constsize"><span class="centeralign">Submitted On:</span></p>
                 <p class="gra_result constsize2">{{pendingdetails.s_date}}</p>
             </div>
-            <button class="button">Claim</button>   
+            <button class="button" @click="claimPublication(pendingdetails.sp_id)">Claim</button>   
             <button class="button2" @click="openPDF(pendingdetails.link)">Open PDF</button>                  
         </div>
     </div>
 </template>
 
 <script>
-import GetEach from '@/services/GetEach.js';
+import EachStudentPublication from '@/services/EachStudentPublication.js';
 export default {
     
-    props:['pendingdetails'],
+    props:['pendingdetails','student'],
     data(){
         return{
             isActive:false,
-            student:{}
         }
-    },
-    mounted(){
-        this.loadeachstudent();
-      
     },
     methods:{
         toggleButton(){
             this.isActive=!this.isActive; console.log(this.pendingdetails);
         },
-        async loadeachstudent(){
-              const response =await GetEach.getEachStudent();
-              this.student=response.data;
-          },
         openPDF(link){
             console.log(link);
                 window.open(link, "_blank");
+          },
+        async claimPublication(sp_id){
+            console.log("inside refresh 0");
+            await EachStudentPublication.claimPublication({"sp_id":sp_id});
+            this.$emit('claimedit');
+        
           }
     }
 }

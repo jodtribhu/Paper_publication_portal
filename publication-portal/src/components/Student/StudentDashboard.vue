@@ -36,8 +36,8 @@
                         <p  class="each_item_answer"> {{student.email}}</p>
                     </div>
                     <div  class="each_item"> 
-                        <p class="each_item_label">Mobile:</p>
-                        <p  class="each_item_answer"> {{student.phoneNO}}</p>
+                        <p class="each_item_label">Mobile Number:</p>
+                        <p  class="each_item_answer"> {{student.phoneno}}</p>
                     </div>
                 </div>
 
@@ -50,10 +50,11 @@
                     <div class="container_top" >
                         <div class="container">
                                
-                                <div class="container-items1"><p class="block">{{publication_count.accepted}}</p> <p class="block">  Accepted Publications </p> </div>
-                                <div class="container-items2"><p class="block">{{publication_count.rejected}}</p><p class="block"> Rejected Publications </p></div>
-                                <div class="container-items3"><p class="block">{{publication_count.pending}}</p><p class="block"> Pending Publications </p></div>
-                                <div class="container-items4"><p class="block">{{publication_count.total}}</p><p class="block"> Total Publications</p> </div>
+                                <div class="container-items1"><div class="elem">   <p class="block">  Pending Publications: </p> <p class="block color">{{publication_count.pending  }}</p></div></div>
+                                <div class="container-items2"><div class="elem">   <p class="block">  Claimed Publications: </p> <p class="block color">{{publication_count.claimed  }}</p> </div></div>
+                                <div class="container-items3"><div class="elem">  <p class="block"> Accepted Publications: </p> <p class="block color">{{publication_count.accepted }}</p></div></div>
+                                <div class="container-items4"><div class="elem"> <p class="block"> Rejected Publications: </p>  <p class="block color">{{publication_count.rejected}}</p></div></div>
+                                <div class="container-items5"><div class="elem">  <p class="block"> Total Publications: </p> <p class="block color">{{publication_count.total}}</p> </div></div>
                         </div>            
                         <div class="pcard">
                             <div>
@@ -73,9 +74,7 @@
 </template>
 
 <script>
-import GetEach from '@/services/GetEach.js';
 
-import EachStudentPublication from '@/services/EachStudentPublication.js';
 export default {
     data(){
         return{
@@ -83,7 +82,7 @@ export default {
             publication_count:{},
             publicationchartOptions: {
                             chart: {fontFamily: 'Montserrat, sans-serif'},
-                            colors:['#13a608','#ff9a1f','#f72027'],
+                            colors:['#13a608','#ff9a1f','#4e6321','#f72027'],
                             stroke: {
                                     width:0
                                 },
@@ -91,42 +90,51 @@ export default {
                                     style: {
                                         colors: ['#e6e6e6'] }
                                 },
-                            labels:['Accepted','Pending','Rejected']
+                            labels:['Accepted','Pending','Claimed','Rejected']
                         },
 
             publicationseries: [], 
         }
     },
     created(){
-        this.loadeachstudent();
-        this.loadthePublications();
+         if(this.$store.getters.checkStudent)
+         {
+               this.loadeachstudent(); 
+               this.loadthePublications();
+         }
+         else{
+                this.student= this.$store.getters.getLoggedInStudent;
+                this.publication_count={'pending':this.$store.getters.getPendingPublication.length,
+                'claimed':this.$store.getters.getClaimedPublication.length,
+                'accepted':this.$store.getters.getAcceptedPublication.length,
+                'rejected':this.$store.getters.getRejectedPublication.length,
+                'total':this.$store.getters.getTotal}
+                var listArray = []
+                listArray.push(this.$store.getters.getAcceptedPublication.length)
+                listArray.push(this.$store.getters.getPendingPublication.length)
+                listArray.push(this.$store.getters.getClaimedPublication.length)
+                listArray.push(this.$store.getters.getRejectedPublication.length)
+                this.publicationseries=listArray;
+         }
+        
     },
     methods:{
         async loadeachstudent(){
-              const response =await GetEach.getEachStudent();
-              this.student=response.data;
+              await this.$store.dispatch("loadstudent");
+              this.student= this.$store.getters.getLoggedInStudent;
           },
         async loadthePublications(){
-            const response =await EachStudentPublication.getEachStudentPublciation();
-            console.log("IN "+response.data.publications[0].title);
-            this.pending_publication = response.data.publications.filter(function (e) {
-                        return e.p_status =="Pending";
-            });
-
-            console.log("All pending "+this.pending_publication[0].title );
-            this.accepted_publication = response.data.publications.filter(function (e) {
-                        return e.p_status=="Accepted";
-            });
-            this.rejected_publication = response.data.publications.filter(function (e) {
-                        return e.p_status=="Rejected";
-            });
-            var total=this.pending_publication.length+this.accepted_publication.length+this.rejected_publication.length;
-            this.publication_count={'pending':this.pending_publication.length,'accepted':this.accepted_publication.length,'rejected':this.rejected_publication.length,'total':total}
+            await this.$store.dispatch("loadpublication");
+            this.publication_count={'pending':this.$store.getters.getPendingPublication.length,
+            'accepted':this.$store.getters.getAcceptedPublication.length,
+            'claimed':this.$store.getters.getClaimedPublication.length,
+            'rejected':this.$store.getters.getRejectedPublication.length,
+            'total':this.$store.getters.getTotal}
             var listArray = []
-            listArray.push(this.accepted_publication.length)
-            listArray.push(this.pending_publication.length)
-            listArray.push(this.rejected_publication.length)
-
+            listArray.push(this.$store.getters.getAcceptedPublication.length)
+            listArray.push(this.$store.getters.getPendingPublication.length)
+            listArray.push(this.$store.getters.getClaimedPublication.length)
+            listArray.push(this.$store.getters.getRejectedPublication.length)
             this.publicationseries=listArray;
         }
     }
@@ -182,14 +190,33 @@ h1{
 
 
 /*graph*/
+
 .container_top{
     padding-top: 2rem;
 }
+.elem{
+    min-height:4rem;
+    display: flex;
+    text-align: center;
+    justify-content:center;
+    flex-direction: column;
+    width:100%;
+    margin:0;
+    padding:0;
+    
+    
+}
 .block{
+    padding-top:0.2rem;
+    padding-bottom:0;
+    margin:0;
     display: inline-block;
     padding-left:2px;
     font-family: 'Montserrat', sans-serif;     
-    font-weight:600;   
+    font-weight:600; 
+     
+   
+    
 }
 .container-items1{
     display: flex;
@@ -224,6 +251,16 @@ h1{
     border-left:2px solid rgb(70, 69, 69);
      background-color:rgb(209, 199, 199);
     justify-content: center;
+    border-radius: 0 0 0 0;
+    
+    align-items: center;
+}
+.container-items5{
+    display: flex;
+    width:100%;
+    border-left:2px solid rgb(70, 69, 69);
+     background-color:rgb(209, 199, 199);
+    justify-content: center;
     border-radius: 0 24px 0 0;
     
     align-items: center;
@@ -251,7 +288,7 @@ h1{
 .container{
     margin:auto;
     
-    width: 80%;
+    width: 90%;
     display: flex;
     justify-content: space-around;
     align-items: center;

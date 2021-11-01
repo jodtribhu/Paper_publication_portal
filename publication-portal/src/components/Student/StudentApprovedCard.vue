@@ -34,26 +34,18 @@
 </template>
 
 <script>
-import GetEach from '@/services/GetEach.js';
 export default {
-    props:['accepteddetails2'],
+    props:['accepteddetails2','student'],
     data(){
         return{
             isActive:false,
-            student:{}
         }
     },
-    created(){
-        this.loadeachstudent();
-    },
+
     methods:{
         toggleButton(){
             this.isActive=!this.isActive;
         },
-         async loadeachstudent(){
-              const response =await GetEach.getEachStudent();
-              this.student=response.data;
-          },
           openPDF(link){
                 window.open(link, "_blank");
           }

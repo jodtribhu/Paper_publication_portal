@@ -23,7 +23,7 @@ public class EachStudent extends HttpServlet{
 					obj.put("sID",fs.getInt(1));
 					obj.put("name",fs.getString(2));
 					obj.put("rollNo",fs.getString(3));
-					obj.put("phoneNO",fs.getString(11));
+				
 					obj.put("email",fs.getString(4));
 					obj.put("graceMarks",fs.getInt(6));
 					obj.put("campus",fs.getString(8));

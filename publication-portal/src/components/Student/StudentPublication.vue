@@ -8,6 +8,12 @@
                         </div>
                         
                         <hr>
+
+                        <div :class="{ 'shadow2' : gotoComponentDashboard === 'StudentClaimed'}"  @click="executeClaimed" class="tabbed_view_flex_item tab2"> 
+                            <p>Claimed Publication</p>
+                        </div>
+
+                        <hr>
                         <div :class="{ 'shadow2' : gotoComponentDashboard === 'StudentAccepted'}"  @click="executeAccepted" class="tabbed_view_flex_item tab2"> 
                             <p >Approved Publication</p>
                         </div>
@@ -20,9 +26,10 @@
                 </div>
 
                 
-                <student-pending  :pending="pending_publication"  v-if="gotoComponentDashboard=='StudentPending'"></student-pending >
-                <student-accepted :accepted2="accepted_publication"   v-if="gotoComponentDashboard=='StudentAccepted'"></student-accepted >
-                <student-rejected :rejected="rejected_publication"  v-if="gotoComponentDashboard=='StudentRejected'"></student-rejected >
+                <student-pending @claimed_it_p="refresh()" :student="student" :pending="pending_publication"  v-if="gotoComponentDashboard=='StudentPending'"></student-pending >
+                <student-claimed :student="student" :claimed="claimed_publication"  v-if="gotoComponentDashboard=='StudentClaimed'"></student-claimed >               
+                <student-accepted :student="student" :accepted2="accepted_publication"   v-if="gotoComponentDashboard=='StudentAccepted'"></student-accepted >
+                <student-rejected :student="student"  :rejected="rejected_publication"  v-if="gotoComponentDashboard=='StudentRejected'"></student-rejected >
             </div> 
     </div>
 </template>
@@ -30,22 +37,34 @@
 import StudentAccepted from './StudentAccepted.vue';
 import StudentRejected from './StudentRejected.vue';
 import StudentPending from './StudentPending.vue';
-
-import EachStudentPublication from '@/services/EachStudentPublication.js';
+import StudentClaimed from './StudentClaimed.vue';
 
 export default {
-      components: { StudentAccepted,StudentRejected,StudentPending},
+      components: { StudentAccepted,StudentRejected,StudentPending,StudentClaimed},
+      created(){
+         if(this.$store.getters.checkStudent)
+         {
+               this.loadeachstudent(); 
+               this.loadthePublications();
+         }
+         else{
+              this.student= this.$store.getters.getLoggedInStudent;
+              this.pending_publication= this.$store.getters.getPendingPublication;
+               this.claimed_publication= this.$store.getters.getClaimedPublication;
+              this.accepted_publication= this.$store.getters.getAcceptedPublication;
+              this.rejected_publication= this.$store.getters.getRejectedPublication;
+         }
+        
+        },
       data(){
       return{
           gotoComponentDashboard:"StudentPending",
           pending_publication:[{}],
           accepted_publication:[{}],
-          rejected_publication:[{}]
+          rejected_publication:[{}],
+          claimed_publication:[{}]
 
             };
-        },
-        mounted(){
-            this.loadPublications();
         },
     methods:{
           executeAccepted(){
@@ -57,22 +76,26 @@ export default {
            executeRejected(){
             this.gotoComponentDashboard="StudentRejected"
           },
-        async loadPublications(){
-            console.log("INside the loadpending");
-            const response =await EachStudentPublication.getEachStudentPublciation();
-            console.log("IN "+response.data.publications[0].title);
-            this.pending_publication = response.data.publications.filter(function (e) {
-                        return e.p_status =="Pending";
-            });
-            console.log("All pending "+this.pending_publication[0].title );
-            this.accepted_publication = response.data.publications.filter(function (e) {
-                        return e.p_status=="Accepted";
-            });
-            this.rejected_publication = response.data.publications.filter(function (e) {
-                        return e.p_status=="Rejected";
-            });
+           executeClaimed(){
+            this.gotoComponentDashboard="StudentClaimed"
+          },
 
-            return ;
+        async loadeachstudent(){
+            console.log("inside the studentpublication.vue");
+              await this.$store.dispatch("loadstudent");
+              this.student= this.$store.getters.getLoggedInStudent;
+          },
+        async loadthePublications(){
+            await this.$store.dispatch("loadpublication");
+            this.student= this.$store.getters.getLoggedInStudent;
+            this.pending_publication=this.$store.getters.getPendingPublication
+            this.claimed_publication= this.$store.getters.getClaimedPublication;
+            this.accepted_publication=this.$store.getters.getAcceptedPublication
+            this.rejected_publication=this.$store.getters.getRejectedPublication
+        },
+        refresh(){
+            console.log("inside refresh 2");
+            this.loadthePublications();
         }
       }
 }
@@ -101,7 +124,7 @@ h2{
      text-align: center;
 }
 .tabbed_view{
-    max-width:55%;
+    max-width:70%;
     margin-left:3.5rem;
     padding-bottom:0;
 }
