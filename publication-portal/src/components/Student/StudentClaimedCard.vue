@@ -1,5 +1,19 @@
 <template>
     <div class='paper'>  
+        <base-dialog :show=showDialog  title="Team Mates" @close="opencloseDialog">
+            <div>
+                <div v-for="member in claimeddetails_team(student.sID)" :key=member.name>
+                        <div class="student_name">
+                            <p> <span class="boldit">Student Name</span>  : <span>{{member.mate_name}}</span> </p>
+                        </div>
+                        
+                        <div class="student_name">
+                            <p> <span class="boldit">Paper Status</span>  : <span>{{getStatus(member.mate_status,member.mate_claimed_status)}}</span> </p>
+                        </div>
+                        <hr v-if="claimeddetails_team(student.sID).length>1">
+                </div>
+            </div>
+        </base-dialog>  
          <div class="stuinfo">
             <p class="title">{{claimeddetails.title}}</p>
             <div class="container_name">    
@@ -28,18 +42,22 @@
                 <p class="constsize"><span class="centeralign">Submitted On:</span></p>
                 <p class="gra_result constsize2">{{claimeddetails.s_date}}</p>
             </div>
-            <button class="button2" @click="openPDF(claimeddetails.link)">Open PDF</button>                  
+            <button class="button" @click="unclaim(claimeddetails.sp_id)">Remove</button>    
+            <button class="button2" @click="openPDF(claimeddetails.link)">Open PDF</button>         
+            <button class="button" @click="opencloseDialog()" v-if="claimeddetails_team(student.sID).length>0">Team Status</button>             
         </div>
     </div>
 </template>
 
 <script>
+import EachStudentPublication from '@/services/EachStudentPublication.js';
 export default {
     
     props:['claimeddetails','student'],
     data(){
         return{
             isActive:false,
+            showDialog:false,
         }
     },
     methods:{
@@ -49,7 +67,31 @@ export default {
         openPDF(link){
             console.log(link);
                 window.open(link, "_blank");
-          }
+        },
+        opencloseDialog(){
+             this.showDialog=!this.showDialog;  
+        },  
+        claimeddetails_team(id){
+          var team2=this.claimeddetails.team.filter(function (e) {
+                    return e.mate_id != id;
+                });
+            return team2;
+        },
+        getStatus(status,c_status){
+            if(status=="Pending" && c_status=="Yes"){
+                return "Claimed"
+            }
+            else if(status=="Pending" && c_status=="No"){
+                return "Claimed"
+            }
+            else{
+                return status;
+            }              
+        },
+        async unclaim(sp_id){
+            await EachStudentPublication.claimPublication({"sp_id":sp_id,"value":0});
+            this.$emit('unclaimedit');
+        }
     }
 }
 </script>
@@ -151,6 +193,9 @@ export default {
 }
 .button{
     margin-top: 25px;
+    margin-left:1rem;
+    margin-right:1rem;
+
     width:8rem;
     height:40px;
     background-color: rgb(24, 11, 99);

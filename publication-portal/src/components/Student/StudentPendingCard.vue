@@ -70,7 +70,7 @@ export default {
           },
         async claimPublication(sp_id){
             console.log("inside refresh 0");
-            await EachStudentPublication.claimPublication({"sp_id":sp_id});
+            await EachStudentPublication.claimPublication({"sp_id":sp_id,"value":1});
             this.$emit('claimedit');
         
           },

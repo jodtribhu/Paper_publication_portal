@@ -286,9 +286,19 @@ public class Database  {
 		   	catch(Exception e){ 
 		   		System.out.println(e);
 		   	} 
-		  
-		 
 	   }
+	   public void unclaimPublication(int sp_id)  {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   stmt.executeUpdate("Update student_paper SET IS_CLAIMED='No' where sp_id="+sp_id); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+	   }
+	   
 	   public ResultSet getEachStudentPublicationTeamStatus(int p_id)  {
 		   ResultSet rs2=null;
 		   try{  

@@ -23,7 +23,14 @@ public class claimPublication extends HttpServlet{
 	        }
 	        JSONObject jObj = new JSONObject(sb.toString());
 	        int sp_id = jObj.getInt("sp_id");
-	        d.claimPublication(sp_id);    
+	        int value = jObj.getInt("value");
+	        if(value==1) {
+	        	d.claimPublication(sp_id);
+	        }
+	        else {
+	        	d.unclaimPublication(sp_id);
+	        }
+	            
 	        
 	        JSONObject json = new JSONObject();
 	        res.setContentType("application/json");

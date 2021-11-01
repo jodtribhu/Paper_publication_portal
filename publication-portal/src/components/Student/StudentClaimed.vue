@@ -2,7 +2,7 @@
     <base-card class="bg_color">
         <h2 >Claimed Publication</h2>
         <p @click="check()" v-for="each_claimed in claimed" :key="each_claimed.PID">
-          <student-claimed-card :student="student" :claimeddetails="each_claimed"></student-claimed-card>
+          <student-claimed-card @unclaimedit="unclaim()"  :student="student" :claimeddetails="each_claimed"></student-claimed-card>
         </p>
 
     </base-card>
@@ -19,6 +19,9 @@ export default {
   methods:{
     check(){
       console.log("Inside student claimed"+ this.claimed);
+    },
+    unclaim(){
+      this.$emit('unclaimedit_pending');
     }
   }
     

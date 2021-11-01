@@ -27,7 +27,7 @@
 
                 
                 <student-pending @claimed_it_p="refresh()" :student="student" :pending="pending_publication"  v-if="gotoComponentDashboard=='StudentPending'"></student-pending >
-                <student-claimed :student="student" :claimed="claimed_publication"  v-if="gotoComponentDashboard=='StudentClaimed'"></student-claimed >               
+                <student-claimed @unclaimedit_pending="refresh()" :student="student" :claimed="claimed_publication"  v-if="gotoComponentDashboard=='StudentClaimed'"></student-claimed >               
                 <student-accepted :student="student" :accepted2="accepted_publication"   v-if="gotoComponentDashboard=='StudentAccepted'"></student-accepted >
                 <student-rejected :student="student"  :rejected="rejected_publication"  v-if="gotoComponentDashboard=='StudentRejected'"></student-rejected >
             </div> 
