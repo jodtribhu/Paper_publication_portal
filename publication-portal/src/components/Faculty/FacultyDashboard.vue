@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <faculty-profile v-if="gotoComponentDashboard=='ProfileInfo'" :faculty="getEach"> </faculty-profile>
+                <faculty-profile @refresh="refreshthePage()" v-if="gotoComponentDashboard=='ProfileInfo'" :faculty="getEach"> </faculty-profile>
                 <faculty-paper v-if="gotoComponentDashboard=='PaperList'"></faculty-paper>
             </div>
 
@@ -57,6 +57,10 @@ export default {
               await this.$store.dispatch("loadfaculty");
               this.getEach= this.$store.getters.getLoggedInFaculty;
               console.log(this.getEach.name);
+          },
+          refreshthePage(){
+              console.log("inside refresh the page");
+              this.loadeachfaculty();
           }
       }
 }

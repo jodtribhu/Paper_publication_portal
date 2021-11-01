@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-public class claimPublication extends HttpServlet{
+public class editFaculty extends HttpServlet{
 	public void doPost(HttpServletRequest req,HttpServletResponse res)
 	{
 		utilities.Database d=new utilities.Database();
@@ -22,15 +22,16 @@ public class claimPublication extends HttpServlet{
 	            System.out.println(str);
 	        }
 	        JSONObject jObj = new JSONObject(sb.toString());
-	        int sp_id = jObj.getInt("sp_id");
-	        int value = jObj.getInt("value");
-	        if(value==1) {
-	        	d.claimPublication(sp_id);
-	        }
-	        else {
-	        	d.unclaimPublication(sp_id);
-	        }	
-	            
+	        int f_id = jObj.getInt("f_id");
+	        String editname = jObj.getString("editname");
+	        String editroll = jObj.getString("editroll");
+	        String editdept = jObj.getString("editdept");
+	        String editdesig = jObj.getString("editdesig");
+	        String editcampus = jObj.getString("editcampus");
+	        String editmobile = jObj.getString("editmobile");
+	        String editemail = jObj.getString("editemail");
+	        d.editFaculty(f_id,editname,editroll,editdept,editdesig,editcampus,editmobile,editemail);
+	        
 	        
 	        JSONObject json = new JSONObject();
 	        res.setContentType("application/json");

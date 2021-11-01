@@ -103,7 +103,7 @@ public class Database  {
 				    login_id=rs.getInt(1);
 			   }
 			   
-			   String sql3="Insert into faculty(Name,PhoneNO,IDNO,DEPARTMENT,EMAIL,L_ID,CREATEDAT,DESIGNATION,CAMPUS) VALUES ('"+"Enter Name"+ "','"+ "Enter Phone "+"','"+name+ "',"+"'Enter department','"+email+"','"+login_id+"','"+ldate+"','"+"Enter Designation','"+"Enter Campus"+"');";
+			   String sql3="Insert into faculty(Name,PhoneNO,IDNO,DEPARTMENT,EMAIL,L_ID,DESIGNATION,CAMPUS) VALUES ('"+"Enter Name"+ "','"+ "Enter Phone "+"','"+name+ "',"+"'Enter department','"+email+"','"+login_id+"',"+"Enter Designation','"+"Enter Campus"+"');";
 			   stmt.executeUpdate(sql3); 
 			   System.out.println(sql3);
 			  }
@@ -333,7 +333,20 @@ public class Database  {
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
 			   Statement stmt=con.createStatement(); 
-			   stmt.executeUpdate("Update student SET Name='"+editname+"',RollNO='" +editroll+"',EMAIL='"+editemail+"',CAMPUS='"+editcampus+"',SEX='"+editgender+"',PHONENO='"+editmobile+"',DEPARTMENT='"+editdept+"' where s_id="+s_id); 
+			   stmt.executeUpdate("Update student SET Name='"+editname+"',RollNO='" +editroll+"',EMAIL='"+editemail+"',CAMPUS='"+editcampus+"',SEX='"+editgender+"',PHONENO='"+editmobile+"',DEPARTMENT='"+editdept+"' where S_ID="+s_id); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		  
+		 
+	   }
+	   public void editFaculty(int f_id,String editname,String editroll ,String editdept ,String editdesig ,String editcampus ,String editmobile,String editemail)  {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   stmt.executeUpdate("Update faculty SET Name='"+editname+"',IDNO='" +editroll+"',EMAIL='"+editemail+"',CAMPUS='"+editcampus+"',DESIGNATION='"+editdesig+"',PhoneNO='"+editmobile+"',DEPARTMENT='"+editdept+"' where F_ID="+f_id); 
 			  }
 		   	catch(Exception e){ 
 		   		System.out.println(e);

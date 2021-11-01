@@ -100,4 +100,13 @@
 		<url-pattern>/editstudent </url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>editFaculty</servlet-name>
+	<servlet-class>Services.editFaculty</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>editFaculty</servlet-name>
+		<url-pattern>/editfaculty </url-pattern>
+	</servlet-mapping>
+
 </web-app>

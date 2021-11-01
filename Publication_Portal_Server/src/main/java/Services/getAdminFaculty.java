@@ -36,8 +36,8 @@ public class getAdminFaculty extends HttpServlet{
 					obj.put("IDNO",fs2.getString(4));
 					obj.put("department",fs2.getString(5));
 					obj.put("email",fs2.getString(6));
-					obj.put("designation",fs2.getString(9));
-					obj.put("campus",fs2.getString(10));
+					obj.put("designation",fs2.getString(8));
+					obj.put("campus",fs2.getString(9));
 					array.put(obj);	
 				
 			}

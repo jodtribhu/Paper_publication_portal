@@ -26,8 +26,8 @@ public class EachFaculty extends HttpServlet{
 				obj.put("IDNO",fs.getString(4));
 				obj.put("department",fs.getString(5));
 				obj.put("email",fs.getString(6));
-				obj.put("designation",fs.getString(9));
-				obj.put("campus",fs.getString(10));
+				obj.put("designation",fs.getString(8));
+				obj.put("campus",fs.getString(9));
 			     res.setContentType("application/json");
 			     res.setHeader("Cache-Control", "nocache");
 			     res.setCharacterEncoding("utf-8");
