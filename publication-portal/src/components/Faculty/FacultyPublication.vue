@@ -3,7 +3,7 @@
     <h1>Student Publications</h1>
     <base-card >
       <input type="text" v-on:keyup.delete="filter_publications()" v-on:keyup.enter="filter_publications()"  class="searchbar" v-model="searchkey" placeholder="Search..">
-      <p>.</p>
+   
       <table>
               <tr>
                   <th> Student Name</th>
@@ -12,8 +12,9 @@
                   <th class="details_size"> Details</th>
               </tr>
         </table>
-      <p v-for="publication in x" :key="publication._id">
-        <faculty-item  :publication_record="publication" ></faculty-item> 
+      <p v-for="publication in pending_publications" :key="publication.PF_ID">
+        <faculty-item  @refreshthepublication="refresh()" :publication_record="publication" ></faculty-item> 
+        
       </p>
     </base-card>
    
@@ -28,67 +29,29 @@ export default {
       return {
         searchkey:'',
         x:[],
-        publications:[ {name:"Yadhu Nandan",rollNo:"CB.EN.U4CSE18368",email:"cb.en.u4cse18368@cb.students.amrita.edu",ptitle:"Research Paper Classification",
-start:"01-01-2021",end:"10-08-2021",journal:"true",conference:"false",jname:"Scientific Reports",cname:null,teamsize:4,mark:8,teammates:"Kenny Bhat, Akash Varma, Sujith Kaur"},
-      {name:"Jodiss Tribhu",
-      rollNo:"CB.EN.U4CSE18327",
-      email:"cb.en.u4cse18327@cb.students.amrita.edu",
-      ptitle:"Alzheimer's Detection",
-      start:"05-09-2020",
-      end:"15-11-2020",
-      journal:"true",
-      conference:"false",
-      jname:"Science Advances",
-      cname:null,
-      teamsize:4,
-      mark:8,
-      gdrive:'https://googledrive/.com',
-      teammates:"Sachin Sharma, Rohit Gupta,Virat Tendulkar"},
-      {name:"Ashwin K",
-        rollNo:"CB.EN.U4CSE18307",
-        email:"cb.en.u4cse18307@cb.students.amrita.edu",
-        ptitle:"Smart Home System",
-        start:"07-10-2020",
-        end:"30-12-2020",
-        journal:"true",
-        conference:"false",
-        jname:"Science",
-        cname:null,
-        teamsize:1,
-        mark:6},
-        {name:"Sreekar K",
-          rollNo:"CB.EN.U4CSE18330",
-          email:"cb.en.u4cse18330@cb.students.amrita.edu",
-          ptitle:"Glaucoma Detection",
-          start:"07-10-2020",
-          end:"30-12-2020",
-          journal:"true",
-          conference:"false",
-          jname:"Science Advances",
-          cname:null,
-          teamsize:3,
-          mark:7,
-          teammates:"John Smith, Michael Scott"},
-          {name:"Abhilash Parayil",
-            rollNo:"CB.EN.U4CSE18301",
-            email:"cb.en.u4cse18301@cb.students.amrita.edu",
-            ptitle:"Spam Mail Classification",
-            start:"17-09-2020",
-            end:"31-12-2020",
-            journal:"false",
-            conference:"true",
-            jname:null,
-            cname:"Cyber Summit",
-            teamsize:1,
-            mark:8},
-]
+        pending_publications:[{}]
       };
     },
     created(){
-      this.x=this.publications;
+        if(this.$store.getters.checkFaculty)
+         {
+               this.loadeachfaculty();
+               this.loadthePendingFacultyPublications(); 
+         }
+         else{
+              this.getEach= this.$store.getters.getLoggedInFaculty;
+              this.pending_publications=this.$store.getters.getFacultyPendingPublication
+         }
     },
     methods:{
-        
+         async loadthePendingFacultyPublications(){
+            await this.$store.dispatch("loadfacultypublication");
+            this.pending_publications=this.$store.getters.getFacultyPendingPublication
+       
+        },
+        refresh(){
+            this.loadthePendingFacultyPublications(); 
+        },
         filter_publications(){
             this.x=this.publications.filter((publication) => {
               if (publication.name.toLowerCase().includes(this.searchkey.toLowerCase())) {

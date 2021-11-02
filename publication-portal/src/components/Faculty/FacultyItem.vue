@@ -1,29 +1,37 @@
 <template>
     <div >
-     <base-dialog :show=showDialog class="dialogbox " title=" Additional Details" @close="opencloseDialog" >
+<base-dialog :show=showDialog class="dialogbox " title=" Additional Details" @close="opencloseDialog" >
             <div class="student_name">
-                <p> <span class="boldit">Student Email</span>  : <span>{{publication_record.email}}</span> </p>
+                <p> <span class="boldit">Student Email :</span>   <span>{{publication_record.email}}</span> </p>
             </div>
             <div class="student_name">
-                <p> <span class="boldit">Student Roll Number</span>  : <span>{{publication_record.rollNo}}</span> </p>
+                <p> <span class="boldit">Student Roll Number :</span>   <span>{{publication_record.rollNo}}</span> </p>
             </div>
             <div class="student_name">
-                <p> <span class="boldit">Publication Link</span>  : <span><a href="publication_record.gdrive">{{publication_record.gdrive}}</a></span> </p>
+                <p> <span class="boldit">Student Phone Number :</span>  <span>{{publication_record.phoneno}}</span> </p>
             </div>
             <div class="student_name">
-                <p><span class="boldit">Journal Name </span> : <span v-if="publication_record.jname!=''">{{publication_record.jname}}</span>
+                <p> <span class="boldit">Publication Link :</span>  <span><a :href="publication_record.link">Click Here</a></span> </p>
+            </div>
+            <div class="student_name" v-if="publication_record.jname!=0">
+                <p><span class="boldit">Journal Name :</span>  <span >{{publication_record.jname}}</span>
                 <span v-if="publication_record.jname==null">: Not in a Journal</span>
                 </p>
             </div>
-            <div class="student_name">
-                <p><span class="boldit">Conference Name </span> <span v-if="publication_record.cname!=''">{{publication_record.cname}}</span>
+            <div class="student_name"  v-if="publication_record.cname!=0">
+                <p><span class="boldit">Conference Name : </span> <span>{{publication_record.cname}}</span>
                 <span v-if="publication_record.cname==null">:Not presented in a Conference</span>
                 
                 </p>
             </div>
             <div class="student_name">
-                <p><span class="boldit">Team Mates </span> <span v-if="publication_record.teammates!=''">: {{publication_record.teammates}}</span>
-                <span v-if="publication_record.teammates==null">: Himself</span>   
+                <p> <span class="boldit">Scopus Indexed :</span>  <span>{{publication_record.scp_index}} </span> </p>
+            </div>
+            
+            <div class="student_name" v-if="getTemsize(publication_record.team)>0">
+                <p><span class="boldit">Team Mates : </span> 
+                <span v-for="member in publication_record.team" :key="member.mate_id" > {{member.mate_name}}  </span>
+    
                 </p>
             </div>
             <div class="buttons_position">
@@ -31,27 +39,30 @@
               <button class="declineButton" @click="opencloseDeclineDialog">Decline</button>
             </div>
      </base-dialog>
+
+
+     
      <base-dialog :show=showAcceptDialog class="dialogbox " title="Accept" @close="opencloseAcceptDialog" >
         <div class="remark_container">
             <p class="label_accept">Enter Your Remarks: </p>
-            <textarea class="textarea_accept" ></textarea>
+            <textarea class="textarea_accept" v-model="publication_remarks" ></textarea>
         </div>
         <div class="accept_container">
             <p class="label_accept">Enter Your Marks: </p>
-            <input class="input_accept" type="text">
+            <input class="input_accept" type="text" v-model="publication_marks">
         </div>
         <div class="buttons_position">
-              <button class="acceptButton" @click="opencloseAcceptDialog">Accept</button>
+              <button class="acceptButton" @click="opencloseApprovePublicationDialog">Accept</button>
              
         </div>
      </base-dialog>
      <base-dialog :show=showDeclineDialog class="dialogbox " title="Accept" @close="opencloseDeclineDialog" >
         <div class="remark_container">
             <p class="label_accept">Enter Your Remarks: </p>
-            <textarea class="textarea_accept" ></textarea>
+            <textarea class="textarea_accept" v-model="publication_remarks" ></textarea>
         </div>
         <div class="buttons_position">
-              <button class="declineButton"  @click="opencloseDeclineDialog">Decline</button>
+              <button class="declineButton"  @click="opencloseDeclinePublicationDialog">Decline</button>
         </div>
      </base-dialog>
 
@@ -60,8 +71,8 @@
             <table >
                 <tr>
                     <td> {{publication_record.name}}</td>
-                    <td class="title_size">  {{publication_record.ptitle}}</td>
-                    <td class="m_size"> {{publication_record.teamsize}}</td>
+                    <td class="title_size">  {{publication_record.title}}</td>
+                    <td class="m_size"> {{getTemsize(publication_record.team)}}</td>
                     <td class="details_size" @click="opencloseDialog"> <button class="detailsbutton">Show Details</button> </td>
                 </tr>
             </table>
@@ -76,13 +87,16 @@
 
 
 <script>
+import EachFacultyPublication from '@/services/EachFacultyPublication.js';
 export default {
     props:['publication_record'],
      data(){
         return{
             showDialog:false,
             showAcceptDialog:false,
-            showDeclineDialog:false
+            showDeclineDialog:false,
+            publication_remarks:'',
+            publication_marks:0,
 
         };
      },
@@ -90,10 +104,25 @@ export default {
         opencloseDialog(){
             this.showDialog=!this.showDialog;           
         },
-        opencloseAcceptDialog(){
-            this.showAcceptDialog=!this.showAcceptDialog;  
-            this.showDialog=false;  
+        getTemsize(teamarray){
+            return teamarray.length
         },
+        async opencloseAcceptDialog(){
+            this.showAcceptDialog=!this.showAcceptDialog;  
+            this.showDialog=false; 
+        },
+        async opencloseApprovePublicationDialog(){
+            this.showAcceptDialog=!this.showAcceptDialog;  
+            this.showDialog=false; 
+            await EachFacultyPublication.acceptPublication({p_remark:this.publication_remarks,p_mark:this.publication_marks,SP_ID:this.publication_record.SP_ID});
+            this.$emit("refreshthepublication")
+        },
+        async opencloseDeclinePublicationDialog(){
+            this.showAcceptDialog=!this.showAcceptDialog;  
+            this.showDialog=false; 
+            await EachFacultyPublication.declinePublication({p_remark:this.publication_remarks,SP_ID:this.publication_record.SP_ID});
+            this.$emit("refreshthepublication")
+        }, 
         opencloseDeclineDialog(){
             this.showDeclineDialog=!this.showDeclineDialog;  
             this.showDialog=false; 

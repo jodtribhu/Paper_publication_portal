@@ -108,5 +108,37 @@
 		<servlet-name>editFaculty</servlet-name>
 		<url-pattern>/editfaculty </url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>getEachFacultyPublication</servlet-name>
+	<servlet-class>Services.getEachFacultyPublication</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getEachFacultyPublication</servlet-name>
+		<url-pattern>/geteachfacultypublication </url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>acceptPublication</servlet-name>
+	<servlet-class>Services.acceptPublication</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>acceptPublication</servlet-name>
+		<url-pattern>/acceptpublication </url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>declinePublication</servlet-name>
+	<servlet-class>Services.declinePublication</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>declinePublication</servlet-name>
+		<url-pattern>/declinepublication </url-pattern>
+	</servlet-mapping>
+	
+	
+
 
 </web-app>

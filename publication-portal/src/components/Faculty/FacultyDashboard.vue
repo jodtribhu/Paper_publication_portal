@@ -18,8 +18,8 @@
                     </div>
                 </div>
 
-                <faculty-profile @refresh="refreshthePage()" v-if="gotoComponentDashboard=='ProfileInfo'" :faculty="getEach"> </faculty-profile>
-                <faculty-paper v-if="gotoComponentDashboard=='PaperList'"></faculty-paper>
+                <faculty-profile @refresh="refreshthePage()" v-if="gotoComponentDashboard=='ProfileInfo'" :faculty="getEach" > </faculty-profile>
+                <faculty-paper v-if="gotoComponentDashboard=='PaperList'" :faculty_publication_count="faculty_publication_count"> </faculty-paper>
             </div>
 
         </base-card>
@@ -34,16 +34,24 @@ export default {
       data(){
       return{
                 gotoComponentDashboard:"ProfileInfo",
-                getEach:{}
+                getEach:{},
+                faculty_publication_count:{},
+                f_accepted:[{}],
+                f_pending:[{}],
+                f_rejected:[{}],
+
+
             };
         },
     created(){
          if(this.$store.getters.checkFaculty)
          {
-               this.loadeachfaculty(); 
+               this.loadeachfaculty();
+               this.loadtheFacultyPublications(); 
          }
          else{
               this.getEach= this.$store.getters.getLoggedInFaculty;
+              this.loadtheFacultyPublications(); 
          }
     },
     methods:{
@@ -58,6 +66,19 @@ export default {
               this.getEach= this.$store.getters.getLoggedInFaculty;
               console.log(this.getEach.name);
           },
+        async loadtheFacultyPublications(){
+           console.log("inside loadtheFacultyPublications "+ this.$store.getters.getFacultyPendingPublication.length);
+            await this.$store.dispatch("loadfacultypublication");
+            console.log("inside loadtheFacultyPublications "+ this.$store.getters.getFacultyPendingPublication.length);
+            this.faculty_publication_count={'pending':this.$store.getters.getFacultyPendingPublication.length,
+            'accepted':this.$store.getters.getFacultyAcceptedPublication.length,
+            'rejected':this.$store.getters.getFacultyRejectedPublication.length,
+            'total':this.$store.getters.getFacultyTotalPublication}
+            
+            this.f_accepted=this.$store.getters.getFacultyAcceptedPublication
+            this.f_pending=this.$store.getters.getFacultyPendingPublication
+            this.f_rejected=this.$store.getters.getFacultyRejectedPublication
+        },
           refreshthePage(){
               console.log("inside refresh the page");
               this.loadeachfaculty();

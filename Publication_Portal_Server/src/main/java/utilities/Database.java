@@ -83,6 +83,22 @@ public class Database  {
 		 
 	   }
 	   
+	   
+	   public ResultSet getEachFacultyPublication(int faculty_id)  {
+		   ResultSet rs2=null;
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement();  
+			   return stmt.executeQuery("Select * from paper,paper_faculty,student_paper,student where paper.P_ID IN (Select P_ID from paper_faculty where F_ID="+faculty_id+")  && paper.P_ID=paper_faculty.P_ID && paper_faculty.F_ID="+faculty_id+"  &&student_paper.SP_ID=paper_faculty.SP_ID && student.S_ID=student_paper.S_ID"); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		   return rs2; 
+		 
+	   }
+	   
 	   public void addFaculty(String name,String email,String pass)  {
 		   
 		   try{  
@@ -314,6 +330,8 @@ public class Database  {
 		 
 	   }
 	   
+
+	   
 	   public ResultSet getEachMateName(int s_id)  {
 		   ResultSet rs2=null;
 		   try{  
@@ -354,7 +372,32 @@ public class Database  {
 		  
 		 
 	   }
-	   
+	public void acceptPublication(String p_remark, int p_mark,int sp_id) {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   stmt.executeUpdate("Update student_paper SET PSTATUS='Accepted',MARKS="+p_mark+" where sp_id="+sp_id); 
+			   stmt.executeUpdate("Update paper_faculty SET REMARKS='"+p_remark+"' where sp_id="+sp_id); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		
+	}
+	public void declinetPublication(String p_remark,int sp_id) {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   stmt.executeUpdate("Update student_paper SET PSTATUS='Rejected'"+"where sp_id="+sp_id); 
+			   stmt.executeUpdate("Update paper_faculty SET REMARKS='"+p_remark+"' where sp_id="+sp_id); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		
+	}
 	   
 	   
 	   

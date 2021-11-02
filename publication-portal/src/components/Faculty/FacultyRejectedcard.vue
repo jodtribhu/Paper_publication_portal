@@ -1,11 +1,11 @@
 <template>
     <div class='paper'>   
          <div class="stuinfo">
-            <p class="title">Sample Paper Title</p>
+            <p class="title">{{rj_publication.title}}</p>
             <div class="container_name">    
                 <div class="stu_info_child">
                     <p class="constsize_title ">Student Name : </p>
-                    <p class="constsize_title2 ">Terry Crews</p>
+                    <p class="constsize_title2 ">{{rj_publication.name}}</p>
                 </div>
                 <i @click="toggleButton()" class="far fa-caret-square-down"></i>
             </div>
@@ -16,24 +16,26 @@
              <div>        
                 <div class="flex-ele ">
                     <p class="constsize"><span class="centeralign">Roll Number:</span></p>
-                    <p class="ele_result constsize2">CB.EN.U4CSE150099</p>
+                    <p class="ele_result constsize2">{{rj_publication.rollNo}}</p>
                 </div>
             </div>
             <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Eligibility:</span></p>
-                <p class="eli_result constsize2">Distinction</p>
+                <p v-if="rj_publication.is_eligible_dist=='Yes'" class="eli_result constsize2">Distinction</p>
+                <p v-if="rj_publication.is_eligible_grace=='Yes'" class="eli_result constsize2">Grace Marks</p>
             </div>
             <div class="flex-ele ">
                 <p class="constsize"><span class="centeralign">Grace Marks:</span></p>
-                <p class="gra_result constsize2">NIL</p>
+                <p class="gra_result constsize2">{{rj_publication.marks}}</p>
             </div>
-            <button class="button">Open PDF</button>                   
+            <button class="button"  @click="openPDF(rj_publication.link)">Open PDF</button>                   
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    props:['rj_publication'],
     data(){
         return{
             isActive:false,
@@ -42,7 +44,10 @@ export default {
     methods:{
         toggleButton(){
             this.isActive=!this.isActive;
-        }
+        },
+        openPDF(link){
+                window.open(link, "_blank");
+          },
     }
 }
 </script>

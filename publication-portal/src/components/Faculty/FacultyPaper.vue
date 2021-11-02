@@ -3,19 +3,21 @@
     <div class="card">
         <div class="paper_item">
             <p class="paper_item_title">Paper Under Process:</p>
-            <p class="paper_item_no"> <span class="yellow"> <span class="center">22</span> </span>  </p>
+            <p class="paper_item_no"> <span class="yellow"> <span class="center">{{faculty_publication_count.pending}}</span> </span>  </p>
         </div>
-        <div class="paper_item">
-            <p class="paper_item_title">Submitted:</p>
-            <p class="paper_item_no"><span class="orange"> <span class="center">35</span></span></p>
-        </div>
+
         <div class="paper_item"> 
             <p class="paper_item_title">Accepted:</p>
-            <p class="paper_item_no"><span class="green"><span class="center">45</span></span></p>
+            <p class="paper_item_no"><span class="green"><span class="center">{{faculty_publication_count.accepted}}</span></span></p>
         </div>
         <div class="paper_item">
             <p class="paper_item_title">Rejected:</p>
-            <p class="paper_item_no"><span class="red"><span class="center">10</span></span></p>
+            <p class="paper_item_no"><span class="red"><span class="center">{{faculty_publication_count.rejected}}</span></span></p>
+        </div>
+
+        <div class="paper_item">
+            <p class="paper_item_title">Total:</p>
+            <p class="paper_item_no"><span class="orange"> <span class="center">{{faculty_publication_count.total}}</span></span></p>
         </div>
 
     </div>
@@ -25,7 +27,7 @@
 </template>
 <script>
 export default {
-    
+    props:['faculty_publication_count']
 }
 </script>
 <style scoped>
