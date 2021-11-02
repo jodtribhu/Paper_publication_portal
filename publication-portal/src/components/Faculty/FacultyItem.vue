@@ -29,8 +29,8 @@
             </div>
             
             <div class="student_name" v-if="getTemsize(publication_record.team)>0">
-                <p><span class="boldit">Team Mates : </span> 
-                <span v-for="member in publication_record.team" :key="member.mate_id" > {{member.mate_name}}  </span>
+                <p><span class="boldit">Team: </span> 
+                <span v-for="(member,index) in publication_record.team" :key="member.mate_id" > <span v-if="index!=0"> , </span> {{member.mate_name}}  </span>
     
                 </p>
             </div>

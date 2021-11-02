@@ -34,6 +34,10 @@
                                 <input v-model="student_publication_link"  type="text" :class="[student_publication_link_error ? 'error_div' : 'input_form']">
                             </div>
                             <div class="student_name">
+                                <p>Faculty ID Number :</p>
+                                <input v-model="faculty_id_no"  type="text" :class="[student_publication_link_error ? 'error_div' : 'input_form']">
+                            </div>
+                            <div class="student_name">
                                 <p>Add other contributers to the project (if any):</p>
                                     <div v-for="Person in addPerson" :key="Person" class="student_add_contribution">
                                         <div class="contributer_section">
@@ -134,6 +138,8 @@ export default {
             student_journal_name:'',
             student_conference_name:'',
             student_publication_link:'',
+            faculty_id_no:'',
+
             student_name_error:false,
             student_roll_no_error:false,
             student_email_error:false,
@@ -141,6 +147,7 @@ export default {
             student_publication_start_error:false,
             student_publication_end_error:false,
             student_journal_name_error:false,
+            faculty_id_no_error:false,
             student_survey:false,
             student_implementation:false,
             
@@ -218,6 +225,9 @@ export default {
             if(this.student_conference_name==''){
                 this.student_conference_name_error=true
             }
+            if(this.faculty_id_no==''){
+                this.faculty_id_no_error=true
+            }
 
             try {
                 var is_jo="No";
@@ -272,7 +282,8 @@ export default {
                   student_publication_isimp:stu_imp,
                   student_publication_issurv:stu_surv,
                   student_publication_isconf:is_conf,
-                  student_publication_isjor:is_jo
+                  student_publication_isjor:is_jo,
+                  faculty_id_no:this.faculty_id_no,
                   })
 
                

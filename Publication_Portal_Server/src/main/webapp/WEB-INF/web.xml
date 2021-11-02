@@ -129,7 +129,7 @@
 		<url-pattern>/acceptpublication </url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
 		<servlet-name>declinePublication</servlet-name>
 	<servlet-class>Services.declinePublication</servlet-class>
 	</servlet>
@@ -138,6 +138,15 @@
 		<url-pattern>/declinepublication </url-pattern>
 	</servlet-mapping>
 	
+	
+	<servlet>
+		<servlet-name>undoFacultyPublication</servlet-name>
+	<servlet-class>Services.undoFacultyPublication</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>undoFacultyPublication</servlet-name>
+		<url-pattern>/undofacultypublication </url-pattern>
+	</servlet-mapping>
 	
 
 

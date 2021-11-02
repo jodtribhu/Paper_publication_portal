@@ -2,7 +2,7 @@
     <base-card>
         <h2>Approved Publication </h2>
         <p v-for="ap_publication in approved_publication" :key="ap_publication.PF_ID">
-                <faculty-approvedcard :ap_publication="ap_publication"></faculty-approvedcard>
+                <faculty-approvedcard @refreshpublication="reload()"   :ap_publication="ap_publication"></faculty-approvedcard>
         </p>
               
     </base-card>    
@@ -33,6 +33,9 @@ export default {
             await this.$store.dispatch("loadfacultypublication");
             this.approved_publication=this.$store.getters.getFacultyAcceptedPublication
        
+        },
+        reload(){
+            this.loadtheApprovedFacultyPublications()
         },
      }
 }

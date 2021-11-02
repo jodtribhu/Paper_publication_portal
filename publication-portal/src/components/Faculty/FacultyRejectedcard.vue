@@ -1,5 +1,45 @@
 <template>
     <div class='paper'>   
+    <base-dialog :show=showDialog class="dialogbox " title=" Additional Details" @close="opencloseDialog" >
+            <div class="student_name">
+                <p> <span class="boldit">Student Email :</span>   <span>{{rj_publication.email}}</span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Student Roll Number :</span>   <span>{{rj_publication.rollNo}}</span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Student Phone Number :</span>  <span>{{rj_publication.phoneno}}</span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Publication Link :</span>  <span><a :href="rj_publication.link">Click Here</a></span> </p>
+            </div>
+            <div class="student_name" v-if="rj_publication.jname!=0">
+                <p><span class="boldit">Journal Name :</span>  <span >{{rj_publication.jname}}</span>
+                <span v-if="rj_publication.jname==0">: Not in a Journal</span>
+                </p>
+            </div>
+            <div class="student_name"  v-if="rj_publication.cname!=0">
+                <p><span class="boldit">Conference Name : </span> <span>{{rj_publication.cname}}</span>
+                <span v-if="rj_publication.cname==0">:Not presented in a Conference</span>
+                </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Scopus Indexed :</span>  <span>{{rj_publication.scp_index}} </span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Remarks:</span>  <span>{{rj_publication.remarks}} </span> </p>
+            </div>
+            
+            
+            <div class="student_name" v-if="getTemsize(rj_publication.team)>0">
+                <p><span class="boldit">Team  : </span> 
+                <span v-for="(member,index)  in rj_publication.team" :key="member.mate_id" > <span v-if="index!=0"> , </span> {{member.mate_name}}  </span>
+                </p>
+            </div>
+
+     </base-dialog>
+
+
          <div class="stuinfo">
             <p class="title">{{rj_publication.title}}</p>
             <div class="container_name">    
@@ -28,17 +68,21 @@
                 <p class="constsize"><span class="centeralign">Grace Marks:</span></p>
                 <p class="gra_result constsize2">{{rj_publication.marks}}</p>
             </div>
-            <button class="button"  @click="openPDF(rj_publication.link)">Open PDF</button>                   
+            <button class="button"  @click="openPDF(rj_publication.link)">Open PDF</button>   
+            <button class="button" @click="undo(rj_publication.SP_ID,rj_publication.PF_ID)">Undo</button>      
+            <button class="button" @click="opencloseDialog"> View Details</button>             
         </div>
     </div>
 </template>
 
 <script>
+import EachFacultyPublication from '@/services/EachFacultyPublication';
 export default {
     props:['rj_publication'],
     data(){
         return{
             isActive:false,
+            showDialog:false,
         }
     },
     methods:{
@@ -48,6 +92,17 @@ export default {
         openPDF(link){
                 window.open(link, "_blank");
           },
+
+        async undo(SP_ID,PF_ID){
+           await EachFacultyPublication.undo({SP_ID:SP_ID,PF_ID:PF_ID}) 
+           this.$emit("refreshpublication")
+        },
+        opencloseDialog(){
+            this.showDialog=!this.showDialog;           
+        },
+        getTemsize(teamarray){
+            return teamarray.length
+        },
     }
 }
 </script>
@@ -98,6 +153,10 @@ export default {
 }
 .line{
     width:80%
+}
+.boldit{
+    font-size:1.12rem;
+    font-weight: bold;
 }
 
 
@@ -151,6 +210,8 @@ export default {
 }
 .button{
     margin-top: 25px;
+     margin-left:1rem;
+    margin-right:1rem;
     width:8rem;
     height:40px;
     background-color: rgb(24, 11, 99);

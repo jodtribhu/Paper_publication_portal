@@ -1,5 +1,48 @@
 <template>
     <div class='paper'>   
+      
+    <base-dialog :show=showDialog class="dialogbox " title=" Additional Details" @close="opencloseDialog" >
+            <div class="student_name">
+                <p> <span class="boldit">Student Email :</span>   <span>{{ap_publication.email}}</span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Student Roll Number :</span>   <span>{{ap_publication.rollNo}}</span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Student Phone Number :</span>  <span>{{ap_publication.phoneno}}</span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Publication Link :</span>  <span><a :href="ap_publication.link">Click Here</a></span> </p>
+            </div>
+            <div class="student_name" v-if="ap_publication.jname!=0">
+                <p><span class="boldit">Journal Name :</span>  <span >{{ap_publication.jname}}</span>
+                <span v-if="ap_publication.jname==0">: Not in a Journal</span>
+                </p>
+            </div>
+            <div class="student_name"  v-if="ap_publication.cname!=0">
+                <p><span class="boldit">Conference Name : </span> <span>{{ap_publication.cname}}</span>
+                <span v-if="ap_publication.cname==0">:Not presented in a Conference</span>
+                </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Scopus Indexed :</span>  <span>{{ap_publication.scp_index}} </span> </p>
+            </div>
+            <div class="student_name">
+                <p> <span class="boldit">Remarks:</span>  <span>{{ap_publication.remarks}} </span> </p>
+            </div>
+            
+            
+            <div class="student_name" v-if="getTemsize(ap_publication.team)>0">
+                <p><span class="boldit">Team  : </span> 
+                
+                <span v-for="(member,index) in ap_publication.team" :key="member.mate_id" > <span v-if="index!=0"> , </span>{{member.mate_name}}  </span>
+                </p>
+            </div>
+
+     </base-dialog>
+
+
+
          <div class="stuinfo">
             <p class="title">{{ap_publication.title}}</p>
             <div class="container_name">    
@@ -28,26 +71,46 @@
                 <p class="constsize"><span class="centeralign">Grace Marks:</span></p>
                 <p class="gra_result constsize2">{{ap_publication.marks}}</p>
             </div>
-            <button class="button" @click="openPDF(ap_publication.link)">Open PDF</button>                   
+            <button class="button" @click="openPDF(ap_publication.link)">Open PDF</button>   
+            <button class="button" @click="undo(ap_publication.SP_ID,ap_publication.PF_ID)">Undo</button>
+            <button class="button" @click="opencloseDialog"> View Details</button>                     
         </div>
     </div>
 </template>
 
 <script>
+import EachFacultyPublication from '@/services/EachFacultyPublication';
 export default {
     props:['ap_publication'],
     data(){
         return{
             isActive:false,
+            showDialog:false,
+            i:0,
         }
     },
     methods:{
+        opencloseDialog(){
+            this.showDialog=!this.showDialog;    
+            this.i=0;       
+        },
         toggleButton(){
             this.isActive=!this.isActive;
         },
         openPDF(link){
                 window.open(link, "_blank");
           },
+        async undo(SP_ID,PF_ID){
+           await EachFacultyPublication.undo({SP_ID:SP_ID,PF_ID:PF_ID}) 
+           this.$emit("refreshpublication")
+        },
+        getTemsize(teamarray){
+            return teamarray.length
+        },
+        incrementIndex() {
+            console.log("INSIDE");
+               this.i+=1
+         },
     }
 }
 </script>
@@ -80,6 +143,10 @@ export default {
     padding:10px 0px 0px 20px;
     text-align: center;
     max-width:430px;
+}
+.boldit{
+    font-size:1.12rem;
+    font-weight: bold;
 }
 .constsize_title{
     font-family: 'Montserrat', sans-serif;
@@ -153,6 +220,8 @@ export default {
 }
 .button{
     margin-top: 25px;
+    margin-left:1rem;
+    margin-right:1rem;
     width:8rem;
     height:40px;
     background-color: rgb(24, 11, 99);

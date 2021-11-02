@@ -12,6 +12,9 @@ export default{
         var x=await Api().post('declinepublication',data);
         return x
     }, 
-    
+    async undo(data){ 
+        var x=await Api().post('undofacultypublication',data);
+        return x
+    }, 
 
 }

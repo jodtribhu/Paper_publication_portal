@@ -2,7 +2,7 @@
     <base-card>
         <h2>Rejected Publication</h2>
         <p v-for="rj_publication in rejected_publication" :key="rj_publication.PF_ID">
-                <faculty-rejectedcard :rj_publication="rj_publication"></faculty-rejectedcard>    
+                <faculty-rejectedcard @refreshpublication="reload()" :rj_publication="rj_publication"></faculty-rejectedcard>    
         </p>
            
     </base-card>    
@@ -34,6 +34,9 @@ export default {
             await this.$store.dispatch("loadfacultypublication");
             this.rejected_publication=this.$store.getters.getFacultyRejectedPublication
        
+        },
+         reload(){
+            this.loadtheRejectedFacultyPublications()
         },
      }
 }
