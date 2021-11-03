@@ -168,7 +168,7 @@ export default {
     justify-content: space-around;
 }
 .graph_card{
-  width:35%;
+  width:38%;
   position: relative;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);
@@ -183,8 +183,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 .rectangle1 {
   border-radius:0.4rem;
-  height: 8rem;
-  width: 14rem;
+  height: 7.2rem;
+  width: 13.2rem;
   display: flex;
   background-color: #2dad10;
 
@@ -192,8 +192,8 @@ export default {
 }
 .rectangle2 {
   border-radius:0.4rem;
-  height: 8rem;
-  width: 14rem;
+  height: 7.2rem;
+  width: 13.2rem;
   display: flex;
   background-color: #db9316;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);
@@ -231,16 +231,16 @@ export default {
 }
 .rectangle3 {
   border-radius:0.4rem;
-  height: 8rem;
-  width: 14rem;
-   display: flex;
+  height: 7.2rem;
+  width: 13.2rem;
+  display: flex;
   background-color: #106ead;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);
 }
 .rectangle4 {
   border-radius:0.4rem;
-  height: 8rem;
-  width: 14rem;
+  height: 7.2rem;
+  width: 13.2rem;
   display: flex;
   background-color: #ad0958;
  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);

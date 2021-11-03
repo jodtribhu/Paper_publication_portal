@@ -7,7 +7,7 @@
                 <div class="tabbed_view_flex">
                     <div :class="{ 'shadow1' : gotoComponentDashboard === 'Dashboard'}" @click="executeDashboardTab" class="tabbed_view_flex_item tab1" >
                         <div>
-                            <i class="fas fa-chalkboard-teacher"></i>
+                            <i class="fas fa-chart-area"></i>
                             <p>Dashboard</p>
                         </div>
                     </div>
@@ -28,11 +28,20 @@
                         </div>
                        
                     </div>
+                    <hr>
+                    <div :class="{ 'shadow2' : gotoComponentDashboard === 'ForgetPassword'}" @click="executeForgetPasswordTab" class="tabbed_view_flex_item tab2"> 
+                        <div>
+                            <i class="far fa-comment"></i>
+                            <p>Requests</p>
+                        </div>
+                       
+                    </div>
                 </div>
             </div>
             <admin-dashboard v-if="gotoComponentDashboard=='Dashboard'" ></admin-dashboard>
             <admin-faculty v-if="gotoComponentDashboard=='Faculty'" ></admin-faculty>
             <admin-student v-if="gotoComponentDashboard=='Student'"></admin-student>
+            <admin-forget v-if="gotoComponentDashboard=='ForgetPassword'"></admin-forget>
 
 
         </div>
@@ -43,9 +52,10 @@
 import AdminFaculty from './Admin_Faculty.vue';
 import AdminStudent from './Admin_Student.vue';
 import AdminDashboard from './Admin_Dashboard.vue';
+import AdminForget from './Admin_Forget.vue';
 export default {
   
-    components: {AdminStudent,AdminFaculty,AdminDashboard},
+    components: {AdminStudent,AdminFaculty,AdminDashboard,AdminForget},
           data(){
             return{
                 gotoComponentDashboard:"Dashboard"
@@ -58,9 +68,13 @@ export default {
            executeStudentTab(){
             this.gotoComponentDashboard="Student"
           },
-        executeDashboardTab(){
+           executeDashboardTab(){
             this.gotoComponentDashboard="Dashboard"
+          },        
+           executeForgetPasswordTab(){
+            this.gotoComponentDashboard="ForgetPassword"
           }
+        
       }
     
 }
@@ -114,6 +128,16 @@ export default {
      padding-top:1rem;
      color:rgb(194, 183, 133);
     font-size:1.5rem;
+}
+.far,.fa-comment{
+    padding-top:1rem;
+    color:rgb(194, 183, 133);
+    font-size:1.5rem; 
+}
+.fas, .fa-chart-area{
+    padding-top:1rem;
+    color:rgb(194, 183, 133);
+    font-size:1.5rem; 
 }
 .tabbed_view{
     max-width:70%;
