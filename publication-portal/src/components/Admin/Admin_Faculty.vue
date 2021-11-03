@@ -48,7 +48,7 @@ export default {
         }
     },
     created() {
-        if(this.$store.getters.checkAdminFaculty==false)
+        if(this.$store.getters.checkAdmin==false)
          {
             
             this.loadfaculties();
@@ -137,12 +137,15 @@ export default {
   background-color: #f6f6f6;
   width: 70%;
 }
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
 h1{
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Noto Sans Mono', monospace;
+     font-weight: 500;
     text-align: center;
     margin-top:0;
     padding:2rem;
+    font-size:2.4rem;
+   
 }
 .button_row{
     margin:auto;

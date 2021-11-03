@@ -162,6 +162,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap');
 .Numbers{
     display: flex;
     justify-content: space-around;
@@ -253,12 +254,14 @@ export default {
   background-color: #f6f6f6;
   width: 70%;
 }
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
 h1{
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Noto Sans Mono', monospace;
     text-align: center;
     margin-top:0;
     padding:2rem;
+    font-weight: 500;
+    font-size:2.4rem;
 }
 h2{
     font-family: 'Montserrat', sans-serif;

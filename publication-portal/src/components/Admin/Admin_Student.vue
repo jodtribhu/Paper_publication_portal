@@ -93,7 +93,7 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
 .label_dialog{
     width:40%;
 }
@@ -114,10 +114,12 @@ export default {
          /* background-color:orangered; */
      }
 h1{
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Noto Sans Mono', monospace;
+     font-weight: 500;
     text-align: center;
     margin-top:0;
     padding:2rem;
+    font-size:2.4rem;
 }
 .button_row{
     margin:auto;
