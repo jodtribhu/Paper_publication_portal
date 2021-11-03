@@ -48,7 +48,15 @@ export default {
         }
     },
     created() {
-        this.loadfaculties();
+        if(this.$store.getters.checkAdminFaculty==false)
+         {
+            
+            this.loadfaculties();
+         }
+         else{
+             this.list_faculties=this.$store.getters.getAdminFaculty
+         }
+        
     },
     methods:{
         opencloseDialog(){
@@ -63,9 +71,6 @@ export default {
             try {
                   const response =await RegisterService.addFaculty({fname:this.faculty_name,femail:this.faculty_email,fpassword:this.faculty_password})
                     this.showDialog=!this.showDialog;
-                //   if(response.data.registration=="Successfull"){
-                //       this.$router.replace({name: 'admin', params: { load: "Faculty" }});
-                //   }
                 if(response.status==200){
                     this.loadfaculties();
                 }
@@ -77,9 +82,8 @@ export default {
         },
         async loadfaculties(){
             try {
-                  const response =await RegisterService.getFaculty()
-            
-                  this.list_faculties=response.data.adminfaculty;
+                  await this.$store.dispatch("loadadminfacultypublication");
+                  this.list_faculties=this.$store.getters.getAdminFaculty
             } catch (error) {
                 console.log(error);
               

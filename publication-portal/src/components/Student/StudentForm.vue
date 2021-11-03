@@ -20,6 +20,26 @@
 
                     <button class="dialogaddbutton" @click="add_Contributer">Done</button>
             </base-dialog>
+
+            <base-dialog :show=showEditDialog class="dialogbox " title="Add Contributers" @close="opencloseDialog" >
+                <div class="admin_dialog">
+                        <div class="student_form">
+                            <p class="label_dialog">Name :</p>
+                            <input v-model="person_edit_name" class="input_dialog" >
+                        </div>
+                        <div class="student_form">
+                            <p class="label_dialog">Roll Number :</p>
+                            <input v-model="person_edit_roll_no" class="input_dialog"   type="text">
+                        </div>
+                        <div class="student_form">
+                            <p class="label_dialog">Email :</p>
+                            <input v-model="person_edit_email" class="input_dialog"  type="text">
+                        </div>
+                </div>
+                <button class="dialogaddbutton" @click="edit_Contributer">Edit</button>
+            </base-dialog>
+
+         
             <form-card class="form_padding" >
                 <div  class="form_flex">
                     <div class="centered_form">
@@ -39,14 +59,14 @@
                             </div>
                             <div class="student_name">
                                 <p>Add other contributers to the project (if any):</p>
-                                    <div v-for="Person in addPerson" :key="Person" class="student_add_contribution">
+                                    <div v-for="(Person,index) in addPerson" :key="Person" class="student_add_contribution">
                                         <div class="contributer_section">
                                             <p class="contributer"><span class="contributer_span">Name : </span> {{Person.Name}}</p>
                                             <p class="contributer"><span class="contributer_span">Roll Number : </span>  {{Person.RollNo}}</p>
                                             <p class="contributer"><span class="contributer_span">Email : </span> {{Person.Email}}</p>
                                         </div>
                                         <div class="contributer_section_edit" >
-                                            <i class="far fa-edit"></i>
+                                            <i  @click="opencloseEditDialog(Person,index)" class="far fa-edit"></i>
                                         </div>
                                         
                                     </div>
@@ -70,7 +90,7 @@
                             </div>
                         </div>
                         <div class="published_twocolumn_scopus">
-                            <label class="label_container"><input type="radio" >Scopus Indexed</label>
+                            <label class="label_container"><input type="checkbox" >Scopus Indexed</label>
                         </div>
                         <div class="published_twocolumn">
                             <label class="label_container"><input @click="journal_check" class="check"  name="test" type="radio" >Published in a Journal
@@ -155,8 +175,15 @@ export default {
             person_name:'',
             person_roll_no:'',
             person_email:'',
+
+            person_edit_name:'',
+            person_edit_roll_no:'',
+            person_edit_email:'',
+            person_edit_index:-1,
+
             addPerson:[],
             showDialog:false,
+            showEditDialog:false,
             journal_checked:false,
             conference_checked:false,
             l:['image_1.png','image_2.png','image_3.png','image_4.png','image_5.png','image_6.png','image_7.png','image_8.png'],
@@ -168,8 +195,29 @@ export default {
             this.addPerson.push({'Name':this.person_name,'RollNo':this.person_roll_no,'Email':this.person_email})
             this.showDialog=!this.showDialog; 
         },
+        edit_Contributer(){
+            this.addPerson[this.person_edit_index].Name=this.person_edit_name;
+            this.addPerson[this.person_edit_index].RollNo=this.person_edit_roll_no;
+            this.addPerson[this.person_edit_index].Email=this.person_edit_email;
+            this.person_edit_name='';
+            this.person_edit_roll_no='';
+            this.person_edit_email='';
+            this.person_edit_index=-1;
+            this.showEditDialog=!this.showEditDialog;  
+
+        },
         opencloseDialog(){
-            this.showDialog=!this.showDialog;           
+            this.showDialog=!this.showDialog;     
+            this.person_name='';
+            this.person_roll_no='';
+            this.person_email='';
+        },
+        opencloseEditDialog(person,index){
+            this.showEditDialog=!this.showEditDialog;  
+            this.person_edit_name=person.Name;
+            this.person_edit_roll_no=person.RollNo;
+            this.person_edit_email=person.Email;
+            this.person_edit_index=index
         },
         journal_check(){
             this.journal_checked=true;

@@ -21,7 +21,7 @@
   border-width:0.4rem 0.4rem 0.4rem 0.4rem;
     border-style: hidden solid solid solid;
     border-color: #6d1a2e;
-  background:linear-gradient(to right,transparent 38%,  #6d1a2e 20%) top;
+  background:linear-gradient(to right,transparent 70%,  #6d1a2e 20%) top;
   background-repeat: no-repeat;
   background-size:100% 0.4rem;
    

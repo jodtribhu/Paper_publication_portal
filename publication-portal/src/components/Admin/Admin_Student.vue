@@ -45,7 +45,15 @@ export default {
         }
     },
     created() {
-        this.loadstudents();
+        
+        if(this.$store.getters.checkAdminStudent==false)
+         {
+            this.loadstudents();
+         
+         }
+         else{
+             this.list_students=this.$store.getters.getAdminStudent
+         }
     },
     methods:{
         opencloseDialog(){
@@ -72,9 +80,8 @@ export default {
         },
         async loadstudents(){
             try {
-                  const response =await RegisterService.getStudent()
-                  this.list_students=response.data.adminstudent;
-                  console.log(response.data.adminstudent);
+                await this.$store.dispatch("loadadminstudentpublication");
+                  this.list_students=this.$store.getters.getAdminStudent
             } catch (error) {
                 console.log(error);
               

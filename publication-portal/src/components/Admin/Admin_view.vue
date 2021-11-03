@@ -1,13 +1,18 @@
 <template>
     <div>
         <the-header></the-header>
-        <!-- <div class="style_font">
-            <p class="letter" > <span class="title">A</span>D<span class="title">M</span>I<span class="title">N</span> </p>
-        </div> -->
-
+        <h1 class="admin_title">Admin </h1>
         <div class="center">
             <div class="tabbed_view">
                 <div class="tabbed_view_flex">
+                    <div :class="{ 'shadow1' : gotoComponentDashboard === 'Dashboard'}" @click="executeDashboardTab" class="tabbed_view_flex_item tab1" >
+                        <div>
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <p>Dashboard</p>
+                        </div>
+                    </div>
+                    
+                     <hr>
                     <div :class="{ 'shadow1' : gotoComponentDashboard === 'Faculty'}" @click="executeFacultyTab" class="tabbed_view_flex_item tab1" >
                         <div>
                             <i class="fas fa-chalkboard-teacher"></i>
@@ -25,6 +30,7 @@
                     </div>
                 </div>
             </div>
+            <admin-dashboard v-if="gotoComponentDashboard=='Dashboard'" ></admin-dashboard>
             <admin-faculty v-if="gotoComponentDashboard=='Faculty'" ></admin-faculty>
             <admin-student v-if="gotoComponentDashboard=='Student'"></admin-student>
 
@@ -36,12 +42,13 @@
 <script>
 import AdminFaculty from './Admin_Faculty.vue';
 import AdminStudent from './Admin_Student.vue';
+import AdminDashboard from './Admin_Dashboard.vue';
 export default {
   
-    components: {AdminStudent,AdminFaculty},
+    components: {AdminStudent,AdminFaculty,AdminDashboard},
           data(){
-      return{
-          gotoComponentDashboard:"Faculty"
+            return{
+                gotoComponentDashboard:"Dashboard"
             };
         },
     methods:{
@@ -50,6 +57,9 @@ export default {
           },
            executeStudentTab(){
             this.gotoComponentDashboard="Student"
+          },
+        executeDashboardTab(){
+            this.gotoComponentDashboard="Dashboard"
           }
       }
     
@@ -68,6 +78,11 @@ export default {
     padding:0;
      color:#551524;
     
+}
+.admin_title{
+     text-align:center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
 }
 .style_font{
     width:20%;
@@ -101,7 +116,7 @@ export default {
     font-size:1.5rem;
 }
 .tabbed_view{
-    max-width:38%;
+    max-width:70%;
     
      margin-top:2rem;
     padding-bottom:0;

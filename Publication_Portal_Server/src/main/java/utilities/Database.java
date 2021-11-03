@@ -488,8 +488,34 @@ public class Database  {
 		   	} 
 		
 	}   
-	   
-	   
-
+	public ResultSet getTotalAcceptedPublications() {
+		ResultSet rs2=null;
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   return stmt.executeQuery("SELECT COUNT(*) FROM publication_portal.student_paper where PSTATUS='Accepted'"); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		  return rs2;
+		
+	}   	   
+	public ResultSet getTotalRejectedPublications() {
+		ResultSet rs2=null;
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   return stmt.executeQuery("SELECT COUNT(*) FROM publication_portal.student_paper where PSTATUS='Rejected'"); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		  return rs2;
+		
+	} 
+	
 
 }

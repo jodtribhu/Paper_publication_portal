@@ -148,6 +148,14 @@
 		<url-pattern>/undofacultypublication </url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>getTotalPublications</servlet-name>
+	<servlet-class>Services.getTotalPublications</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getTotalPublications</servlet-name>
+		<url-pattern>/gettotalpublications </url-pattern>
+	</servlet-mapping>	
 
 
 </web-app>

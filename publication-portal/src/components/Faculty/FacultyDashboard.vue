@@ -51,7 +51,9 @@ export default {
          }
          else{
               this.getEach= this.$store.getters.getLoggedInFaculty;
-              this.loadtheFacultyPublications(); 
+              this.f_accepted=this.$store.getters.getFacultyAcceptedPublication
+              this.f_pending=this.$store.getters.getFacultyPendingPublication
+              this.f_rejected=this.$store.getters.getFacultyRejectedPublication
          }
     },
     methods:{

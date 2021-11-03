@@ -14,6 +14,9 @@ export default{
     },
     deleteFaculty(data){
         return Api().post('deleteadminfaculty',data);
+    },
+    getTotalPublications(){
+        return Api().get('gettotalpublications');
     }
     
 }
