@@ -54,6 +54,10 @@ export default {
               this.f_accepted=this.$store.getters.getFacultyAcceptedPublication
               this.f_pending=this.$store.getters.getFacultyPendingPublication
               this.f_rejected=this.$store.getters.getFacultyRejectedPublication
+            this.faculty_publication_count={'pending':this.$store.getters.getFacultyPendingPublication.length,
+            'accepted':this.$store.getters.getFacultyAcceptedPublication.length,
+            'rejected':this.$store.getters.getFacultyRejectedPublication.length,
+            'total':this.$store.getters.getFacultyTotalPublication}
          }
     },
     methods:{
