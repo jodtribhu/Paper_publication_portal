@@ -9,8 +9,8 @@
 
             </h1>
             <ul>
-                <li><router-link to="/login" v-if="!isLoggedIn">Login</router-link></li>
-                <li v-if="isLoggedIn"><router-link to="/login" @click="logout()">Logout</router-link></li>
+                <li ><router-link to="/login" v-if='userId =="" '>Login</router-link></li>
+                <li v-if='userId!="" '><router-link to="/login" @click="logout()">Logout</router-link></li>
             </ul>
         </nav>
     </header>
@@ -20,6 +20,12 @@
 <script>
 
 export default {
+  data(){
+    return {userId:''}
+  },
+  created(){
+   this.userId=localStorage.getItem("userId");
+  },
   methods:{
     logout(){
       this.$store.dispatch('logout');

@@ -13,7 +13,7 @@
                         
                         <hr>
                         <div :class="{ 'shadow2' : gotoComponentDashboard === 'PaperList'}"  @click="executePaperList" class="tabbed_view_flex_item tab2"> 
-                        <p  >My Paper List</p>
+                            <p >My Paper List</p>
                         </div>
                     </div>
                 </div>

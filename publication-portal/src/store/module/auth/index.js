@@ -4,11 +4,9 @@ import getters from './getters.js'
 export default{
     state(){
         return{
-            AdminFaculty_Publications:[],
-            AdminStudent_Publications:[],
-            Admin_Forget:[],
-            Accepted_Publications:-1,
-            Rejected_Publications:-1,
+          user_id:'',
+          isFacultyLoggedIn:"No",
+          isAdminLoggedIn:"No",
         };
         
       },

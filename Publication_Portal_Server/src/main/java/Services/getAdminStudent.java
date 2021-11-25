@@ -20,14 +20,21 @@ public class getAdminStudent  extends HttpServlet{
 			ResultSet fs=d.getAdminStudent();
 			JSONArray array = new JSONArray();
 			while(fs.next()) {
+				System.out.println("Inside admin student "+fs.getString(2));
 					JSONObject obj = new JSONObject(); 
 					int loginid=fs.getInt(1);
+					obj.put("lid",fs.getInt(1));
 					obj.put("rollNo",fs.getString(2));
 					obj.put("created_at",fs.getString(6));
 					obj.put("modified_at",fs.getString(7));
 					
+				
+					
 					ResultSet fs2=d.getEachStudent(loginid);
+					
 					fs2.next();
+					
+					System.out.println(fs2.getString(2));
 					obj.put("sID",fs2.getInt(1));
 					obj.put("name",fs2.getString(2));
 					obj.put("rollNo",fs2.getString(3));
@@ -39,8 +46,11 @@ public class getAdminStudent  extends HttpServlet{
 					obj.put("phoneno",fs2.getString(10));
 					obj.put("department",fs2.getString(11));
 					array.put(obj);	
+					 obj = new JSONObject(); 
+					System.out.println(obj);
 				
 			}
+			System.out.println(array);
 		    res.setContentType("application/json");
 		    res.setHeader("Cache-Control", "nocache");
 		    res.setCharacterEncoding("utf-8");

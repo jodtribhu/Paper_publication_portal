@@ -3,6 +3,7 @@ import StudentForm from '../components/Student/StudentForm.vue';
 import FacultyView from '../components/Faculty/FacultyView.vue';
 import Login from '../components/Authentication/Login.vue';
 import ForgotPassword from '../components/Authentication/ForgotPassword.vue';
+import Forbidden from '../components/Authentication/Forbidden.vue';
 
 import Sidebar from '../components/layout/Sidebar.vue';
 import AdminView from '../components/Admin/Admin_view.vue';
@@ -18,6 +19,8 @@ const router=createRouter({
         {path:'/ForgotPassword',component:ForgotPassword},
         {path:'/admin',component:AdminView},
         {path:'/student',component:StudentView},
+        {path:'/fpassword',component:ForgotPassword},
+        {path:'/forbidden',component:Forbidden},
         {path:'/trial',component:Sidebar},
     ]
 });

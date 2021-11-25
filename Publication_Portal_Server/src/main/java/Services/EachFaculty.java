@@ -17,6 +17,7 @@ public class EachFaculty extends HttpServlet{
 	{			        	
 		utilities.Database d=new utilities.Database();
 		try {
+			
 			ResultSet fs=d.getEachFaculty(5);
 			while(fs.next()) {
 				JSONObject obj = new JSONObject(); 

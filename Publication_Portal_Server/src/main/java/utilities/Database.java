@@ -108,7 +108,7 @@ public class Database  {
 			   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
 			   LocalDateTime now = LocalDateTime.now(); 
 			   String ldate=dtf.format(now);
-			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY) VALUES ('"+name+ "','"+ pass+"',"+ "'sample_salt'" + ","+"'sample_hash','"+ldate+"','"+ldate+"',"+"'Yes"+"');";
+			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY,ISADMIN) VALUES ('"+name+ "','"+ pass+"',"+ "'sample_salt'" + ","+"'sample_hash','"+ldate+"','"+ldate+"',"+"'Yes"+"','No');";
 			   stmt.executeUpdate(sql); 
 			   
 			   String sql4="Select * from login where USERNAME='"+name+"'";
@@ -139,7 +139,7 @@ public class Database  {
 			   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
 			   LocalDateTime now = LocalDateTime.now(); 
 			   String ldate=dtf.format(now);
-			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY) VALUES ('"+stuname+ "','"+ stupassword+"',"+ "'sample_salt'" + ","+"'sample_hash','"+ldate+"','"+ldate+"',"+"'No"+"');";
+			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY,ISADMIN) VALUES ('"+stuname+ "','"+ stupassword+"',"+ "'sample_salt'" + ","+"'sample_hash','"+ldate+"','"+ldate+"',"+"'No"+"','No');";
 			   stmt.executeUpdate(sql); 
 			   
 			   String sql4="Select * from login where USERNAME='"+stuname+"'";
@@ -341,12 +341,13 @@ public class Database  {
 		 
 	   }
 	   public ResultSet getAdminStudent()  {
+		   System.out.println("Inside get Admin Student");
 		   ResultSet rs2=null;
 		   try{  
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
 			   Statement stmt=con.createStatement();  
-			   return stmt.executeQuery("Select * from login where ISFACULTY='No'"); 
+			   return stmt.executeQuery("Select * from login where ISFACULTY='No' and ISADMIN='No'"); 
 			  }
 		   	catch(Exception e){ 
 		   		System.out.println(e);
@@ -361,13 +362,26 @@ public class Database  {
 			   Statement stmt=con.createStatement(); 
 			   
 			   stmt.executeUpdate("DELETE FROM login WHERE L_ID="+lid); 
+			   stmt.executeUpdate("DELETE FROM paper_faculty WHERE F_ID="+fid);
 			   stmt.executeUpdate("DELETE FROM faculty WHERE F_ID="+fid); 
 			  }
 		   	catch(Exception e){ 
 		   		System.out.println(e);
 		   	} 
-		  
-		 
+	   }
+	   public void deleteAdminStudent(int sid,int lid)  {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   
+			   stmt.executeUpdate("DELETE FROM login WHERE L_ID="+lid); 
+			   stmt.executeUpdate("DELETE FROM student_paper WHERE S_ID="+sid);
+			   stmt.executeUpdate("DELETE FROM student WHERE S_ID="+sid); 
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
 	   }
 	   public void claimPublication(int sp_id)  {
 		   try{  
@@ -517,5 +531,79 @@ public class Database  {
 		
 	} 
 	
-
+	public LoginObj login(String username,String password) {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   ResultSet rs2=stmt.executeQuery("Select PASS,ISFACULTY,L_ID,ISADMIN from login where USERNAME='"+username+"'");
+			   while(rs2.next()) {
+				   String pass=rs2.getString(1);
+				   String isFaculty=rs2.getString(2);
+				   int LID=rs2.getInt(3);
+				   String isAdmin=rs2.getString(4);
+				 
+				   if(pass.equals(password)) {
+					   LoginObj lobj=new LoginObj(true,isFaculty,LID,isAdmin);
+					   return lobj;
+				   }
+					   
+				   else {
+					   LoginObj lobj=new LoginObj(false,isFaculty,LID,isAdmin);
+					   return lobj;
+					  
+				   }
+			   }
+			   
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		   LoginObj lobj2=new LoginObj(false,"No",-1,"No");
+		   return lobj2;
+	}  
+	   public void addForget(String username,String status)  {
+		   
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement();  
+			   String sql3="Insert into forget_request(forget_request_status,forget_request_username) VALUES ('"+status+ "','"+ username+" '); ";
+			   stmt.executeUpdate(sql3); 
+		   }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		 
+	   }
+	   
+	   public ResultSet getAdminForget()  {
+		   ResultSet rs2=null;
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement();  
+			   String sql3="Select * from forget_request ";
+			   return stmt.executeQuery(sql3); 
+		   }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+		   return rs2;
+	   }
+	   
+	   public void editLogin(String username,String pass) {
+		   try{  
+			   Class.forName("com.mysql.jdbc.Driver");   
+			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
+			   Statement stmt=con.createStatement(); 
+			   stmt.executeUpdate("Update login SET PASS="+"'"+pass+"'"+" where USERNAME="+"'"+username+"'"); 
+			   stmt.executeUpdate("Update forget_request SET forget_request_status='done'"+" where forget_request_username="+"'"+username+"'"); 
+			   
+			  }
+		   	catch(Exception e){ 
+		   		System.out.println(e);
+		   	} 
+	   }
+	
 }

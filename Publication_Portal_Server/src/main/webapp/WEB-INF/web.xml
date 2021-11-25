@@ -157,5 +157,51 @@
 		<url-pattern>/gettotalpublications </url-pattern>
 	</servlet-mapping>	
 
+	<servlet>
+		<servlet-name>Login</servlet-name>
+	<servlet-class>Services.Login</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login </url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>Fpassword</servlet-name>
+		<servlet-class>Services.Fpassword</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Fpassword</servlet-name>
+		<url-pattern>/fpassword </url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>getAdminForget</servlet-name>
+		<servlet-class>Services.getAdminForget</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getAdminForget</servlet-name>
+		<url-pattern>/getAdminForget </url-pattern>
+	</servlet-mapping>	
+	
+	
+	<servlet>
+		<servlet-name>changePassword</servlet-name>
+		<servlet-class>Services.changePassword</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>changePassword</servlet-name>
+		<url-pattern>/changePassword </url-pattern>
+	</servlet-mapping>	
+
+	<servlet>
+		<servlet-name>deleteAdminStudent</servlet-name>
+		<servlet-class>Services.deleteAdminStudent</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>deleteAdminStudent</servlet-name>
+		<url-pattern>/deleteAdminStudent </url-pattern>
+	</servlet-mapping>	
+
 
 </web-app>

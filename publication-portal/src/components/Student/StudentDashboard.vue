@@ -1,5 +1,17 @@
 <template>
     <div class="margin_Correct">
+        <base-dialog :show=showPasswordDialog  title="Edit Password" @close="openclosePasswordDialog">
+        
+        <div class="input_cont">
+            <div class="each_input">
+                <label class="input_label">Enter new Password:</label>
+                <input class="input_text" v-model="editpass" type="text" >
+            </div>
+            <button class="button" @click="updatePassword()">Edit</button>
+        </div>
+
+     </base-dialog> 
+
         <base-dialog :show=showDialog  title="Team Mates" @close="opencloseDialog">
             <div class="input_cont">
                 <div class="each_input">
@@ -59,6 +71,10 @@
                         <p class="each_item_label">Campus:</p>
                         <p  class="each_item_answer"> {{student.campus}}</p>
                     </div>
+                    <div  class="each_item"> 
+                        <p class="each_item_label" >Edit Password:</p>
+                        <button @click="openclosePasswordDialog()" class="button2">Update</button>
+                    </div>
                 </div>
 
                 <div class="container_flex_item">
@@ -113,6 +129,7 @@
 </template>
 
 <script>
+import RegisterService from '@/services/RegistrationService.js';
 import GetEach from '@/services/GetEach';
 export default {
     data(){
@@ -126,7 +143,8 @@ export default {
             editmobile:'',
             editemail:'',
             showDialog:false,
-            
+            showPasswordDialog:false,
+            editpass:'',
             publication_count:{},
             publicationchartOptions: {
                             chart: {fontFamily: 'Montserrat, sans-serif'},
@@ -178,6 +196,14 @@ export default {
         opencloseDialog(){
              this.showDialog=!this.showDialog;  
         },  
+        async updatePassword(){
+            this.showPasswordDialog=!this.showPasswordDialog;
+            await RegisterService.changePassword({'username':this.student.rollNo,'pass':this.editpass});
+            this.editpass=''
+        },
+        openclosePasswordDialog(){
+            this.showPasswordDialog=!this.showPasswordDialog;
+        },
         async loadeachstudent(){
               await this.$store.dispatch("loadstudent");
               this.student= this.$store.getters.getLoggedInStudent;
@@ -408,7 +434,24 @@ h1{
     width: 90%;
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    
+    align-items: center;  
+}
+
+.button2{
+    width:8rem;
+    margin-top:0.6rem;
+    margin-left:1rem;
+    height:40px;
+    background-color: rgb(24, 11, 99);
+    font-family: 'Montserrat', sans-serif;
+    font-size:1rem;
+    border-radius:12px;
+    color:rgb(212, 206, 195);
+    cursor: pointer;
+    border-style:none;
+}
+.button2:hover{
+    background-color: rgba(69, 70, 82, 0.753);
+    color:white;
 }
 </style>

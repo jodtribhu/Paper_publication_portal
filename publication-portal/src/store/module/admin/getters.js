@@ -5,8 +5,17 @@ export default {
     getAdminStudent(state){
         return state.AdminStudent_Publications;
     },
+    getAdminForgets(state){
+        return state.Admin_Forget;
+    },
     checkAdminFaculty(state){
         if( state.AdminFaculty_Publications.length==0){
+            return false;
+        }
+        return true;
+    },
+    checkAdminForget(state){
+        if( state.Admin_Forget.length==0){
             return false;
         }
         return true;
@@ -17,6 +26,7 @@ export default {
         }
         return true;
     },
+
     getAdminFacultyLength(state){
         return state.AdminFaculty_Publications.length;
     },
@@ -28,6 +38,7 @@ export default {
     },
     getRejectedcount(state){
         return state.Rejected_Publications;
-    }
+    },
+
   
 };

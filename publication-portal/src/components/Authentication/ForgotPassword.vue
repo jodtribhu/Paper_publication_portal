@@ -2,15 +2,9 @@
   <div>
     <h1 class="aligncenter">Forget Password</h1>
     <forget-card>
-      <label for="facultyemail">Email:</label>
-      <input name="facultyemail" type="email" placeholder="Email" v-model="email" />
-       <label for="problem">Please Select the problem:</label>
-       <select id="cars" name="problem" v-model="problem">
-        <option value="Forgot Password">Forgot Password</option>
-        <option value="Report An Bug">Report An Bug</option>
-      </select>
-      <label v-if="problem=='Report An Bug'" for="description">Description:</label>
-      <textarea  v-if="problem=='Report An Bug'" id="description" v-model="description" name="description" rows="7" cols="40" required>  </textarea>
+      <label >Username:</label>
+      <input type="text" placeholder="Username" v-model="username" />
+       
       <h4>Please Answer the Question Given Below:</h4>
     
       <p ><span class="n1"> {{ randomFirstNumber }} </span> <span  class="n1"> + </span> <span class="n1">{{ randomSecondNumber }} </span>  <span  class="n1"> - </span> <span class="n1"> {{ randomThirdNumber }} </span></p>
@@ -23,14 +17,14 @@
 </template>
 
 <script>
-
+import RegisterService from '@/services/RegistrationService.js';
 import ForgetCard from "../layout/ForgetCard.vue";
 export default {
   components: { ForgetCard },
   data() {
     return {
       total: 0,
-      email: "",
+      username: "",
       description: "",
       tried: 0,
       success: true,
@@ -39,7 +33,6 @@ export default {
       randomThirdNumber: 0,
       answer: 0,
       error:'',
-      problem:'Forgot Password'
     };
   },
   created() {
@@ -66,6 +59,8 @@ export default {
           this.tried+=1;
           this.sucess=true;
           this.error=""
+          await RegisterService.fpassword({username:this.username ,status:"pending"})
+          
            try {
              this.$router.replace("/login");
             } catch (error) {

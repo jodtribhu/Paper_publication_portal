@@ -75,6 +75,14 @@ export default {
             this.gotoComponentDashboard="ForgetPassword"
           }
         
+      },
+      created(){
+        var isAdmin= localStorage.getItem("isAdmin");
+        var isFaculty=localStorage.getItem("isFaculty");
+         if(isAdmin== "No" || isFaculty=="Yes"){
+             
+             this.$router.push({path: '/forbidden'});
+         }
       }
     
 }

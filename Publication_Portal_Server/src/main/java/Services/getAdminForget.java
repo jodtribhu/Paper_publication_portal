@@ -13,35 +13,20 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class getAdminFaculty extends HttpServlet{
+public class getAdminForget extends HttpServlet{
 	public void doGet(HttpServletRequest req,HttpServletResponse res) throws IOException
 	{			        	
 		utilities.Database d=new utilities.Database();
-		HttpSession session=req.getSession();
-		System.out.println(" getAdminFaculty " +session.getAttribute("isFaculty"));
-		System.out.println(" getAdminFaculty "+session.getAttribute("isAdmin"));
+
 		try {
-			ResultSet fs=d.getAdminFaculty();
+			ResultSet fs=d.getAdminForget();
 			JSONArray array = new JSONArray();
 			while(fs.next()) {
 					JSONObject obj = new JSONObject(); 
-					int loginid=fs.getInt(1);
-					obj.put("lid",fs.getInt(1));
-					obj.put("rollNo",fs.getString(2));
-					obj.put("created_at",fs.getString(6));
-					obj.put("modified_at",fs.getString(7));
-					
-					ResultSet fs2=d.getEachFaculty(loginid);
+					obj.put("fid",fs.getInt(1));
+					obj.put("f_status",fs.getString(2));
+					obj.put("f_username",fs.getString(3));
 
-					fs2.next();
-					obj.put("fID",fs2.getInt(1));
-					obj.put("name",fs2.getString(2));
-					obj.put("phoneNO",fs2.getString(3));
-					obj.put("IDNO",fs2.getString(4));
-					obj.put("department",fs2.getString(5));
-					obj.put("email",fs2.getString(6));
-					obj.put("designation",fs2.getString(8));
-					obj.put("campus",fs2.getString(9));
 					array.put(obj);	
 				
 			}
@@ -49,7 +34,7 @@ public class getAdminFaculty extends HttpServlet{
 		    res.setHeader("Cache-Control", "nocache");
 		    res.setCharacterEncoding("utf-8");
 			JSONObject obj2 = new JSONObject(); 	
-			obj2.put("adminfaculty",array);
+			obj2.put("adminforget",array);
 		    PrintWriter out2 = res.getWriter(); 
 		    out2.println(obj2);
 		    

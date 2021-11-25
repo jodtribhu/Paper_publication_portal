@@ -28,65 +28,41 @@
 </template>
 
 <script>
-export default {
- 
-    data(){
-        return{
-            email:'',
-            password:'',
-            error:'',
-            incorrect_login:true,
-            nooftimes:0
-        };
-    },
-    methods:{
-      forgotpassword(){
-        this.$router.push("/ForgotPassword")
+  import RegisterService from '@/services/RegistrationService.js';
+  export default {
+      data(){
+          return{
+              email:'',
+              password:'',
+              error:'',
+              incorrect_login:true,
+              nooftimes:0
+          };
       },
-      onVerify(response){
-          if (response) {
-              console.log("true");
+      methods:{
+        forgotpassword(){
+          this.$router.push("/ForgotPassword")
+        },
+      async login(){    
+          const response=await RegisterService.login({uname:this.email,password:this.password})          
+          if(response.data.logged_in==true){
+            await this.$store.dispatch("setUser",response.data);
           }
-            
-      },
-      changeVisibility(){
-        this.incorrect_login = !this.incorrect_login;
-      },
-       changeError(msg){
-        this.error = msg;
-      },
-      
-    async login(){    
-            try {
-            localStorage.setItem('nooftimes', 0);
-            } catch (error) {
-                   var failedlogins = parseInt(localStorage.getItem('nooffailedlogins'));
-                   this.changeError(error.response.data.errormessage);
-                   if(failedlogins>4)
-                   {
-                    this.changeVisibility();
-                    this.nooftimes= parseInt(localStorage.getItem('nooftimes'));
-                     this.nooftimes+=1;
-                     localStorage.setItem('nooftimes', this.nooftimes)
-                     var timeouttime=2000*this.nooftimes;
-                      this.changeError("Please Wait for "+timeouttime/1000+" seconds"); 
-                     console.log(timeouttime);
-                     const insidethis=this;
-                     setTimeout(function(){ 
-                        insidethis.changeVisibility();
-                        localStorage.setItem('nooffailedlogins', 0);
-                        insidethis.changeError("");  
-                     }, timeouttime);
-                   }
-                   failedlogins=failedlogins+1
-                    localStorage.setItem('nooffailedlogins', failedlogins);
-                        
-            }
-            
-        
+          
+        var isAdmin= localStorage.getItem("isAdmin");
+        var isFaculty=localStorage.getItem("isFaculty");
+        if(isAdmin=="Yes"){
+          this.$router.push({path: '/admin'});
         }
+        else if(isFaculty=="Yes"){
+          this.$router.push({path: '/faculty'});
+        }
+        else if(isFaculty=="No"){
+          this.$router.push({path: '/student'});
+        }
+      },
     }
-}
+  }
 </script>
 
 <style scoped>

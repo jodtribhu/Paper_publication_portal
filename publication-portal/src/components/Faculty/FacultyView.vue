@@ -30,6 +30,13 @@ export default {
           gotoComponent:"Dashboard"
       }
   },
+ created(){
+       var isFaculty= localStorage.getItem("isFaculty");
+       var isAdmin= localStorage.getItem("isAdmin");
+         if(isFaculty == "No" ||isAdmin=="Yes"){
+             this.$router.push({path: '/forbidden'});
+         }
+ },
   methods:{
         childMessageRecieved(message){
            this.gotoComponent=message

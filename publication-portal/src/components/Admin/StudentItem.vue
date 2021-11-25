@@ -8,8 +8,15 @@
 </template>
 
 <script>
+import RegisterService from '@/services/RegistrationService.js';
 export default {
-    props:['id','name','created_at','modified_at','rollno'],
+    props:['id','name','created_at','modified_at','rollno','lid'],
+    methods:{
+      async deletestudent(){
+           await RegisterService.deleteStudent({"sid":this.id,"lid":this.lid});
+           this.$emit('messageFromStudentChild','valueChanged')
+      },
+    }
 }
 </script>
 

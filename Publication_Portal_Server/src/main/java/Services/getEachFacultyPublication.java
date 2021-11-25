@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,7 +17,7 @@ public class getEachFacultyPublication extends HttpServlet {
 	public void doGet(HttpServletRequest req,HttpServletResponse res) throws IOException
 	{			        	
 		utilities.Database d=new utilities.Database();
-		
+
 		try {
 			ResultSet fs=d.getEachFacultyPublication(2);
 			JSONArray array = new JSONArray();

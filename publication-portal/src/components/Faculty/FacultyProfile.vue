@@ -1,5 +1,18 @@
 <template>
 <div class="margin">
+    <base-dialog :show=showPasswordDialog  title="Edit Password" @close="openclosePasswordDialog">
+        
+        <div class="input_cont">
+            <div class="each_input">
+                <label class="input_label">Enter new Password:</label>
+                <input class="input_text" v-model="editpass" type="text" >
+            </div>
+            <button class="button" @click="updatePassword()">Edit</button>
+        </div>
+
+     </base-dialog> 
+
+
     <base-dialog :show=showDialog  title="Team Mates" @close="opencloseDialog">
             <div class="input_cont">
                 <div class="each_input">
@@ -51,6 +64,11 @@
                 <p class="each_item_label">Campus:</p>
                 <p  class="each_item_answer"> {{faculty.campus}}</p>
             </div>
+            <div  class="each_item"> 
+
+                    <p class="each_item_label" >Edit Password:</p>
+                    <button @click="openclosePasswordDialog()" class="button2">Update</button>
+            </div>
         </div>
 
         <div class="container_flex_each class2">
@@ -71,6 +89,7 @@
                     <p class="each_item_label">Mobile:</p>
                     <p  class="each_item_answer"> {{faculty.phoneNO}}</p>
                 </div>
+
             </div>
 
         </div>
@@ -83,6 +102,7 @@
 </template>
 
 <script>
+import RegisterService from '@/services/RegistrationService.js';
 import GetEach from '@/services/GetEach';
 export default {
     props:['faculty'],
@@ -95,10 +115,23 @@ export default {
                 editcampus:'',
                 editmobile:'',
                 editemail:'',
+                editpass:'',
                 showDialog:false,
+                showPasswordDialog:false,
         }
     },
     methods:{
+        async updatePassword(){
+            console.log("india "+this.editpass)
+            this.showPasswordDialog=!this.showPasswordDialog;
+     
+            var x = this.faculty.IDNO.replace('-','');
+            console.log("inside update password "+x);
+
+
+            await RegisterService.changePassword({'username':x.toLowerCase(),'pass':this.editpass});
+            this.editpass=''
+        },
         opencloseDialog(){
             if(this.showDialog==false){
                 this.editname=this.faculty.name;
@@ -110,9 +143,10 @@ export default {
                 this.editemail=this.faculty.email;
              }
              this.showDialog=!this.showDialog;  
-
-             
         },  
+        openclosePasswordDialog(){
+            this.showPasswordDialog=!this.showPasswordDialog;
+        },
         async editFaculty(){
             this.showDialog=!this.showDialog;  
             await GetEach.editEachFaculty({"f_id":this.faculty.fID,"editname":this.editname,"editroll":this.editroll,
@@ -204,4 +238,23 @@ export default {
     background-color: rgba(69, 70, 82, 0.753);
     color:white;
 }
+
+.button2{
+    width:8rem;
+    margin-top:0.6rem;
+    margin-left:1rem;
+    height:40px;
+    background-color: rgb(24, 11, 99);
+    font-family: 'Montserrat', sans-serif;
+    font-size:1rem;
+    border-radius:12px;
+    color:rgb(212, 206, 195);
+    cursor: pointer;
+    border-style:none;
+}
+.button2:hover{
+    background-color: rgba(69, 70, 82, 0.753);
+    color:white;
+}
+
 </style>

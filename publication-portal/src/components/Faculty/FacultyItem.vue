@@ -47,7 +47,7 @@
             <p class="label_accept">Enter Your Remarks: </p>
             <textarea class="textarea_accept" v-model="publication_remarks" ></textarea>
         </div>
-        <div class="accept_container">
+        <div class="accept_container" v-if="getTemsize(publication_record.team)==1">
             <p class="label_accept">Enter Your Marks: </p>
             <input class="input_accept" type="text" v-model="publication_marks">
         </div>

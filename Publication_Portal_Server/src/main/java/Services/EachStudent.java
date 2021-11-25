@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -15,6 +16,8 @@ public class EachStudent extends HttpServlet{
 	public void doGet(HttpServletRequest req,HttpServletResponse res) throws IOException
 	{			        	
 		utilities.Database d=new utilities.Database();
+		HttpSession session = req.getSession();
+		System.out.println("inside each student "+session.getAttribute("logged_in"));
 		try {
 			ResultSet fs=d.getEachStudent(1);
 

@@ -12,5 +12,8 @@ export default{
     setTotalPublications(state,payload){
         state.Accepted_Publications=payload.data.accepted_count;
         state.Rejected_Publications=payload.data.rejected_count;
+    },
+    setAdminForget_Requests(state,payload){
+        state.Admin_Forget=payload.data.adminforget;
     }
 }

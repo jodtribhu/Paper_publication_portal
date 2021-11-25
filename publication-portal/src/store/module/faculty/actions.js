@@ -2,12 +2,14 @@ import GetEach from '@/services/GetEach';
 import EachFacultyPublication from '@/services/EachFacultyPublication';
 export default{
     async loadfaculty(context){ 
-        const response =await GetEach.getEachFaculty();
+        var userid= localStorage.getItem("userId");
+        const response =await GetEach.getEachFaculty({'userid':userid});
          context.commit('setLoggedInFaculty',response.data)
      },
      async loadfacultypublication(context){ 
          console.log("inside actions");
-        const response =await EachFacultyPublication.EachFacultyPublication();
+         var userid= localStorage.getItem("userId");
+        const response =await EachFacultyPublication.EachFacultyPublication({'userid':userid});
         context.commit('setLoggedInFaculty_Publications',response)
     }
 }
