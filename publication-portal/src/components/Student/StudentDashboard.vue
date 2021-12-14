@@ -71,10 +71,7 @@
                         <p class="each_item_label">Campus:</p>
                         <p  class="each_item_answer"> {{student.campus}}</p>
                     </div>
-                    <div  class="each_item"> 
-                        <p class="each_item_label" >Edit Password:</p>
-                        <button @click="openclosePasswordDialog()" class="button2">Update</button>
-                    </div>
+
                 </div>
 
                 <div class="container_flex_item">
@@ -82,10 +79,7 @@
                         <p class="each_item_label">Department:</p>
                         <p  class="each_item_answer">{{student.department}}</p>
                     </div>
-                    <div  class="each_item"> 
-                        <p class="each_item_label">Grace Marks:</p>
-                        <p  class="each_item_answer"> {{student.graceMarks}}</p>
-                    </div>
+
                     <div  class="each_item"> 
                         <p class="each_item_label">Email:</p>
                         <p  class="each_item_answer"> {{student.email}}</p>
@@ -93,6 +87,10 @@
                     <div  class="each_item"> 
                         <p class="each_item_label">Mobile Number:</p>
                         <p  class="each_item_answer"> {{student.phoneno}}</p>
+                    </div>
+                    <div  class="each_item"> 
+                        <p class="each_item_label" >Edit Password:</p>
+                        <button @click="openclosePasswordDialog()" class="button2">Update</button>
                     </div>
                 </div>
 

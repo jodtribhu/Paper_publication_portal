@@ -19,7 +19,7 @@ public class EachStudent extends HttpServlet{
 		HttpSession session = req.getSession();
 		System.out.println("inside each student "+session.getAttribute("logged_in"));
 		try {
-			ResultSet fs=d.getEachStudent(1);
+			ResultSet fs=d.getEachStudent(39);
 
 			while(fs.next()) {
 					JSONObject obj = new JSONObject(); 

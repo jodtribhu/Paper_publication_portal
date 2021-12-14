@@ -30,7 +30,7 @@ export default {
   created(){
         var isFaculty= localStorage.getItem("isFaculty");
         var isAdmin= localStorage.getItem("isAdmin");
-         if(isFaculty == "Yes" || isAdmin=="Yes"){
+         if(isFaculty == "Yes" || isAdmin=="Yes" || isFaculty==''||isAdmin==''){
              this.$router.push({path: '/forbidden'});
          }
  },

@@ -1,5 +1,8 @@
 package utilities;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class Database  {
+public class Database {
 	   public  ResultSet getFaculty() {
 		   ResultSet rs2=null;
 		   try{  
@@ -99,8 +102,11 @@ public class Database  {
 		 
 	   }
 	   
-	   public void addFaculty(String name,String email,String pass)  {
-		   
+	   public void addFaculty(String name,String email,String pass) throws NoSuchAlgorithmException  {
+	        String passwordToHash = pass;
+	        String salt = getSalt();
+	        
+	        String securePassword = get_SHA_512_SecurePassword(passwordToHash, salt);
 		   try{  
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
@@ -108,7 +114,7 @@ public class Database  {
 			   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
 			   LocalDateTime now = LocalDateTime.now(); 
 			   String ldate=dtf.format(now);
-			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY,ISADMIN) VALUES ('"+name+ "','"+ pass+"',"+ "'sample_salt'" + ","+"'sample_hash','"+ldate+"','"+ldate+"',"+"'Yes"+"','No');";
+			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY,ISADMIN) VALUES ('"+name+ "','"+ securePassword+"','"+ salt + "',"+"'SHA_512','"+ldate+"','"+ldate+"',"+"'Yes"+"','No');";
 			   stmt.executeUpdate(sql); 
 			   
 			   String sql4="Select * from login where USERNAME='"+name+"'";
@@ -119,19 +125,49 @@ public class Database  {
 				    login_id=rs.getInt(1);
 			   }
 			   
-			   String sql3="Insert into faculty(Name,PhoneNO,IDNO,DEPARTMENT,EMAIL,L_ID,DESIGNATION,CAMPUS) VALUES ('"+"Enter Name"+ "','"+ "Enter Phone "+"','"+name+ "',"+"'Enter department','"+email+"','"+login_id+"',"+"Enter Designation','"+"Enter Campus"+"');";
+			   String sql3="Insert into faculty(Name,PhoneNO,IDNO,DEPARTMENT,EMAIL,L_ID,DESIGNATION,CAMPUS) VALUES ('"+"Enter Name"+ "','"+ "Enter Phone "+"','"+name+ "',"+"'Enter department','"+email+"','"+login_id+"','"+"Enter Designation','"+"Enter Campus"+"');";
 			   stmt.executeUpdate(sql3); 
-			   System.out.println(sql3);
+	
 			  }
 		   	catch(Exception e){ 
 		   		System.out.println(e);
 		   	} 
 		 
 	   }
+	   //Login Hashing and salt 
+	    private static String get_SHA_512_SecurePassword(String passwordToHash,
+	            String salt) {
+	        String generatedPassword = null;
+	        try {
+	            MessageDigest md = MessageDigest.getInstance("SHA-512");
+	            md.update(salt.getBytes());
+	            byte[] bytes = md.digest(passwordToHash.getBytes());
+	            StringBuilder sb = new StringBuilder();
+	            for (int i = 0; i < bytes.length; i++) {
+	                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
+	                        .substring(1));
+	            }
+	            generatedPassword = sb.toString();
+	        } catch (NoSuchAlgorithmException e) {
+	            e.printStackTrace();
+	        }
+	        return generatedPassword;
+	    }
+	    
+	    private static String getSalt() throws NoSuchAlgorithmException {
+	        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+	        byte[] salt = new byte[16];
+	        sr.nextBytes(salt);
+	        return salt.toString();
+	    }
 	   
 	   
-	   public void addStudent(String stuname,String stueroll,String stupassword)  {
-		   
+	   public void addStudent(String stuname,String stueroll,String stupassword) throws NoSuchAlgorithmException  {
+	        String passwordToHash = stupassword;
+	        String salt = getSalt();
+	        
+	        String securePassword = get_SHA_512_SecurePassword(passwordToHash, salt);
+	        
 		   try{  
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
@@ -139,11 +175,11 @@ public class Database  {
 			   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
 			   LocalDateTime now = LocalDateTime.now(); 
 			   String ldate=dtf.format(now);
-			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY,ISADMIN) VALUES ('"+stuname+ "','"+ stupassword+"',"+ "'sample_salt'" + ","+"'sample_hash','"+ldate+"','"+ldate+"',"+"'No"+"','No');";
+			   String sql="Insert into login(USERNAME,PASS,SALT,HASHVAL,CREATEDAT,MODIFIEDAT,ISFACULTY,ISADMIN) VALUES ('"+stueroll+ "','"+ securePassword+"','"+ salt + "',"+"'SHA_512','"+ldate+"','"+ldate+"',"+"'No"+"','No');";
 			   stmt.executeUpdate(sql); 
 			   
-			   String sql4="Select * from login where USERNAME='"+stuname+"'";
-			   System.out.println(sql4);
+			   String sql4="Select * from login where USERNAME='"+stueroll+"'";
+			  
 			   ResultSet rs=stmt.executeQuery(sql4);
 			   int login_id=-1;
 			   while(rs.next()) {
@@ -151,7 +187,7 @@ public class Database  {
 			   }
 			   
 			   String sql3="Insert into student(Name,RollNO,EMAIL,PRE_RECORD,GRACEMARKS,L_ID,CAMPUS,SEX,PHONENO,DEPARTMENT) VALUES ('"+stuname+ "','"+ stueroll+"','"+"Enter Email"+ "',"+0+",'"+"0"+"',"+login_id+",'Enter Campus"+"','"+"Enter Sex"+"','"+"Enter Phone No','"+"Enter department"+"');";
-			   System.out.println(sql3);
+			 
 			   stmt.executeUpdate(sql3); 
 			   
 			  }
@@ -164,7 +200,7 @@ public class Database  {
 	   public void addPublication(String student_publication_title,String student_publication_start,String student_publication_link,
 			   String student_journal_name,String student_conference_name,String student_publication_end,String student_publication_submitdate,
 			   String student_publication_isimp,String student_publication_issurv,String student_publication_isconf,String student_publication_isjor,String addp1,String addp2,String addp3,String addp4,String faculty_id_no){   
-		  System.out.println("Student Publication Link"+student_publication_link);
+	
 		   try{  
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
@@ -185,13 +221,13 @@ public class Database  {
 			   		+student_publication_link+"',"
 			   		+ "'"+student_publication_submitdate+"'"
 			   		+");";
-			   System.out.println(sql);
+	
 			   stmt.executeUpdate(sql);
-			   System.out.println(addp1+" addsad "+addp2+" ADASD"+addp3+"DADSA"+addp4);
+			
 			   
 			   Statement stmt2=con.createStatement();
 			   String sql2="Select P_ID from paper where TITLE='"+student_publication_title+"'";
-			   System.out.println(sql2);
+	
 			   ResultSet rs4 =stmt2.executeQuery(sql2);
 			   int p_Id=-1;
 			   while(rs4.next()) {
@@ -201,7 +237,7 @@ public class Database  {
 			   Statement stmt4=con.createStatement();
 			   if(!addp1.isEmpty()) {
 				   String sql3="Insert into student_paper(S_ID,P_ID,IS_CLAIMED,MARKS,PSTATUS) VALUES ("+addp1+","+p_Id+","+"'No',"+"0"+",'Pending')";
-				   System.out.println(sql3);
+		
 				   stmt.executeUpdate(sql3);
 				   
 				   //Faculty Paper
@@ -235,7 +271,7 @@ public class Database  {
 				   
 				   
 				   String sql3="Insert into student_paper(S_ID,P_ID,IS_CLAIMED,MARKS,PSTATUS) VALUES ("+s_id+","+p_Id+","+"'No',"+"0"+",'Pending')";
-				   System.out.println(sql3);
+			
 				   stmt3.executeUpdate(sql3);
 				   
 				   
@@ -267,7 +303,7 @@ public class Database  {
 					   s_id=fs5.getInt(1);
 				   }
 				   String sql3="Insert into student_paper(S_ID,P_ID,IS_CLAIMED,MARKS,PSTATUS) VALUES ("+s_id+","+p_Id+","+"'No',"+"0"+",'Pending')";
-				   System.out.println(sql3);
+			
 				   stmt3.executeUpdate(sql3);
 				   
 				   //Faculty Paper
@@ -298,7 +334,7 @@ public class Database  {
 					   s_id=fs5.getInt(1);
 				   }
 				   String sql3="Insert into student_paper(S_ID,P_ID,IS_CLAIMED,MARKS,PSTATUS) VALUES ("+s_id+","+p_Id+","+"'No',"+"0"+",'Pending')";
-				   System.out.println(sql3);
+			
 				   stmt3.executeUpdate(sql3);
 				   
 				   //Faculty Paper
@@ -341,7 +377,7 @@ public class Database  {
 		 
 	   }
 	   public ResultSet getAdminStudent()  {
-		   System.out.println("Inside get Admin Student");
+		
 		   ResultSet rs2=null;
 		   try{  
 			   Class.forName("com.mysql.jdbc.Driver");   
@@ -375,9 +411,20 @@ public class Database  {
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
 			   Statement stmt=con.createStatement(); 
 			   
+			   Statement stmt2=con.createStatement();  
+			   ResultSet fs10=stmt2.executeQuery("Select * from student_paper WHERE S_ID ="+sid); 
+			   while(fs10.next()) {
+				   
+				   int sp_id=fs10.getInt(1);
+				   stmt.executeUpdate("DELETE FROM paper_faculty WHERE SP_ID="+sp_id);
+			   };
+			   
+			   
+			   
 			   stmt.executeUpdate("DELETE FROM login WHERE L_ID="+lid); 
-			   stmt.executeUpdate("DELETE FROM student_paper WHERE S_ID="+sid);
-			   stmt.executeUpdate("DELETE FROM student WHERE S_ID="+sid); 
+			   
+			   stmt.executeUpdate("DELETE FROM publication_portal.student_paper WHERE S_ID="+sid);
+			   stmt.executeUpdate("DELETE FROM publication_portal.student WHERE S_ID="+sid); 
 			  }
 		   	catch(Exception e){ 
 		   		System.out.println(e);
@@ -532,18 +579,24 @@ public class Database  {
 	} 
 	
 	public LoginObj login(String username,String password) {
+
 		   try{  
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
 			   Statement stmt=con.createStatement(); 
-			   ResultSet rs2=stmt.executeQuery("Select PASS,ISFACULTY,L_ID,ISADMIN from login where USERNAME='"+username+"'");
+			   ResultSet rs2=stmt.executeQuery("Select PASS,ISFACULTY,L_ID,ISADMIN,SALT from login where USERNAME='"+username+"'");
 			   while(rs2.next()) {
 				   String pass=rs2.getString(1);
 				   String isFaculty=rs2.getString(2);
 				   int LID=rs2.getInt(3);
 				   String isAdmin=rs2.getString(4);
-				 
-				   if(pass.equals(password)) {
+				   String salt=rs2.getString(5);
+
+			        String passwordToHash = password;
+			        String securePassword = get_SHA_512_SecurePassword(passwordToHash, salt);
+			        
+			        
+				   if(pass.equals(securePassword)) {
 					   LoginObj lobj=new LoginObj(true,isFaculty,LID,isAdmin);
 					   return lobj;
 				   }
