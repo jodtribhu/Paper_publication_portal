@@ -1,5 +1,6 @@
 package Services;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -14,13 +15,24 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class getEachStudentPublication extends HttpServlet{
-	public void doGet(HttpServletRequest req,HttpServletResponse res) throws IOException
+	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException
 	{			        	
 		utilities.Database d=new utilities.Database();
 		HttpSession session=req.getSession();
 		System.out.println(" getEachStudentPublication "+session.getAttribute("isFaculty"));
 		try {
-			ResultSet fs=d.getEachStudentPublication(1);
+	        StringBuilder sb = new StringBuilder();
+	        BufferedReader br = req.getReader();
+	        String str = null;
+	        while ((str = br.readLine()) != null) {
+	            sb.append(str);
+	            System.out.println(str);
+	        }
+	        JSONObject jObj = new JSONObject(sb.toString());
+	        int student_id = jObj.getInt("student_id");
+	        int login_id = jObj.getInt("login_id");
+	        System.out.println("STUDENT ID" +student_id+" LOGIN_ID "+login_id);
+			ResultSet fs=d.getEachStudentPublication(student_id);
 			JSONArray array = new JSONArray();
 			JSONArray array2 = new JSONArray();
 			while(fs.next()) {

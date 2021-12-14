@@ -6,7 +6,9 @@ export default{
     },
     getEachStudent(){
         console.log("inside getEachStudent");
-        return Api().get('geteachstudent');
+        var s_id=localStorage.getItem("studentid")
+        var l_id=localStorage.getItem("userId")
+        return Api().post('geteachstudent',{"student_id":s_id,"login_id":l_id});
     },
     editEachStudent(data){
  

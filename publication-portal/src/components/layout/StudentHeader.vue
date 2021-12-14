@@ -28,7 +28,9 @@ export default {
   },
   methods:{
     logout(){
+      console.log("Inside the logout student in the headerS")
       this.$store.dispatch('logout');
+      this.$store.dispatch('logout_the_student');
       this.$router.replace('/login');
     }
   }

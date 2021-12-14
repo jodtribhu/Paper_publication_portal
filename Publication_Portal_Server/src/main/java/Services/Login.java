@@ -43,6 +43,8 @@ public class Login extends HttpServlet{
 			obj2.put("isFaculty",lobj.getIsFaculty());
 			obj2.put("isAdmin", lobj.getIsAdmin());
 			obj2.put("LID",lobj.getLID());
+			obj2.put("s_id",lobj.getS_id());
+			obj2.put("f_id",lobj.getF_id());
 		    PrintWriter out2 = res.getWriter(); 
 		    out2.println(obj2);
 		    			

@@ -54,7 +54,7 @@
                                 <input v-model="student_publication_link"  type="text" :class="[student_publication_link_error ? 'error_div' : 'input_form']">
                             </div>
                             <div class="student_name">
-                                <p>Faculty ID Number :</p>
+                                <p>Faculty ID Number (XX-000) :</p>
                                 <input v-model="faculty_id_no"  type="text" :class="[student_publication_link_error ? 'error_div' : 'input_form']">
                             </div>
                             <div class="student_name">
@@ -302,7 +302,7 @@ export default {
                 var addp2='';
                 var addp3='';
                 var addp4='';
-                addp1='1'
+                addp1=localStorage.getItem("studentid");
                 for (let i = 0; i < this.addPerson.length; i++) {
                     if(i==0){
                          addp2=this.addPerson[i].RollNo

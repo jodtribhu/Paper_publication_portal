@@ -591,18 +591,32 @@ public class Database {
 				   int LID=rs2.getInt(3);
 				   String isAdmin=rs2.getString(4);
 				   String salt=rs2.getString(5);
+				   int s_id=-1;
+				   int f_id=-1;
 
 			        String passwordToHash = password;
 			        String securePassword = get_SHA_512_SecurePassword(passwordToHash, salt);
 			        
 			        
 				   if(pass.equals(securePassword)) {
-					   LoginObj lobj=new LoginObj(true,isFaculty,LID,isAdmin);
+					   if(isFaculty.equals("No")) {
+						   Statement stmt2=con.createStatement(); 
+						   ResultSet rs4=stmt2.executeQuery("Select S_ID from student where L_ID='"+LID+"'");
+						   rs4.next();
+						   s_id=rs4.getInt(1);
+					   }
+					   else if(isFaculty.equals("Yes")) {
+						   Statement stmt2=con.createStatement(); 
+						   ResultSet rs4=stmt2.executeQuery("Select F_ID from faculty where L_ID='"+LID+"'");
+						   rs4.next();
+						   f_id=rs4.getInt(1);   
+					   }
+					   LoginObj lobj=new LoginObj(true,isFaculty,LID,isAdmin,s_id,f_id);
 					   return lobj;
 				   }
 					   
 				   else {
-					   LoginObj lobj=new LoginObj(false,isFaculty,LID,isAdmin);
+					   LoginObj lobj=new LoginObj(false,isFaculty,LID,isAdmin,s_id,f_id);
 					   return lobj;
 					  
 				   }
@@ -612,7 +626,7 @@ public class Database {
 		   	catch(Exception e){ 
 		   		System.out.println(e);
 		   	} 
-		   LoginObj lobj2=new LoginObj(false,"No",-1,"No");
+		   LoginObj lobj2=new LoginObj(false,"No",-1,"No",-1,-1);
 		   return lobj2;
 	}  
 	   public void addForget(String username,String status)  {

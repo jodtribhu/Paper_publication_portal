@@ -48,7 +48,7 @@
           if(response.data.logged_in==true){
             await this.$store.dispatch("setUser",response.data);
           }
-          
+
         var isAdmin= localStorage.getItem("isAdmin");
         var isFaculty=localStorage.getItem("isFaculty");
         if(isAdmin=="Yes"){

@@ -23,5 +23,14 @@ export default{
 
         state.logged_in_student_publication_total =state.logged_in_student_publication_pending.length+ state.logged_in_student_publication_accepted.length+state.logged_in_student_publication_rejected.length+state.logged_in_student_publication_claimed.length;
         
+    },
+    logout_student_mutation(state){
+        console.log("Inside logout student mutations")
+        state.logged_in_student={};
+        state.logged_in_student_publication_pending=[];
+        state.logged_in_student_publication_accepted=[];
+        state.logged_in_student_publication_rejected=[];
+        state.logged_in_student_publication_claimed=[];
+        state.logged_in_student_publication_total=0;
     }
 }
