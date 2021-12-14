@@ -599,18 +599,19 @@ public class Database {
 			        
 			        
 				   if(pass.equals(securePassword)) {
-					   if(isFaculty.equals("No")) {
+					   if(isFaculty.equals("No") && isAdmin.equals("No")) {
 						   Statement stmt2=con.createStatement(); 
 						   ResultSet rs4=stmt2.executeQuery("Select S_ID from student where L_ID='"+LID+"'");
 						   rs4.next();
 						   s_id=rs4.getInt(1);
 					   }
-					   else if(isFaculty.equals("Yes")) {
+					   else if(isFaculty.equals("Yes") && isAdmin.equals("No")) {
 						   Statement stmt2=con.createStatement(); 
 						   ResultSet rs4=stmt2.executeQuery("Select F_ID from faculty where L_ID='"+LID+"'");
 						   rs4.next();
 						   f_id=rs4.getInt(1);   
 					   }
+					   
 					   LoginObj lobj=new LoginObj(true,isFaculty,LID,isAdmin,s_id,f_id);
 					   return lobj;
 				   }

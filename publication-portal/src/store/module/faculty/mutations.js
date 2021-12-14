@@ -16,5 +16,14 @@ export default{
                     return e.p_status=="Rejected" && e.is_claimed=="Yes";
         });
         state.logged_in_faculty_publication_total =state.logged_in_faculty_publication_pending.length+ state.logged_in_faculty_publication_accepted.length+state.logged_in_faculty_publication_rejected.length;
+    },
+    logout_faculty_mutation(state){
+        console.log("Inside logout student mutations")
+        state.logged_in_faculty={};
+        state.logged_in_faculty_publication_pending=[];
+        state.logged_in_faculty_publication_accepted=[];
+        state.logged_in_faculty_publication_rejected=[];
+        state.logged_in_faculty_publication_total=0;
     }
+    
 }

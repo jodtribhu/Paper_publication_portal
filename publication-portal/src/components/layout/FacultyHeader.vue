@@ -29,6 +29,7 @@ export default {
   methods:{
     logout(){
       this.$store.dispatch('logout');
+      this.$store.dispatch('logout_the_faculty');
       this.$router.replace('/login');
     }
   }

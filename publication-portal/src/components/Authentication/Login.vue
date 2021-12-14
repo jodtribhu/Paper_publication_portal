@@ -17,10 +17,10 @@
                 
               
             <div>
-              <p class="error" v-if="error!=''">{{error}}</p>
+              <p class="error" v-if="incorrect_login">The credentials entered are wrong.Please try again.</p>
             </div>
 
-            <button v-if="incorrect_login" @click="login">Login</button>
+            <button  @click="login">Login</button>
 
              <p class="forgotpassword" @click="forgotpassword">Forgot Password </p>
         </div>       
@@ -35,7 +35,7 @@
               email:'',
               password:'',
               error:'',
-              incorrect_login:true,
+              incorrect_login:false,
               nooftimes:0
           };
       },
@@ -59,6 +59,9 @@
         }
         else if(isFaculty=="No"){
           this.$router.push({path: '/student'});
+        }
+        if(isAdmin=='' && isFaculty==''){
+          this.incorrect_login=true;
         }
       },
     }
@@ -122,7 +125,7 @@ div.input-block input:valid + span.placeholder{
 }
 
 .error{
-    color: #a75864;
+    color: #c9b7ba;
 }
 .box{
   border-radius: 5%;

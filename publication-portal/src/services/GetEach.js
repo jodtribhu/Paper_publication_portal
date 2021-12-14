@@ -2,7 +2,9 @@ import Api from '@/services/Api';
 export default{
    getEachFaculty(){
     console.log("inside geteachfaculty");
-        return Api().get('geteachfaculty');
+        var f_id=localStorage.getItem("facultyid")
+        var l_id=localStorage.getItem("userId")
+        return Api().post('geteachfaculty',{"faculty_id":f_id,"login_id":l_id});
     },
     getEachStudent(){
         console.log("inside getEachStudent");

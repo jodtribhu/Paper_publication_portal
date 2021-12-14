@@ -11,5 +11,10 @@ export default{
          var userid= localStorage.getItem("userId");
         const response =await EachFacultyPublication.EachFacultyPublication({'userid':userid});
         context.commit('setLoggedInFaculty_Publications',response)
-    }
+    },
+    logout_the_faculty(context){ 
+        
+        context.commit('logout_faculty_mutation')
+    },
+    
 }
