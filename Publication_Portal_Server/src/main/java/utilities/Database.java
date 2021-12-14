@@ -662,10 +662,15 @@ public class Database {
 	   
 	   public void editLogin(String username,String pass) {
 		   try{  
+			   
+		        String passwordToHash = pass;
+		        String salt = getSalt();
+		        
+		        String securePassword = get_SHA_512_SecurePassword(passwordToHash, salt);
 			   Class.forName("com.mysql.jdbc.Driver");   
 			   Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/publication_portal","root","");
 			   Statement stmt=con.createStatement(); 
-			   stmt.executeUpdate("Update login SET PASS="+"'"+pass+"'"+" where USERNAME="+"'"+username+"'"); 
+			   stmt.executeUpdate("Update login SET PASS="+"'"+securePassword+"',SALT='"+salt+"'"+" where USERNAME="+"'"+username+"'"); 
 			   stmt.executeUpdate("Update forget_request SET forget_request_status='done'"+" where forget_request_username="+"'"+username+"'"); 
 			   
 			  }
